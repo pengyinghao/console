@@ -23,7 +23,8 @@ const props = withDefaults(defineProps<TableProps>(), {
     load: true,
     resetPage: false,
     showRefreshBtn: true,
-    pagination: true
+    pagination: true,
+    tree: false
 })
 
 const table = reactive<TableReactive>({
@@ -48,23 +49,32 @@ const getTableData = async () => {
         // eslint-disable-next-line no-console
         if (!props.requestApi) return console.error('请传入请求方法')
         table.loading = true
-        const result = await props.requestApi({
-            pageNo: paginationState.currentPage,
-            pageSize: paginationState.pageSize,
+
+        const params: Record<string, any> = {
             asc: table.asc,
             sortDataField: table.sortDataField,
             ...props.requestParams
-        })
+        }
+
+        if (props.pagination) {
+            params.pageNo = paginationState.currentPage
+            params.pageSize = paginationState.pageSize
+        }
+
+        const result = await props.requestApi(params)
 
         // 判断不是第一页 没数据情况
         if (result.total === 0 && paginationState.currentPage > 1) {
             paginationState.currentPage--
             return getTableData()
         }
-
-        paginationState.total = result.total
-        table.dataSource = result.data
-        props.callBack && props.callBack(result.data)
+        if (props.pagination) {
+            paginationState.total = result.total
+            table.dataSource = result.data
+        } else {
+            table.dataSource = result
+        }
+        props.callBack && props.callBack(props.pagination ? result.data : result)
     } finally {
         // eslint-disable-next-line no-use-before-define
         reload.value = false
