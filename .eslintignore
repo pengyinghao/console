@@ -1,0 +1,15 @@
+node_modules
+*.md
+*.woff
+*.ttf
+.vscode
+.idea
+dist
+typings
+/public
+.husky
+.local
+.eslintrc.js
+prettier.js
+/server
+

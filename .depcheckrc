@@ -1,0 +1,15 @@
+ignores:
+    [
+        'eslint',
+        'babel-*',
+        'stylelint',
+        'stylelint-*',
+        '@commitlint/*',
+        'vue-countup-v3',
+        '@iconify/vue',
+        'dayjs',
+        'commitizen',
+        'cz-conventional-changelog',
+        'postcss-html'
+    ]
+skip-missing: true

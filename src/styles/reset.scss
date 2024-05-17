@@ -1,0 +1,33 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+    @apply m-0px h-full text-12px;
+}
+
+html {
+    background-color: #f6f9f8;
+}
+
+html.dark {
+    background-color: var(--el-bg-color-page);
+}
+
+#nprogress .bar {
+    background-color: var(--el-color-primary) !important;
+}
+
+div:focus-within,
+span:focus-within {
+    outline: none;
+}
+:root {
+    --el-font-size-base: 12px;
+    --el-font-size-medium: 14px;
+    --el-font-size-large: 16px;
+    --dark1: #343a41;
+    --el-border-color: #e9ebf3;
+}

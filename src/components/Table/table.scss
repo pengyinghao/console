@@ -1,0 +1,12 @@
+.c-table {
+    @apply h-full flex-1 flex flex-col;
+    &-header {
+        @apply mb-10px;
+    }
+}
+
+:deep(.el-table):not(.el-table--border) {
+    .el-table__header th {
+        background-color: #f0f2f3;
+    }
+}
