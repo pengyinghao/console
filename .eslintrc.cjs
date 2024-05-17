@@ -39,6 +39,7 @@ module.exports = {
         'import/no-extraneous-dependencies': 'off',
         'consistent-return': 'off',
         'no-undef': 'off',
-        'vue/no-v-html': 'off'
+        'vue/no-v-html': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off'
     }
 }

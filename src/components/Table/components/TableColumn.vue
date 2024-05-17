@@ -3,7 +3,6 @@ import { defineProps } from 'vue'
 import { TableColumn, TableColumnScope, TableHeaderScope } from '../type'
 defineProps<{ column: TableColumn }>()
 
-defineOptions({ name: 'TableColumn' })
 const renderColumn = (item: TableColumn) => {
     if (item.hide) return <></>
 
