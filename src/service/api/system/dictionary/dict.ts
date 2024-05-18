@@ -17,6 +17,7 @@ export interface Dict {
 }
 
 export type UpdateDictOption = Optional<Dict, 'id' | 'typeId'>
+export type TypeNoToDict = Pick<Dict, 'id' | 'value'> & { label: string }
 
 /** 获取字典分页信息 */
 export const fetchDictInfos = (params: Record<string, any>) => {
@@ -50,7 +51,7 @@ export const fetchDictDetail = (id: number) => {
 
 /** 通过类型编号查询 字典信息 */
 export const fetchDictTypeNo = (no: string) => {
-    return requestGet<Dict[]>(`/system/dict/type_no/${no}`)
+    return requestGet<TypeNoToDict[]>(`/system/dict/type_no/${no}`)
 }
 
 /** 删除字典信息 */
