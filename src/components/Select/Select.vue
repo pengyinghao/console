@@ -1,5 +1,56 @@
+<script lang="ts" setup>
+import { onBeforeMount, ref, toRefs, useSlots, watchEffect } from 'vue'
+import { SelectProps } from './select-type'
+import { fetchDictTypeNo } from '@/service/api/system/dictionary'
+import { requestGet, requestPost } from '@/service/request'
+
+const slots = useSlots()
+const props = withDefaults(defineProps<SelectProps>(), {
+    method: 'get',
+    displayValue: 'value',
+    displayLabel: 'label',
+    data: [] as any
+})
+
+/** 是否重新加载 */
+const reload = defineModel('reload', { type: Boolean, default: false })
+const value = defineModel()
+
+const options = ref<any[]>([])
+const init = async () => {
+    // 当有静态数据时，先加载静态数据
+    if (props.data && props.data.length > 0) {
+        options.value = toRefs(props.data)
+        return true
+    }
+
+    if (props.typeNo) {
+        const result = await fetchDictTypeNo(props.typeNo)
+        options.value = result
+        return true
+    }
+
+    if (props.requestApi) {
+        const result = await props.requestApi(props.requestParams)
+        options.value = result
+    }
+
+    throw new Error('请传入typeNo或url')
+}
+
+watchEffect(() => {
+    if (reload.value) {
+        init()
+        reload.value = false
+    }
+})
+
+onBeforeMount(() => {
+    init()
+})
+</script>
 <template>
-    <el-select v-bind="{ ...$attrs, ...props }" @change="onChange">
+    <el-select v-bind="$attrs" v-model="value">
         <template v-if="!$slots.default && !$slots.custom">
             <el-option
                 v-for="(item, index) in options"
@@ -15,82 +66,8 @@
         <slot v-for="name in Object.keys(slots)" :name="name"></slot>
     </el-select>
 </template>
-<script lang="ts" setup>
-import { onMounted, ref, useSlots, watch, watchEffect } from 'vue'
-import { selectProps, Method, emits as Emits } from './select-type'
-const slots = useSlots()
-const props = defineProps(selectProps)
-const emits = defineEmits(Emits)
-defineOptions({ name: 'CSelect', inheritAttrs: false })
-// 字典查询url地址
-const DICT_URL = '/api/dict/list'
-
-/** 下拉数据源 */
-const options = ref<any[]>([])
-
-// 后台方法，
-const fetchSelectDataSource = (url: string, method: Method, params: any) => {
-    return Promise.resolve({
-        url,
-        method,
-        params
-    }) as any
+<style lang="scss" scoped>
+:deep(.el-select__wrapper) {
+    font-size: var(--el-font-size-base);
 }
-
-/** 获取下拉数据源 */
-const getSelectDataInfos = async () => {
-    let result = null
-    if (props.dictNo) {
-        result = await fetchSelectDataSource(DICT_URL, 'get', { no: props.dictNo })
-    } else {
-        result = await fetchSelectDataSource(props.url, props.method, props.params)
-    }
-
-    if (result) {
-        options.value = [...result, ...props.appendData]
-    } else {
-        options.value = [...props.appendData]
-    }
-}
-
-/** 设置下拉数据源 */
-const setOptions = () => {
-    options.value = props.dataSource
-}
-
-onMounted(() => {
-    if (!props.url && props.dataSource.length === 0 && !slots.default)
-        throw new Error('url or dataSource is required')
-
-    if (props.dataSource.length > 0) {
-        setOptions()
-    } else if (props.url) {
-        if (props.init) {
-            getSelectDataInfos() // 请求后台
-        }
-    }
-})
-
-watch(
-    () => props.dataSource,
-    () => setOptions()
-)
-
-watchEffect(() => {
-    if (props.reload) {
-        getSelectDataInfos()
-        emits('update:reload', false)
-    }
-})
-
-/** 下拉值改变事件 */
-const onChange = (value: any) => {
-    let selectRows: any = []
-    if (props.multiple) {
-        selectRows = options.value.filter((item) => value.includes(item[props.displayValue]))
-    } else {
-        selectRows = options.value.find((item) => item[props.displayValue] === value)
-    }
-    emits('change', value, selectRows)
-}
-</script>
+</style>
