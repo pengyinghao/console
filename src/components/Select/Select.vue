@@ -2,7 +2,6 @@
 import { onBeforeMount, ref, toRefs, useSlots, watchEffect } from 'vue'
 import { SelectProps } from './select-type'
 import { fetchDictTypeNo } from '@/service/api/system/dictionary'
-import { requestGet, requestPost } from '@/service/request'
 
 const slots = useSlots()
 const props = withDefaults(defineProps<SelectProps>(), {
@@ -14,7 +13,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
 
 /** 是否重新加载 */
 const reload = defineModel('reload', { type: Boolean, default: false })
-const value = defineModel()
+const value = defineModel({ type: Object })
 
 const options = ref<any[]>([])
 const init = async () => {
