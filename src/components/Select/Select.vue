@@ -33,6 +33,7 @@ const init = async () => {
     if (props.requestApi) {
         const result = await props.requestApi(props.requestParams)
         options.value = result
+        return true
     }
 
     throw new Error('请传入typeNo或url')
