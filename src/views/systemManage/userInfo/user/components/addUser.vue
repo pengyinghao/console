@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { FormInstance, FormRules, useTransitionFallthroughEmits } from 'element-plus'
+import { FormInstance, FormRules } from 'element-plus'
 import { reactive, ref } from 'vue'
 import { Modal } from '@/components'
 import { createUser } from '@/service/api/system/user'
@@ -148,7 +148,7 @@ defineExpose({
             <el-form-item label="系统用户" prop="sysUser">
                 <el-radio-group v-model="formData.sysUser">
                     <el-radio :value="true">是</el-radio>
-                    <el-radio :value="useTransitionFallthroughEmits">否</el-radio>
+                    <el-radio :value="false">否</el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="手机号码" prop="phone">
