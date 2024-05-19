@@ -22,14 +22,12 @@ onMounted(() => setBreadCrumbData(route))
 <template>
     <el-breadcrumb separator="/">
         <template v-for="(item, index) in routes" :key="index">
-            <el-breadcrumb-item v-if="item.meta?.title" :to="{ path: item.path }">
+            <el-breadcrumb-item v-if="item.meta?.name" :to="{ path: item.path }">
                 <div class="h-16px flex items-center">
                     <Icon v-if="item.meta?.icon" :name="item.meta.icon" />
-                    <span class="ml-5px">{{ item.meta?.title }}</span>
+                    <span class="ml-5px">{{ item.meta?.name }}</span>
                 </div>
             </el-breadcrumb-item>
         </template>
     </el-breadcrumb>
 </template>
-, useRouteimport { ref, watch, onMounted } from 'vue';import { ref, watch, onMounted } from
-'vue';onMounted, , watch

@@ -4,7 +4,7 @@ import { RouteRecordRaw, useRoute, useRouter } from 'vue-router'
 import { ref, toRefs, watch } from 'vue'
 import { Icon } from '@/components'
 import contextMenu from './contextMenu.vue'
-import { useTabStore } from '@/store'
+import { useTabStore, useUserStore } from '@/store'
 import { useCompRef } from '@/composables/useCompRef'
 
 const route = useRoute()
@@ -16,7 +16,7 @@ const allRouters = router.getRoutes()
 
 /** 添加tab */
 const addTab = () => {
-    if (!route.name) return
+    if (!route.path) return
     const result = allRouters.find((item: RouteRecordRaw) => item.path === route.path)
     result && tabStore.add(result)
 }
@@ -39,9 +39,13 @@ onClickOutside(tabViewContainer, () => {
     refContextMenu.value?.hideContextMenu()
 })
 
+const userStore = useUserStore()
 /** 关闭当前选项卡 */
 const onCloseCurrTab = (tab: RouteRecordRaw) => {
     tabStore.remove(tab)
+    if (tabs.value.length === 0) {
+        return router.push(userStore.defaultRouterPath)
+    }
     const { path } = tabs.value[tabs.value.length - 1]
     router.push(path)
 }
@@ -60,7 +64,7 @@ const onCloseCurrTab = (tab: RouteRecordRaw) => {
                         refContextMenu?.openContextMenu(tab, tabViewContainer, $event)
                     "
                 >
-                    <span>{{ tab.meta?.title }}</span>
+                    <span>{{ tab.meta?.name }}</span>
                     <Icon
                         v-if="!fixedTabs.includes(tab.path)"
                         name="ep:close"

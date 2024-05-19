@@ -1,34 +1,34 @@
 <script lang="ts" setup>
-import { RouteRecordRaw } from 'vue-router'
 import { Icon } from '@/components'
+import { SystemMenu } from '@/service/api/system/menu'
 
 defineOptions({
     name: 'SubMenu'
 })
-defineProps<{ route: RouteRecordRaw }>()
+defineProps<{ menu: SystemMenu }>()
 </script>
 
 <template>
-    <el-sub-menu v-if="!route.meta?.hidden" :index="(route.meta?.id as string)">
+    <el-sub-menu v-if="!menu.hidden" :index="menu.id">
         <template #title>
-            <i v-if="route.meta?.icon" class="flex-center mr-5px">
-                <Icon :name="(route.meta.icon as string)"></Icon>
+            <i v-if="menu.icon" class="flex-center mr-5px">
+                <Icon :name="(menu.icon as string)"></Icon>
             </i>
-            <span>{{ route.meta?.title }}</span>
+            <span>{{ menu.name }}</span>
         </template>
-        <template v-for="sub in route.children" :key="sub.meta?.id">
+        <template v-for="sub in menu.children" :key="sub.id">
             <!-- 判断是否隐藏菜单 -->
-            <template v-if="!sub.meta?.hidden">
+            <template v-if="!sub.hidden">
                 <!-- 二级菜单 -->
                 <el-menu-item
                     v-if="sub.children && sub.children.length === 0"
-                    :index="sub.meta?.id"
+                    :index="sub.id"
                     class="aside-sub-menu"
                 >
-                    {{ sub.meta?.title }}
+                    {{ sub.name }}
                 </el-menu-item>
                 <!-- 三级菜单及n级菜单 -->
-                <sub-menu v-else :route="sub" />
+                <sub-menu v-else :menu="sub" />
             </template>
         </template>
     </el-sub-menu>

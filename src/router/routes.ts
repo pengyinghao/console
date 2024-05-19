@@ -12,7 +12,7 @@ export const routes: RouteRecordRaw[] = [
                 component: () =>
                     import('@/views/systemManage/userInfo/personInformation/personInformation.vue'),
                 meta: {
-                    title: '个人信息'
+                    name: '个人信息'
                 }
             }
         ]

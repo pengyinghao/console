@@ -1,5 +1,6 @@
 import { requestDelete, requestGet, requestPost, requestPut } from '@/service/request'
 import { PagingResponse } from '@/types/pagingResponse'
+import { CurrentMenu } from '../menu'
 
 /** 用户实体 */
 export interface User {
@@ -43,6 +44,13 @@ export type UpdateUserOption = Optional<
     'id'
 >
 
+export type UserDetail = Pick<User, 'id' | 'name' | 'account' | 'phone' | 'email' | 'avatar'>
+export type UserCurrent = {
+    menu: CurrentMenu
+    user: UserDetail
+    redirect: string
+}
+
 /** 获取用户分页信息 */
 export const fetchUserInfos = (params: Record<string, string>) => {
     return requestGet<PagingResponse<User>>('/system/user', {
@@ -84,4 +92,9 @@ export const updateUserFreeze = (id: string, freeze: boolean) => {
 /** 删除用户 */
 export const deleteUser = (id: number | string) => {
     return requestDelete(`/system/user/${id}`)
+}
+
+/** 获取当前用户信息、菜单、权限等 */
+export const fetchUserCurrent = () => {
+    return requestGet<UserCurrent>('/system/user/current')
 }

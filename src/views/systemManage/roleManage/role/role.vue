@@ -2,9 +2,14 @@
 import { ref } from 'vue'
 import { Select } from '@/components'
 import { fetchTreeMenu } from '@/service/api/system/menu'
+import { fetchUserCurrent } from '@/service/api/system/user'
 
 const value1 = ref('disabled')
 const value2 = ref(1)
+
+fetchUserCurrent().then((res) => {
+    console.log(res)
+})
 </script>
 <template>
     <div>

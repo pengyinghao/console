@@ -66,8 +66,8 @@ onBeforeMount(() => {
         <slot v-for="name in Object.keys(slots)" :name="name"></slot>
     </el-select>
 </template>
-<style lang="scss" scoped>
-:deep(.el-select__wrapper) {
+<style lang="scss">
+.el-select__wrapper {
     font-size: var(--el-font-size-base);
 }
 </style>

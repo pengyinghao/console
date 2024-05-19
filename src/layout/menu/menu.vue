@@ -6,6 +6,7 @@ import subMenu from './sub-menu.vue'
 import Logo from './logo.vue'
 import { useAppStore, useUserStore } from '@/store'
 import { useLayout } from '@/composables/useLayout'
+import { dataToTree } from '@/utils'
 
 const route = useRoute()
 const router = useRouter()
@@ -19,15 +20,21 @@ watchEffect(() => {
     }
 })
 
-const onSelect = (menuId: string) => {
-    const menu = userStore.originMenus.find((item) => `${item.id}` === menuId)
-    if (menu) {
-        const { openType, url, outPageUrl } = menu
-        if (openType === 0) {
-            router.push(url)
-        } else if (openType === 1) {
-            window.open(outPageUrl, '_black')
-        }
+/** 菜单信息 */
+const menus = dataToTree(userStore.originMenus, 'parentId')
+
+const onSelect = (menuId: number) => {
+    const menu = userStore.originMenus.find((item) => item.id === menuId)
+    if (!menu) return
+    if (!menu.parentId) return
+    if (!menu.url) return window.$message.error('菜单没有url地址')
+
+    const { openType, url } = menu
+    if (openType === 0) {
+        return router.push(url)
+    }
+    if (openType === 2) {
+        return window.open(url, '_black')
     }
 }
 </script>
@@ -36,21 +43,26 @@ const onSelect = (menuId: string) => {
         <logo />
         <el-scrollbar style="height: calc(100% - 56px)">
             <el-menu
-                :default-active="route.meta?.id"
+                :default-active="route.meta!.id"
                 :collapse="appStore.menuIsCollapse"
                 class="aside-menu"
                 @select="onSelect"
             >
-                <template v-for="(routeItem, index) in userStore.elementMenus" :key="index">
+                <template v-for="(routeItem, index) in menus" :key="index">
                     <el-menu-item
-                        v-if="routeItem.children?.length === 0 && !routeItem.meta?.hidden"
+                        v-if="routeItem.children?.length === 0 && !routeItem.hidden"
                         class="aside-sub-menu"
-                        :index="routeItem.meta?.id"
+                        :index="routeItem.id"
                     >
-                        <Icon :name="(routeItem.meta?.icon as string)" size="20" class="mr-5px" />
-                        <template #title>{{ routeItem.meta?.title }}</template>
+                        <Icon
+                            v-if="routeItem.icon"
+                            :name="routeItem.icon"
+                            size="20"
+                            class="mr-5px"
+                        />
+                        <template #title>{{ routeItem.name }}</template>
                     </el-menu-item>
-                    <sub-menu v-else :route="routeItem"></sub-menu>
+                    <sub-menu v-else :menu="routeItem"></sub-menu>
                 </template>
             </el-menu>
         </el-scrollbar>

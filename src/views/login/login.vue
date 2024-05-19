@@ -5,7 +5,6 @@ import { fetchCaptcha } from '@/service/api/common'
 import { login } from '@/service/api/auth'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/core/constant'
 import { Icon } from '@/components'
-import { useUserStore } from '@/store'
 interface FormData {
     /** 账号 */
     account: string
@@ -38,7 +37,6 @@ const passwordIsVisible = ref(false)
 const loading = ref(false)
 
 const router = useRouter()
-const userStore = useUserStore()
 /** 登录 */
 const onLogin = async () => {
     if (!formData.account) return window.$message.warning('请输入账号')
@@ -54,8 +52,7 @@ const onLogin = async () => {
         loading.value = false
     }
 
-    userStore.info.userName = '张三'
-    router.push({ path: '/dashboard' })
+    router.push({ path: '/' })
 }
 </script>
 <template>

@@ -3,6 +3,7 @@ import { LOGIN_PATH, ALLOW_LIST } from '@/core/config'
 import NProgress from '@/plugins/nprogress'
 import { useUserStore } from '@/store'
 import { clearPendingPool } from '@/service/request/baseRequest'
+import { ACCESS_TOKEN } from '@/core/constant'
 
 /** 创建路由守卫 */
 export function createRouterGuard(router: Router) {
@@ -11,20 +12,22 @@ export function createRouterGuard(router: Router) {
         const userStore = useUserStore()
         NProgress.start()
         if (ALLOW_LIST.includes(to.path)) {
-            next()
-        } else if (userStore.info.userName) {
+            return next()
+        }
+
+        if (localStorage.getItem(ACCESS_TOKEN)) {
             if (userStore.dynamicRoute.length === 0) {
+                await userStore.getUserCurrent()
                 const routes = await userStore.generateRoutes()
                 routes.forEach((r: RouteRecordRaw) => {
                     userStore.dynamicRoute.push(router.addRoute(r))
                 })
-                next({ ...to, replace: true })
-            } else {
-                next()
+                return next({ ...to, replace: true })
             }
-        } else {
-            next(LOGIN_PATH)
+            return next()
         }
+
+        next(LOGIN_PATH)
     })
 
     router.afterEach(() => {

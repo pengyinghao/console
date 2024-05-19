@@ -2,7 +2,7 @@
 import { CSSProperties, computed, ref, toRefs } from 'vue'
 import { RouteRecordRaw, useRoute, useRouter } from 'vue-router'
 import { Icon } from '@/components'
-import { useAppStore, useTabStore } from '@/store'
+import { useAppStore, useTabStore, useUserStore } from '@/store'
 defineOptions({
     name: 'ContextMenu'
 })
@@ -112,15 +112,23 @@ const closeRightTab = () => {
     }
 }
 
+const userStore = useUserStore()
 /** 关闭所有标签 */
 const closeTabAll = () => {
     tabStore.removeAllTabs()
+    if (tabs.value.length === 0) {
+        return router.push(userStore.defaultRouterPath)
+    }
     router.push(tabs.value[0].path)
 }
 
 /** 关闭当前标签 */
 const closeTabCurr = () => {
     tabStore.remove(selectTab.value as RouteRecordRaw)
+    if (tabs.value.length === 0) {
+        return router.push(userStore.defaultRouterPath)
+    }
+    return router.push(tabs.value[tabs.value.length - 1].path)
 }
 
 /** 刷新tab */

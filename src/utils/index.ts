@@ -65,25 +65,40 @@ export const dataToTree = <
 
     const map = new Map<T[K], T>()
 
-    // 将所有节点放入map中
+    // 将所有节点放入 map 中
     data.forEach((item) => {
         map.set(item[idField], { ...item, children: [] })
     })
 
     const roots: T[] = []
+    const parentIds = new Set<T[K]>()
 
     // 遍历数据，构建树结构
     data.forEach((item) => {
         const parentId = item[parentIdField]
-        const node = map.get(item[idField])!
+        const node = map.get(item[idField])
 
-        if (parentId !== undefined && parentId !== null) {
-            const parent = map.get(parentId)
-            if (parent && parent.children) {
-                parent.children.push(node)
+        if (node) {
+            if (parentId !== undefined && parentId !== null) {
+                const parent = map.get(parentId)
+                if (parent) {
+                    parent.children!.push(node)
+                    parentIds.add(parentId)
+                }
+            } else {
+                roots.push(node)
             }
-        } else {
-            roots.push(node)
+        }
+    })
+
+    // 查找是否有数据的 parentId 在树中没有找到对应的父节点
+    data.forEach((item) => {
+        const parentId = item[parentIdField]
+        if (parentId !== undefined && parentId !== null && !parentIds.has(parentId)) {
+            const obj = map.get(item[idField])
+            if (obj) {
+                roots.push(obj)
+            }
         }
     })
 

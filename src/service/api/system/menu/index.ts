@@ -31,6 +31,19 @@ export interface Menu {
 
 export type UpdateSystemMenuOption = Omit<Optional<Menu, 'id'>, 'createTime' | 'updateTime'>
 export type PartialMenu = Partial<Menu>
+export type SystemMenu = { children: SystemMenu[] } & Pick<
+    Menu,
+    | 'id'
+    | 'componentLink'
+    | 'hidden'
+    | 'icon'
+    | 'openType'
+    | 'params'
+    | 'parentId'
+    | 'sort'
+    | 'url'
+    | 'name'
+>
 
 /**  获取所有菜单(树形结构) */
 export const fetchMenuInfos = (params?: Record<string, any>) => {

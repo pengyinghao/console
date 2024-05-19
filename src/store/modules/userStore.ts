@@ -1,34 +1,26 @@
-import cloneDeep from 'lodash-es/cloneDeep'
 import { defineStore } from 'pinia'
 import { RouteRecordRaw } from 'vue-router'
 import { reactive, ref } from 'vue'
 import createRoute from '@/router/guard/generatorDynamicRouter'
-import { menuInfos } from '@/menus'
-
-interface UserInfo {
-    /** 用户名称 */
-    userName: string
-    /** 头像地址 */
-    avatar: string
-    /** 用户名 */
-    account: string
-}
+import { UserDetail, fetchUserCurrent } from '@/service/api/system/user'
+import { SystemMenu } from '@/service/api/system/menu'
 
 export const useUserStore = defineStore(
     'user',
     () => {
-        const info = reactive<UserInfo>({
-            account: 'account',
-            avatar: 'https://picsum.photos/200',
-            userName: ''
+        const info = reactive<UserDetail>({
+            account: '',
+            name: '',
+            id: '',
+            phone: ''
         })
 
+        const defaultRouterPath = ref('')
+
+        /** 返回的原有菜单 */
+        const originMenus = ref<SystemMenu[]>([])
         /** 处理果的路由信息 */
         const routes = ref<RouteRecordRaw[]>([])
-        /** 默认系统菜单 */
-        const originMenus = ref<SystemMenu[]>([])
-        /** element 菜单 */
-        const elementMenus = ref<RouteRecordRaw[]>([])
         /** 动态路由 */
         const dynamicRoute = ref<(() => void)[]>([])
 
@@ -36,25 +28,21 @@ export const useUserStore = defineStore(
         const loginOut = () => {
             // 通过动态路由移出 路由信息
             dynamicRoute.value.forEach((fn) => fn())
-            // this.$reset()
         }
 
-        /** 处理element菜单  */
-        const markElementRoute = (routes: RouteRecordRaw[]) => {
-            const newRouter = cloneDeep(routes) // 将单级路由解析出来，用到element 菜单中
-            elementMenus.value = newRouter.map((item) => {
-                if (item.meta?.singleLevel && item.children && item.children.length > 0) {
-                    return item.children[0]
-                }
-                return item
-            })
+        const getUserCurrent = async () => {
+            const res = await fetchUserCurrent()
+            Object.assign(info, res.user)
+            console.log(res.user, 123)
+            originMenus.value = res.menu
+            defaultRouterPath.value = res.redirect
+            return res
         }
+
         /** 创建路由 */
         const generateRoutes = () => {
-            originMenus.value = cloneDeep(menuInfos)
-            const routesRes = createRoute(menuInfos)
+            const routesRes = createRoute(originMenus.value)
             routes.value = routesRes
-            markElementRoute(routesRes)
             return Promise.resolve(routesRes)
         }
 
@@ -62,10 +50,11 @@ export const useUserStore = defineStore(
             info,
             routes,
             originMenus,
-            elementMenus,
             dynamicRoute,
             loginOut,
-            generateRoutes
+            generateRoutes,
+            getUserCurrent,
+            defaultRouterPath
         }
     },
     {
