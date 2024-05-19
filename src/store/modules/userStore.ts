@@ -33,7 +33,6 @@ export const useUserStore = defineStore(
         const getUserCurrent = async () => {
             const res = await fetchUserCurrent()
             Object.assign(info, res.user)
-            console.log(res.user, 123)
             originMenus.value = res.menu
             defaultRouterPath.value = res.redirect
             return res

@@ -21,7 +21,10 @@ watchEffect(() => {
 })
 
 /** 菜单信息 */
-const menus = dataToTree(userStore.originMenus, 'parentId')
+const menus = dataToTree(
+    userStore.originMenus.filter((item) => !item.hidden),
+    'parentId'
+)
 
 const onSelect = (menuId: number) => {
     const menu = userStore.originMenus.find((item) => item.id === menuId)
