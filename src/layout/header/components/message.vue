@@ -18,7 +18,7 @@ for (let i = 1; i <= 20; i++) {
         placement="bottom-start"
         :style="{ width: messageCounter > 0 ? '55px' : '40px' }"
     >
-        <div>
+        <div :style="{ width: messageCounter > 0 ? '55px' : '40px' }" class="h-full flex-y-center">
             <el-badge :value="messageCounter">
                 <icon name="ep:bell" size="20" class="pt-2px" />
             </el-badge>

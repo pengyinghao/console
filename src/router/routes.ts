@@ -7,10 +7,9 @@ export const routes: RouteRecordRaw[] = [
         component: () => import('@/layout/index.vue'),
         children: [
             {
-                name: 'PersonInformation',
-                path: '/personInformation',
-                component: () =>
-                    import('@/views/systemManage/userInfo/personInformation/personInformation.vue'),
+                name: 'Info',
+                path: '/info',
+                component: () => import('@/views/systemManage/userInfo/info/info.vue'),
                 meta: {
                     name: '个人信息'
                 }
