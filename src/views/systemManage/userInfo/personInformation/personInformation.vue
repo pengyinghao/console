@@ -17,13 +17,21 @@
         </Item>
         <!-- 手机绑定 -->
         <Item icon="ep:iphone" title="手机绑定">
-            <span>你已经绑定了手机：132****1253</span>
-            <span class="ml-10px">您的手机为安全手机，可以找回密码</span>
+            你已经绑定了手机：{{ info.phone }},您的手机为安全手机，可以找回密码
         </Item>
         <!-- 绑定邮箱 -->
-        <Item icon="ic:outline-email" title="绑定邮箱">
-            <span>你已经绑定了邮箱，181*******@qq.com</span>
-            <span class="ml-10px">将方便您获取系统消息、重置密码等</span>
+        <Item
+            icon="ic:outline-email"
+            title="绑定邮箱"
+            :btn-text="info.email ? '修改' : '绑定'"
+            :btn-icon="info.email ? 'ep:edit' : 'ep:plus'"
+        >
+            <template v-if="info.email">
+                您已经绑定了邮箱，{{ info.email }}，将方便您获取系统消息、重置密码等
+            </template>
+            <template v-else>
+                您未绑定邮箱，如需要绑定，请单击绑定,将方便您获取系统消息、重置密码等
+            </template>
         </Item>
     </PageContainer>
 </template>
