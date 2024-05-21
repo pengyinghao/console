@@ -1,25 +1,19 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { Select } from '@/components'
-import { fetchTreeMenu } from '@/service/api/system/menu'
-import { fetchUserCurrent } from '@/service/api/system/user'
+import { UploadRequestOptions } from 'element-plus'
+import { upload } from '@/service/api/upload'
 
-const value1 = ref('disabled')
-const value2 = ref(1)
-
-fetchUserCurrent().then((res) => {
-    console.log(res)
-})
+const handleCustomRequest = (options: UploadRequestOptions) => {
+    upload(options.file).then((res) => {
+        console.log(res)
+    })
+}
 </script>
 <template>
-    <div>
-        <div>角色管理</div>
-        <Select v-model="value1" type-no="001" class="w-200px"></Select>
-        <Select
-            v-model="value2"
-            :request-api="fetchTreeMenu"
-            display-label="name"
-            display-value="id"
-        ></Select>
-    </div>
+    <el-upload class="upload-demo" drag action="" multiple :http-request="handleCustomRequest">
+        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+        <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+        <template #tip>
+            <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
+        </template>
+    </el-upload>
 </template>
