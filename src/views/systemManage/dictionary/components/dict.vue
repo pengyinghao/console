@@ -13,6 +13,7 @@ import DictEdit from './dictEdit.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
 import { useBusinessStore } from '@/store'
+import { StateEnum } from '@/core/enums/stateEnum'
 const queryParams = reactive<{ typeId?: number; name?: string }>({
     typeId: undefined,
     name: undefined
@@ -52,12 +53,16 @@ const handleDeleteDict = async (row: Dict) => {
 }
 
 const handleUpdateDictState = async ({ state, id }: Dict) => {
-    await window.$messageBox.confirm(`确定要${state === 0 ? '启用' : '禁用'}该用户吗?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-    })
-    await updateDictState(id, state === 0 ? 1 : 0)
+    await window.$messageBox.confirm(
+        `确定要${state === StateEnum.DISABLED ? '启用' : '禁用'}该用户吗?`,
+        '提示',
+        {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+        }
+    )
+    await updateDictState(id, state === StateEnum.DISABLED ? StateEnum.ENABLE : StateEnum.DISABLED)
     handleQuery()
 }
 

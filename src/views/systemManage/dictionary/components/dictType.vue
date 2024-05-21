@@ -11,6 +11,7 @@ import DictTypeEdit from './dictTypeEdit.vue'
 import { useCompRef } from '@/composables/useCompRef'
 import { setDefaultValue } from '@/utils'
 import { useBusinessStore } from '@/store'
+import { StateEnum } from '@/core/enums/stateEnum'
 
 const reload = ref(false)
 const queryParams = reactive({
@@ -49,12 +50,19 @@ const handleDeleteBtnClick = async (row: DictType) => {
 }
 
 const handleUpdateUserState = async ({ state, id }: DictType) => {
-    await window.$messageBox.confirm(`确定要${state === 0 ? '启用' : '禁用'}该用户吗?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-    })
-    await updateDictTypeState(id, state === 0 ? 1 : 0)
+    await window.$messageBox.confirm(
+        `确定要${state === StateEnum.DISABLED ? '启用' : '禁用'}该用户吗?`,
+        '提示',
+        {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+        }
+    )
+    await updateDictTypeState(
+        id,
+        state === StateEnum.ENABLE ? StateEnum.DISABLED : StateEnum.DISABLED
+    )
     handleQuery()
 }
 

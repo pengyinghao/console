@@ -1,13 +1,14 @@
 import { requestDelete, requestGet, requestPost, requestPut } from '@/service/request'
 import { PagingResponse } from '@/types/pagingResponse'
-import { CurrentMenu } from '../menu'
+import { SystemMenu } from '../menu'
+import { StateEnum } from '@/core/enums/stateEnum'
 
 /** 用户实体 */
 export interface User {
     /** id */
     id: string
     /** 状态 */
-    state: 0 | 1
+    state: StateEnum
     /** 编号 */
     no: string
     /** 姓名 */
@@ -46,7 +47,7 @@ export type UpdateUserOption = Optional<
 
 export type UserDetail = Pick<User, 'id' | 'name' | 'account' | 'phone' | 'email' | 'avatar'>
 export type UserCurrent = {
-    menu: CurrentMenu
+    menu: SystemMenu[]
     user: UserDetail
     redirect: string
 }
@@ -59,7 +60,7 @@ export const fetchUserInfos = (params: Record<string, string>) => {
 }
 
 /** 获取用户详情 */
-export const fetchUserDetail = (id: number | string) => {
+export const fetchUserDetail = (id: number) => {
     return requestGet(`/system/user/${id}`)
 }
 
@@ -74,7 +75,7 @@ export const updateUser = (formData: UpdateUserOption) => {
 }
 
 /** 更新用户状态 */
-export const updateUserState = (id: string, state: 0 | 1) => {
+export const updateUserState = (id: string, state: StateEnum) => {
     return requestPut(`/system/user/state`, {
         id,
         state
@@ -90,7 +91,7 @@ export const updateUserFreeze = (id: string, freeze: boolean) => {
 }
 
 /** 删除用户 */
-export const deleteUser = (id: number | string) => {
+export const deleteUser = (id: number) => {
     return requestDelete(`/system/user/${id}`)
 }
 

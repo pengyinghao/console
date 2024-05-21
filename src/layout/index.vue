@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { CSSProperties, computed } from 'vue'
-import { useAppStore, useTabStore, useUserStore } from '@/store'
+import { useAppStore, useTabStore } from '@/store'
 import Header from './header/header.vue'
 import Menu from './menu/menu.vue'
 import Tab from './tab/tab.vue'

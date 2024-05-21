@@ -9,7 +9,7 @@ defineProps<{ menu: SystemMenu }>()
 </script>
 
 <template>
-    <el-sub-menu v-if="!menu.hidden" :index="menu.id">
+    <el-sub-menu v-if="!menu.hidden" :index="`${menu.id}`">
         <template #title>
             <i v-if="menu.icon" class="flex-center mr-5px">
                 <Icon :name="(menu.icon as string)"></Icon>
@@ -22,7 +22,7 @@ defineProps<{ menu: SystemMenu }>()
                 <!-- 二级菜单 -->
                 <el-menu-item
                     v-if="sub.children && sub.children.length === 0"
-                    :index="sub.id"
+                    :index="`${sub.id}`"
                     class="aside-sub-menu"
                 >
                     {{ sub.name }}

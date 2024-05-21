@@ -1,3 +1,4 @@
+import { StateEnum } from '@/core/enums/stateEnum'
 import { requestDelete, requestGet, requestPost, requestPut } from '@/service/request'
 
 export interface Dict {
@@ -5,7 +6,7 @@ export interface Dict {
     /** 字典名称 */
     name: string
     /** 状态(0:禁用，1:启用) */
-    state: number
+    state: StateEnum
     /** 字典值 */
     value: string
     /** 显示顺序 */
@@ -37,7 +38,7 @@ export const updateDict = (option: UpdateDictOption) => {
 }
 
 /** 修改字典状态 */
-export const updateDictState = (id: number, state: number) => {
+export const updateDictState = (id: number, state: StateEnum) => {
     return requestPut('/system/dict/state', {
         id,
         state
