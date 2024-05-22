@@ -9,6 +9,7 @@ import {
     updateParam,
     Param
 } from '@/service/api/system/param'
+import { ruleHelper } from '@/utils/ruleHelper'
 
 const emit = defineEmits<{
     close: [refreshData: boolean]
@@ -24,10 +25,32 @@ const formData = reactive<UpdateParam>({
     remark: undefined
 })
 
+const { unable_contain_special, only_letter_dot } = ruleHelper
 const rules = reactive<FormRules<Param>>({
-    name: [{ required: true, message: '请输入参数名称', trigger: 'blur' }],
-    label: [{ required: true, message: '请输入参数键', trigger: 'blur' }],
-    value: [{ required: true, message: '请输入参数值', trigger: 'blur' }]
+    name: [
+        { required: true, message: '请输入参数名称', trigger: 'blur' },
+        {
+            type: 'string',
+            pattern: unable_contain_special.reg,
+            message: `参数名称${unable_contain_special.message}`
+        }
+    ],
+    label: [
+        { required: true, message: '请输入参数键', trigger: 'blur' },
+        {
+            type: 'string',
+            pattern: only_letter_dot.reg,
+            message: `参数键${only_letter_dot.message}`
+        }
+    ],
+    value: [{ required: true, message: '请输入参数值', trigger: 'blur' }],
+    remark: [
+        {
+            type: 'string',
+            pattern: unable_contain_special.reg,
+            message: `备注${unable_contain_special.message}`
+        }
+    ]
 })
 
 const visible = ref(false)

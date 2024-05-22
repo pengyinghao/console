@@ -87,7 +87,6 @@ const columns: TableColumn<Param>[] = [
             :columns="columns"
             :request-api="fetchParamInfos"
             :request-params="queryParams"
-            :load="false"
         >
             <template #header>
                 <el-button type="primary" @click="handleEditParam()"> 新增 </el-button>
