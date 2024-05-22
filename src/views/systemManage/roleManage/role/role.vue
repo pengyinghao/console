@@ -1,43 +1,90 @@
-<script lang="ts" setup>
-import { UploadRequestOptions, UploadUserFile } from 'element-plus'
-import { ref } from 'vue'
-import { upload, uploadMultiple } from '@/service/api/upload'
+<script setup lang="tsx">
+import { reactive, ref } from 'vue'
+import { Table, TableColumn, PageContainer } from '@/components'
+import RoleEdit from './components/roleEdit.vue'
+import { setDefaultValue } from '@/utils'
+import { useCompRef } from '@/composables/useCompRef'
+import { fetchRoleInfos, Role, deleteRole } from '@/service/api/system/role'
 
-const handleCustomRequest = (options: UploadRequestOptions) => {
-    upload(options.file).then((res) => {
-        console.log(res)
+const queryParams = reactive<{ name?: string }>({
+    name: undefined
+})
+
+const reload = ref(false)
+const handleQuery = () => {
+    reload.value = true
+}
+
+const refRoleEdit = useCompRef(RoleEdit)
+const handleEditRole = (id?: number) => {
+    refRoleEdit.value?.showModal(id)
+}
+const handleModalClose = (refreshData: boolean) => {
+    refreshData && handleQuery()
+}
+
+const handleDeleteRole = async (row: Role) => {
+    await window.$messageBox.confirm('确定要删除该角色吗', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
     })
+    await deleteRole(row.id)
+    handleQuery()
 }
 
-const fileList = ref<UploadUserFile[]>([])
-const handleCustomRequest1 = () => {
-    console.log('custom request')
-}
-const handleUpload = () => {
-    uploadMultiple(fileList.value.map((item) => item.raw!))
-}
+const columns: TableColumn<Role>[] = [
+    { label: '角色名称', prop: 'name' },
+    {
+        label: '备注',
+        prop: 'remark',
+        showOverflowTooltip: true,
+        render: ({ row }) => setDefaultValue(row.remark)
+    },
+    { label: '创建时间', prop: 'createTime' },
+    { label: '修改时间', prop: 'updateTime' },
+    {
+        label: '操作',
+        prop: 'operation',
+        width: 200,
+        render: ({ row }) => {
+            return (
+                <div>
+                    <a onclick={() => handleEditRole(row.id)}>修改</a>
+                    <el-divider direction="vertical" />
+                    <a onclick={() => handleDeleteRole(row)}>删除</a>
+                </div>
+            )
+        }
+    }
+]
 </script>
 <template>
-    <div>
-        <el-upload class="upload-demo" drag action="" multiple :http-request="handleCustomRequest">
-            <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-            <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
-            <template #tip>
-                <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
-            </template>
-        </el-upload>
-
-        <el-upload
-            v-model:file-list="fileList"
-            class="upload-demo"
-            action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-            :http-request="handleCustomRequest1"
+    <PageContainer>
+        <template #header>
+            <el-form inline class="search-form" label-width="75px" @submit.prevent>
+                <el-form-item label="角色名称：">
+                    <el-input v-model="queryParams.name" clearable @change="handleQuery" />
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click.stop="handleQuery"> 查询 </el-button>
+                    <el-button> 重置 </el-button>
+                </el-form-item>
+            </el-form>
+        </template>
+        <Table
+            v-model:reload="reload"
+            :columns="columns"
+            :request-api="fetchRoleInfos"
+            :request-params="queryParams"
+            :pagination="false"
         >
-            <el-button type="primary">Click to upload</el-button>
-            <template #tip>
-                <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
+            <template #header>
+                <el-button type="primary" @click="handleEditRole()"> 新增 </el-button>
             </template>
-        </el-upload>
-        <el-button @click="handleUpload">上传</el-button>
-    </div>
+        </Table>
+        <role-edit ref="refRoleEdit" @close="handleModalClose"></role-edit>
+    </PageContainer>
 </template>
+
+<style scoped></style>
