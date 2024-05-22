@@ -4,6 +4,7 @@ import { reactive, ref } from 'vue'
 import createRoute from '@/router/guard/generatorDynamicRouter'
 import { UserDetail, fetchUserCurrent } from '@/service/api/system/user'
 import { SystemMenu } from '@/service/api/system/menu'
+import defaultAvatar from '@/assets/images/default-avatar.png'
 
 export const useUserStore = defineStore(
     'user',
@@ -15,6 +16,13 @@ export const useUserStore = defineStore(
             phone: ''
         })
 
+        const setAvatar = (url: string) => {
+            if (url) {
+                info.avatar = import.meta.env.DEV ? import.meta.env.VITE_BASE_URL + url : url
+            } else {
+                info.avatar = defaultAvatar
+            }
+        }
         const defaultRouterPath = ref('')
 
         /** 返回的原有菜单 */
@@ -33,6 +41,8 @@ export const useUserStore = defineStore(
         const getUserCurrent = async () => {
             const res = await fetchUserCurrent()
             Object.assign(info, res.user)
+            setAvatar(res.user.avatar!)
+
             originMenus.value = res.menu
             defaultRouterPath.value = res.redirect
             return res
@@ -47,6 +57,7 @@ export const useUserStore = defineStore(
 
         return {
             info,
+            setAvatar,
             routes,
             originMenus,
             dynamicRoute,

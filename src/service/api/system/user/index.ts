@@ -99,3 +99,8 @@ export const deleteUser = (id: number) => {
 export const fetchUserCurrent = () => {
     return requestGet<UserCurrent>('/system/user/current')
 }
+
+/** 修改用户头像 */
+export const uploadUserAvatar = (url: string) => {
+    return requestPut(`/system/user/avatar?url=${url}`)
+}

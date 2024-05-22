@@ -18,13 +18,12 @@ export interface Upload {
 }
 
 /** 文件上传 */
-export const upload = (file: File) => {
-    const formData = new FormData()
-    formData.append('file', file)
-    return requestPost('/upload/upload', formData, {
+export const upload = (formData: FormData) => {
+    return requestPost<string>('/upload', formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
-        }
+        },
+        handleMessage: false
     })
 }
 

@@ -1,7 +1,12 @@
 <template>
     <PageContainer>
         <div class="flex-y-center">
-            <el-avatar :size="60" :src="info.avatar" />
+            <el-avatar
+                :size="60"
+                :src="info.avatar"
+                class="cursor-pointer"
+                @click="handleUpdateAvatar"
+            />
             <div class="ml-25px">
                 <div>用户名：{{ info.account }}</div>
                 <div class="mt-10px flex-y-center">
@@ -33,6 +38,7 @@
                 您未绑定邮箱，如需要绑定，请单击绑定,将方便您获取系统消息、重置密码等
             </template>
         </Item>
+        <update-avatar ref="refUpdateAvatar"></update-avatar>
     </PageContainer>
 </template>
 <script lang="ts" setup>
@@ -41,7 +47,14 @@ import Icon from '@/components/Icon/Icon.vue'
 import PageContainer from '@/components/common/PageContainer.vue'
 import { useUserStore } from '@/store'
 import Item from './item.vue'
-defineOptions({ name: 'PersonInformation' })
+import UpdateAvatar from './updateAvatar.vue'
+import { useCompRef } from '@/composables/useCompRef'
+
 const userStore = useUserStore()
 const { info } = toRefs(userStore)
+
+const refUpdateAvatar = useCompRef(UpdateAvatar)
+const handleUpdateAvatar = () => {
+    refUpdateAvatar.value?.showModal()
+}
 </script>
