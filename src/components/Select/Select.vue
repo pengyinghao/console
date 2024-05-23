@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onBeforeMount, ref, toRefs, useSlots, watchEffect } from 'vue'
+import { onBeforeMount, ref, useSlots, watchEffect } from 'vue'
 import { SelectProps } from './select-type'
 import { fetchDictTypeNo } from '@/service/api/system/dictionary'
 
@@ -19,7 +19,7 @@ const options = ref<any[]>([])
 const init = async () => {
     // 当有静态数据时，先加载静态数据
     if (props.data && props.data.length > 0) {
-        options.value = toRefs(props.data)
+        options.value = props.data
         return true
     }
 
@@ -58,7 +58,6 @@ onBeforeMount(() => {
                 :label="item[displayLabel]"
                 :value="item[displayValue]"
             >
-                {{ item[displayLabel] }}
             </el-option>
         </template>
         <!-- 通过后台返回数据，自定义渲染 -->
