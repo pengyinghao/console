@@ -30,6 +30,10 @@ export interface TableColumn<T = any>
     fixed?: FixedOption
     /** 隐藏列 */
     hide?: boolean
+    /** 日期格式化 */
+    dateFormat?: boolean
+    /** 日期格式化格式 */
+    format?: string
     /** 自定义header */
     renderHeader?: (scope: TableHeaderScope<T>) => VNode | string
     /** 自定义内容 */

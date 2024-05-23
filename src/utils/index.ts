@@ -1,6 +1,14 @@
+import dayjs from 'dayjs'
+
 /** 是否暗黑模式 */
 export function isDark() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches
+}
+
+/** 日期格式化 */
+export function dateFormat(date: Date | string | number, format = 'YYYY-MM-DD HH:mm:ss') {
+    if (!date) return date
+    return dayjs(date).format(format)
 }
 
 /**
@@ -11,6 +19,16 @@ export function isDark() {
  */
 export function setDefaultValue(value?: string | number, defaultValue = '--') {
     return value || defaultValue
+}
+
+/** 判断是否json格式 */
+export function isJSON(str: string) {
+    try {
+        const obj = JSON.parse(str)
+        return typeof obj === 'object' && obj
+    } catch (e) {
+        return false
+    }
 }
 
 /**
