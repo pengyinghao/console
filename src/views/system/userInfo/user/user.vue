@@ -37,7 +37,7 @@ const handleAddUser = () => {
 }
 
 const refEditUer = useCompRef(EditUser)
-const handleEditUser = (id: string) => {
+const handleEditUser = (id: number) => {
     refEditUer.value?.showModal(id)
 }
 
@@ -46,6 +46,7 @@ const handleClose = (refreshData: boolean) => {
 }
 
 const handleDeleteBtnClick = async (row: User) => {
+    if (row.sysUser === 0) return
     await window.$messageBox.confirm('确定要删除该用户吗?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -68,7 +69,7 @@ const handleUpdateUserState = async ({ id, state }: User) => {
 
 /** 更新用户冻结状态 */
 const handleUpdateUserFreezeState = async ({ id, freeze }: User) => {
-    await window.$messageBox.confirm(`确定要${freeze ? '解冻' : '冻结'}该用户吗?`, '提示', {
+    await window.$messageBox.confirm(`确定要${freeze === 0 ? '解冻' : '冻结'}该用户吗?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -106,17 +107,18 @@ const columns: TableColumn<User>[] = [
             )
         }
     },
+    { label: '姓名', prop: 'name' },
+    { label: '角色', prop: 'roleName' },
     {
         label: '系统用户',
         prop: 'sysUser',
-        render: ({ row }) => (row.freeze ? '是' : '否')
+        render: ({ row }) => (row.sysUser === 0 ? '是' : '否')
     },
     {
         label: '冻结',
         prop: 'freeze',
         render: ({ row }) => (row.freeze ? '是' : '否')
     },
-    { label: '姓名', prop: 'name' },
     { label: '手机', prop: 'phone' },
     {
         label: '邮箱',
@@ -125,8 +127,8 @@ const columns: TableColumn<User>[] = [
         showOverflowTooltip: true,
         render: ({ row }) => setDefaultValue(row.email)
     },
-    { label: '创建时间', prop: 'createTime', width: 160 },
-    { label: '修改时间', prop: 'updateTime', width: 160 },
+    { label: '创建时间', prop: 'createTime', dateFormat: true, width: 160 },
+    { label: '更新时间', prop: 'updateTime', dateFormat: true, width: 160 },
     {
         label: '操作',
         prop: 'operation',
@@ -136,11 +138,20 @@ const columns: TableColumn<User>[] = [
                 <div class="flex-y-center">
                     <a onclick={() => handleEditUser(row.id)}>修改</a>
                     <el-divider direction="vertical" />
-                    <a onclick={() => handleDeleteBtnClick(row)}>删除</a>
-                    <el-divider direction="vertical" />
-                    <MoreButton
-                        buttons={moreButtons(row)}
-                        onCommand={(command) => handleCommand(command, row)}></MoreButton>
+                    <a disabled={row.sysUser === 0} onclick={() => handleDeleteBtnClick(row)}>
+                        删除
+                    </a>
+                    {row.sysUser === 1 ? (
+                        <>
+                            {' '}
+                            <el-divider direction="vertical" />
+                            <MoreButton
+                                buttons={moreButtons(row)}
+                                onCommand={(command) => handleCommand(command, row)}></MoreButton>
+                        </>
+                    ) : (
+                        ''
+                    )}
                 </div>
             )
         }
@@ -152,10 +163,10 @@ const columns: TableColumn<User>[] = [
     <PageContainer>
         <template #header>
             <el-form inline class="search-form" label-width="75px" @submit.prevent>
-                <el-form-item label="姓名：">
+                <el-form-item label="姓名">
                     <el-input v-model="queryParams.name" clearable @change="handleQuery" />
                 </el-form-item>
-                <el-form-item label="账号：">
+                <el-form-item label="账号">
                     <el-input v-model="queryParams.account" clearable @change="handleQuery" />
                 </el-form-item>
                 <el-form-item>

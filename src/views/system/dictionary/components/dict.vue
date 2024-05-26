@@ -118,7 +118,7 @@ handleQuery()
 </script>
 <template>
     <el-form inline class="search-form" label-width="75px" @submit.prevent>
-        <el-form-item label="字典类型：">
+        <el-form-item label="字典类型">
             <el-select
                 v-model="queryParams.typeId"
                 clearable
@@ -134,7 +134,7 @@ handleQuery()
                 />
             </el-select>
         </el-form-item>
-        <el-form-item label="字典名称：">
+        <el-form-item label="字典名称">
             <el-input v-model="queryParams.name" clearable @change="handleQuery" />
         </el-form-item>
         <el-form-item>

@@ -32,6 +32,7 @@
         "echarts",
         "iconify",
         "nprogress",
-        "pinia"
+        "pinia",
+        "vueuse"
     ]
 }

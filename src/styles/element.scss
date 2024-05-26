@@ -15,6 +15,10 @@
     --font-size: var(--el-font-size-base) !important;
 }
 
+.el-form-item__label::after {
+    content: '：';
+}
+
 .el-checkbox {
     --el-checkbox-font-size: var(--el-font-size-base) !important;
 }
@@ -44,6 +48,17 @@
 .el-tabs__nav-wrap:after {
     height: 1px;
 }
+
+.el-drawer__header {
+    @apply mb-10px;
+}
+.el-drawer__body {
+    @apply pt-10px;
+}
 a {
     @apply cursor-pointer c-primary;
+    &[disabled='true'] {
+        @apply cursor-not-allowed;
+        color: var(--el-color-info-light-5);
+    }
 }

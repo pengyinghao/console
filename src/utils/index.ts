@@ -135,3 +135,12 @@ export const formatSize = (sizeInBytes: number): string => {
     }
     return `${size.toFixed(2)} ${units[unitIndex]}`
 }
+
+export const isMatchDynamicRoute = (url: string, pattern: string) => {
+    // eslint-disable-next-line no-useless-escape
+    const escapedPattern = pattern.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1')
+    // Replace :param with a regex pattern to match any non-slash character
+    // eslint-disable-next-line no-useless-escape
+    const regexPattern = new RegExp(`^${escapedPattern.replace(/\/:([^\/]+)/g, '/([^/]+)')}$`)
+    return regexPattern.test(url)
+}

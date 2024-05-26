@@ -19,11 +19,16 @@ const refForm = ref<FormInstance>()
 const formData = reactive<UpdateRoleOption>({
     id: undefined,
     name: '',
+    code: '',
     remark: undefined
 })
 
-const { unable_contain_special } = ruleHelper
+const { unable_contain_special, only_eng_udl } = ruleHelper
 const rules = reactive<FormRules>({
+    code: [
+        { required: true, message: '请输入角色标识', trigger: 'blur' },
+        { pattern: only_eng_udl.reg, message: `角色标识${only_eng_udl.message}` }
+    ],
     name: [
         { required: true, message: '请输入角色名称', trigger: 'blur' },
         {
@@ -36,7 +41,7 @@ const rules = reactive<FormRules>({
         {
             type: 'string',
             pattern: unable_contain_special.reg,
-            message: `备注${unable_contain_special.message}`
+            message: `角色描述${unable_contain_special.message}`
         }
     ]
 })
@@ -90,27 +95,24 @@ defineExpose({
 <template>
     <Modal
         v-model="visible"
-        :title="formData.id ? '修改角色信息' : '新增角色信息'"
+        :title="formData.id ? '修改角色' : '创建角色'"
         width="500"
         :before-close="() => close()"
     >
-        <el-form
-            ref="refForm"
-            label-suffix="："
-            :model="formData"
-            :rules="rules"
-            label-width="85px"
-        >
+        <el-form ref="refForm" :model="formData" :rules="rules" label-width="85px">
+            <el-form-item label="角色标识" prop="50">
+                <el-input v-model="formData.code" maxlength="50" placeholder="请输入角色标识" />
+            </el-form-item>
             <el-form-item label="角色名称" prop="name">
                 <el-input v-model="formData.name" maxlength="20" placeholder="请输入角色名称" />
             </el-form-item>
-            <el-form-item label="备注" prop="remark">
+            <el-form-item label="角色描述" prop="remark">
                 <el-input
                     v-model="formData.remark"
                     :rows="2"
                     type="textarea"
                     maxlength="200"
-                    placeholder="请输入备注"
+                    placeholder="请输入角色描述"
                 />
             </el-form-item>
         </el-form>

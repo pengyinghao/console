@@ -3,7 +3,7 @@ import { RouteRecordRaw } from 'vue-router'
 import { reactive, ref } from 'vue'
 import createRoute from '@/router/guard/generatorDynamicRouter'
 import { UserDetail, fetchUserCurrent } from '@/service/api/system/user'
-import { SystemMenu } from '@/service/api/system/menu'
+import { Buttons, SystemMenu } from '@/service/api/system/menu'
 import defaultAvatar from '@/assets/images/default-avatar.png'
 
 export const useUserStore = defineStore(
@@ -12,7 +12,7 @@ export const useUserStore = defineStore(
         const info = reactive<UserDetail>({
             account: '',
             name: '',
-            id: '',
+            id: 0,
             phone: ''
         })
 
@@ -27,6 +27,8 @@ export const useUserStore = defineStore(
 
         /** 返回的原有菜单 */
         const originMenus = ref<SystemMenu[]>([])
+        /** 有权限的菜单集合 */
+        const buttons = ref<Buttons[]>([])
         /** 处理果的路由信息 */
         const routes = ref<RouteRecordRaw[]>([])
         /** 动态路由 */
@@ -44,6 +46,7 @@ export const useUserStore = defineStore(
             setAvatar(res.user.avatar!)
 
             originMenus.value = res.menu
+            buttons.value = res.btn
             defaultRouterPath.value = res.redirect
             return res
         }
@@ -60,6 +63,7 @@ export const useUserStore = defineStore(
             setAvatar,
             routes,
             originMenus,
+            buttons,
             dynamicRoute,
             loginOut,
             generateRoutes,

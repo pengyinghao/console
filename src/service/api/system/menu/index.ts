@@ -8,8 +8,12 @@ export interface Menu {
     state: StateEnum
     /** 菜单名称 */
     name: string
+    /** 功能代码 */
+    code?: string
     /** 菜单图标 */
     icon?: string
+    /** 菜单类型(0：目录，1：菜单，2：按钮) */
+    type: number
     /** 打开方式 (0：路由，1：内嵌，2：链接) */
     openType: MenuOpenTypeEnum
     /** 显示顺序 */
@@ -17,11 +21,11 @@ export interface Menu {
     /** 上级菜单id */
     parentId?: number
     /** 组件地址 */
-    componentLink?: string
+    component?: string
     /** 页面地址 */
     url?: string
-    /** 是否隐藏菜单 */
-    hidden: boolean
+    /** 显示状态(0：显示，1：隐藏) */
+    display: number
     /** 路由参数 */
     params?: string
     /** 创建时间 */
@@ -36,8 +40,8 @@ export type PartialMenu = Partial<Menu>
 export type SystemMenu = { children: SystemMenu[] } & Pick<
     Menu,
     | 'id'
-    | 'componentLink'
-    | 'hidden'
+    | 'component'
+    | 'display'
     | 'icon'
     | 'openType'
     | 'params'
@@ -45,7 +49,10 @@ export type SystemMenu = { children: SystemMenu[] } & Pick<
     | 'sort'
     | 'url'
     | 'name'
+    | 'type'
 >
+export type Buttons = { menuId: number } & Pick<Menu, 'id' | 'code' | 'icon'>
+export type DefaultNavigate = Pick<Menu, 'name' | 'url'>
 
 /**  获取所有菜单(树形结构) */
 export const fetchMenuInfos = (params?: Record<string, any>) => {

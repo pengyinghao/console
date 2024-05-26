@@ -94,13 +94,7 @@ defineExpose({
         width="500"
         :before-close="() => close()"
     >
-        <el-form
-            ref="refForm"
-            label-suffix="："
-            :model="formData"
-            :rules="rules"
-            label-width="85px"
-        >
+        <el-form ref="refForm" :model="formData" :rules="rules" label-width="85px">
             <el-form-item label="字典类型" name="typeId">
                 <el-select v-model="formData.typeId" :disabled="formData.id">
                     <el-option

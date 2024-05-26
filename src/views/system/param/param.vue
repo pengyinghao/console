@@ -43,8 +43,8 @@ const columns: TableColumn<Param>[] = [
         showOverflowTooltip: true,
         render: ({ row }) => setDefaultValue(row.remark)
     },
-    { label: '创建时间', prop: 'createTime', showOverflowTooltip: true },
-    { label: '修改时间', prop: 'updateTime', showOverflowTooltip: true },
+    { label: '创建时间', prop: 'createTime', dateFormat: true },
+    { label: '更新时间', prop: 'updateTime', dateFormat: true },
     {
         label: '操作',
         prop: 'operation',
@@ -66,13 +66,7 @@ const columns: TableColumn<Param>[] = [
 <template>
     <PageContainer>
         <template #header>
-            <el-form
-                inline
-                class="search-form"
-                label-width="75px"
-                label-suffix="："
-                @submit.prevent
-            >
+            <el-form inline class="search-form" label-width="75px" @submit.prevent>
                 <el-form-item label="参数名">
                     <el-input v-model="queryParams.name" clearable @change="handleQuery" />
                 </el-form-item>

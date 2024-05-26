@@ -3,8 +3,11 @@ import { AppStore } from '@/store/modules/appStore'
 /** 登录地址 */
 export const LOGIN_PATH = '/login'
 
+/**  403页面 */
+export const FORBIDDEN_PATH = '/forbidden'
+
 /** 白名单地址 */
-export const ALLOW_LIST = ['/login', '/test', '/404', '/tree-table', '/level']
+export const ALLOW_LIST = [LOGIN_PATH, FORBIDDEN_PATH]
 
 /**  默认值 */
 export const DEFAULT_APP_STORE: AppStore = {

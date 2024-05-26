@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { FormInstance, FormRules } from 'element-plus'
 import { reactive, ref } from 'vue'
-import { Modal } from '@/components'
+import { Modal, Select } from '@/components'
 import { createUser } from '@/service/api/system/user'
 import { ruleHelper } from '@/utils/ruleHelper'
+import { Role, fetchRoleInfos } from '@/service/api/system/role'
 
 const emits = defineEmits<{
     (e: 'close', refreshData: boolean): void
@@ -17,7 +18,8 @@ const formData = reactive({
     password: '',
     password2: '',
     phone: '',
-    sysUser: false,
+    roleId: undefined,
+    roleName: undefined,
     email: undefined,
     address: undefined
 })
@@ -68,6 +70,7 @@ const rules = reactive<FormRules>({
             message: `密码${mul_special.message}`
         }
     ],
+    roleId: [{ required: true, message: '请选择角色' }],
     password2: [{ required: true, validator: validateConfirmPassword, trigger: 'blur' }],
     phone: [
         { required: true, message: '请输入手机号码', trigger: 'blur' },
@@ -102,6 +105,9 @@ const saveUser = async () => {
     }
 }
 
+const handleRoleChange = (val: number, row: Role) => {
+    formData.roleName = row.name as any
+}
 const handleConfirm = async () => {
     await refForm.value?.validate()
     saveUser()
@@ -114,13 +120,7 @@ defineExpose({
 
 <template>
     <Modal v-model="visible" title="新增用户" width="500" :before-close="() => close()">
-        <el-form
-            ref="refForm"
-            label-suffix="："
-            :model="formData"
-            :rules="rules"
-            label-width="85px"
-        >
+        <el-form ref="refForm" :model="formData" :rules="rules" label-width="85px">
             <el-form-item label="姓名" prop="name">
                 <el-input v-model="formData.name" maxlength="30" placeholder="请输入姓名" />
             </el-form-item>
@@ -145,17 +145,21 @@ defineExpose({
                     placeholder="请输入确认密码"
                 />
             </el-form-item>
-            <el-form-item label="系统用户" prop="sysUser">
-                <el-radio-group v-model="formData.sysUser">
-                    <el-radio :value="true">是</el-radio>
-                    <el-radio :value="false">否</el-radio>
-                </el-radio-group>
-            </el-form-item>
             <el-form-item label="手机号码" prop="phone">
                 <el-input v-model="formData.phone" maxlength="11" placeholder="请输入账号" />
             </el-form-item>
             <el-form-item label="邮箱" prop="email">
                 <el-input v-model="formData.email" maxlength="50" placeholder="请输入邮箱" />
+            </el-form-item>
+            <el-form-item label="角色" prop="roleId">
+                <Select
+                    v-model="formData.roleId"
+                    :request-api="fetchRoleInfos"
+                    display-label="name"
+                    display-value="id"
+                    placeholder="请选择角色"
+                    @change="handleRoleChange"
+                ></Select>
             </el-form-item>
             <el-form-item label="地址" prop="address">
                 <el-input v-model="formData.address" maxlength="100" placeholder="请输入地址" />

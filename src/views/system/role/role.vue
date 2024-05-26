@@ -1,10 +1,12 @@
 <script setup lang="tsx">
 import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { Table, TableColumn, PageContainer } from '@/components'
 import RoleEdit from './components/roleEdit.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
 import { fetchRoleInfos, Role, deleteRole } from '@/service/api/system/role'
+import Accredit from './components/accredit.vue'
 
 const queryParams = reactive<{ name?: string }>({
     name: undefined
@@ -33,16 +35,35 @@ const handleDeleteRole = async (row: Role) => {
     handleQuery()
 }
 
+const refAccredit = useCompRef(Accredit)
+/** 角色授权 */
+const handleAccredit = (row: Role) => {
+    refAccredit.value?.show(row)
+}
+
+const router = useRouter()
+/** 角色名称单击事件 */
+const handleRoleUser = (row: Role) => {
+    router.push(`/system/role-user/${row.id}`)
+}
+
 const columns: TableColumn<Role>[] = [
-    { label: '角色名称', prop: 'name' },
+    { label: '角色标识', prop: 'code' },
     {
-        label: '备注',
+        label: '角色名称',
+        prop: 'name',
+        render: ({ row }) => {
+            return <a onclick={() => handleRoleUser(row)}>{row.name}</a>
+        }
+    },
+    {
+        label: '角色描述',
         prop: 'remark',
         showOverflowTooltip: true,
         render: ({ row }) => setDefaultValue(row.remark)
     },
-    { label: '创建时间', prop: 'createTime' },
-    { label: '修改时间', prop: 'updateTime' },
+    { label: '创建时间', prop: 'createTime', dateFormat: true },
+    { label: '更新时间', prop: 'updateTime', dateFormat: true },
     {
         label: '操作',
         prop: 'operation',
@@ -50,9 +71,17 @@ const columns: TableColumn<Role>[] = [
         render: ({ row }) => {
             return (
                 <div>
-                    <a onclick={() => handleEditRole(row.id)}>修改</a>
-                    <el-divider direction="vertical" />
-                    <a onclick={() => handleDeleteRole(row)}>删除</a>
+                    {row.type === 1 ? (
+                        <>
+                            <a onclick={() => handleEditRole(row.id)}>修改</a>
+                            <el-divider direction="vertical" />
+                            <a onclick={() => handleDeleteRole(row)}>删除</a>
+                            <el-divider direction="vertical" />
+                        </>
+                    ) : (
+                        ''
+                    )}
+                    <a onclick={() => handleAccredit(row)}>授权</a>
                 </div>
             )
         }
@@ -63,11 +92,11 @@ const columns: TableColumn<Role>[] = [
     <PageContainer>
         <template #header>
             <el-form inline class="search-form" label-width="75px" @submit.prevent>
-                <el-form-item label="角色名称：">
+                <el-form-item label="角色名称">
                     <el-input v-model="queryParams.name" clearable @change="handleQuery" />
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click.stop="handleQuery"> 查询 </el-button>
+                    <el-button type="primary" @click.stop="handleQuery">查询</el-button>
                     <el-button> 重置 </el-button>
                 </el-form-item>
             </el-form>
@@ -80,10 +109,13 @@ const columns: TableColumn<Role>[] = [
             :pagination="false"
         >
             <template #header>
-                <el-button type="primary" @click="handleEditRole()"> 新增 </el-button>
+                <el-button type="primary" @click="handleEditRole()">创建</el-button>
             </template>
         </Table>
+        <!-- 新增、编辑 -->
         <role-edit ref="refRoleEdit" @close="handleModalClose"></role-edit>
+        <!-- 授权 -->
+        <accredit ref="refAccredit"></accredit>
     </PageContainer>
 </template>
 

@@ -2,7 +2,7 @@
 import { reactive, ref } from 'vue'
 import { PageContainer, StatusView, Table, TableColumn } from '@/components'
 import { Menu, deleteMenu, fetchMenuInfos } from '@/service/api/system/menu'
-import SystemMenuEdit from './components/systemMenuEdit.vue'
+import MenuEdit from './components/menuEdit.vue'
 import { useCompRef } from '@/composables/useCompRef'
 import { copyText, setDefaultValue } from '@/utils'
 import Icon from '@/components/Icon/Icon.vue'
@@ -16,9 +16,9 @@ const handleSearch = () => {
     reload.value = true
 }
 
-const refSystemMenuEdit = useCompRef(SystemMenuEdit)
-const handleSystemMenuEdit = (id?: number) => {
-    refSystemMenuEdit.value?.showModal(id)
+const refMenuEdit = useCompRef(MenuEdit)
+const handleMenuEdit = (id?: number) => {
+    refMenuEdit.value?.showModal(id)
 }
 
 const handleDeleteSystemMenu = async ({ id, children, state }: Menu) => {
@@ -61,23 +61,23 @@ const columns: TableColumn<Menu>[] = [
         label: '文件路径',
         width: 300,
         render: ({ row }) => {
-            if (row.componentLink) {
+            if (row.component) {
                 return (
                     <div class="flex-y-center">
-                        <span>{row.componentLink}</span>
+                        <span>{row.component}</span>
                         <Icon
                             name="ep:copy-document"
                             class="ml-2px cursor-pointer hover:c-primary"
                             title="复制组件地址"
-                            onClick={() => copyText(row.componentLink!)}></Icon>
+                            onClick={() => copyText(row.component!)}></Icon>
                     </div>
                 )
             }
             return setDefaultValue()
         }
     },
-    { label: '创建时间', prop: 'createTime', width: 230 },
-    { label: '修改时间', prop: 'updateTime', width: 230 },
+    { label: '创建时间', prop: 'createTime', dateFormat: true },
+    { label: '更新时间', prop: 'updateTime', dateFormat: true },
     {
         label: '操作',
         prop: 'operation',
@@ -85,7 +85,7 @@ const columns: TableColumn<Menu>[] = [
         render: ({ row }) => {
             return (
                 <div class="flex-y-center">
-                    <a onclick={() => handleSystemMenuEdit(row.id)}>修改</a>
+                    <a onclick={() => handleMenuEdit(row.id)}>修改</a>
                     <el-divider direction="vertical" />
                     <a onclick={() => handleDeleteSystemMenu(row)}>删除</a>
                 </div>
@@ -97,13 +97,7 @@ const columns: TableColumn<Menu>[] = [
 <template>
     <PageContainer>
         <template #header>
-            <el-form
-                inline
-                class="search-form"
-                label-width="75px"
-                label-suffix="："
-                @submit.prevent
-            >
+            <el-form inline class="search-form" label-width="75px" @submit.prevent>
                 <el-form-item label="菜单名称">
                     <el-input v-model="queryParams.name" clearable @change="handleSearch" />
                 </el-form-item>
@@ -121,9 +115,9 @@ const columns: TableColumn<Menu>[] = [
             :pagination="false"
         >
             <template #header>
-                <el-button type="primary" @click="handleSystemMenuEdit()"> 新增 </el-button>
+                <el-button type="primary" @click="handleMenuEdit()"> 新增 </el-button>
             </template>
         </Table>
-        <SystemMenuEdit ref="refSystemMenuEdit" @close="handleClose"></SystemMenuEdit>
+        <menu-edit ref="refMenuEdit" @close="handleClose"></menu-edit>
     </PageContainer>
 </template>

@@ -1,12 +1,12 @@
 import { requestDelete, requestGet, requestPost, requestPut } from '@/service/request'
 import { PagingResponse } from '@/types/pagingResponse'
-import { SystemMenu } from '../menu'
+import { Buttons, SystemMenu } from '../menu'
 import { StateEnum } from '@/core/enums/stateEnum'
 
 /** 用户实体 */
 export interface User {
     /** id */
-    id: string
+    id: number
     /** 状态 */
     state: StateEnum
     /** 编号 */
@@ -17,20 +17,24 @@ export interface User {
     account: string
     /** 手机号码 */
     phone: string
-    /** 是否冻结 */
-    freeze: boolean
+    /** 是否冻结(0：是，1：否) */
+    freeze: number
     /** 邮箱 */
     email?: string
     /** 地址 */
     address?: string
-    /** 是否系统用户 */
-    sysUser: boolean
+    /** 是否系统用户(0：是,1:否) */
+    sysUser: number
     /** 头像 */
     avatar?: string
+    /** 角色id */
+    roleId: number
+    /** 角色名称 */
+    roleName: string
     /** 创建时间 */
-    createdTime: string
+    createTime: string
     /** 更新时间 */
-    updatedTime: string
+    updateTime: string
 }
 
 /** 创建用户表单提交 */
@@ -41,14 +45,15 @@ export type CreateUserOption = { password: string } & Pick<
 
 /** 修改用户表单提交 */
 export type UpdateUserOption = Optional<
-    Pick<User, 'name' | 'phone' | 'sysUser' | 'email' | 'address' | 'id'>,
-    'id'
+    Pick<User, 'name' | 'phone' | 'email' | 'address' | 'id' | 'roleId' | 'roleName'>,
+    'id' | 'roleId' | 'roleName'
 >
 
 export type UserDetail = Pick<User, 'id' | 'name' | 'account' | 'phone' | 'email' | 'avatar'>
 export type UserCurrent = {
     menu: SystemMenu[]
     user: UserDetail
+    btn: Buttons[]
     redirect: string
 }
 
@@ -75,7 +80,7 @@ export const updateUser = (formData: UpdateUserOption) => {
 }
 
 /** 更新用户状态 */
-export const updateUserState = (id: string, state: StateEnum) => {
+export const updateUserState = (id: number, state: StateEnum) => {
     return requestPut(`/system/user/state`, {
         id,
         state
@@ -83,7 +88,7 @@ export const updateUserState = (id: string, state: StateEnum) => {
 }
 
 /** 更新用户冻结状态 */
-export const updateUserFreeze = (id: string, freeze: boolean) => {
+export const updateUserFreeze = (id: number, freeze: boolean) => {
     return requestPut(`/system/user/freeze`, {
         id,
         freeze

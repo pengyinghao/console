@@ -45,12 +45,20 @@ watchEffect(() => {
     }
 })
 
+const emit = defineEmits<{
+    change: [value: any, row: any]
+}>()
+const handleChange = (val: any) => {
+    const row = options.value.find((item) => item[props.displayValue] === val)
+    emit('change', val, row)
+}
+
 onBeforeMount(() => {
     init()
 })
 </script>
 <template>
-    <el-select v-bind="$attrs" v-model="value">
+    <el-select v-bind="$attrs" v-model="value" @change="handleChange">
         <template v-if="!$slots.default && !$slots.custom">
             <el-option
                 v-for="(item, index) in options"

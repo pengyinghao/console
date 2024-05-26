@@ -106,13 +106,7 @@ defineExpose({
         width="500"
         :before-close="() => close()"
     >
-        <el-form
-            ref="refForm"
-            label-suffix="："
-            :model="formData"
-            :rules="rules"
-            label-width="85px"
-        >
+        <el-form ref="refForm" :model="formData" :rules="rules" label-width="85px">
             <el-form-item label="参数名称" prop="name">
                 <el-input v-model="formData.name" maxlength="20" placeholder="请输入参数名称" />
             </el-form-item>

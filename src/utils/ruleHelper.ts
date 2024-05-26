@@ -46,9 +46,9 @@ export const ruleHelper = {
         reg: /^[a-z.]+$/,
         message: '只能包含小写字母和.'
     },
-    /** 只能输入英文和下划线 */
+    /** 只能输入字母和下划线 */
     only_eng_udl: {
         reg: /^[a-zA-Z|_]*$/,
-        message: '只能输入英文和下划线'
+        message: '只能输入字母和下划线'
     }
 }

@@ -8,16 +8,16 @@ interface PageContainerProps {
     /** 内容区域是否有padding */
     contentPadding?: boolean
     /** 是否显示返回按钮 */
-    goBack?: boolean
+    back?: boolean
 }
 
 withDefaults(defineProps<PageContainerProps>(), {
     contentPadding: true,
     header: false,
-    goBack: false
+    back: false
 })
 const slots = useSlots()
-const emits = defineEmits(['go-back'])
+const emits = defineEmits(['back'])
 
 const refHeader = ref<HTMLElement>()
 const contentHeight = ref('100%')
@@ -35,8 +35,8 @@ onMounted(() => {
 })
 const router = useRouter()
 /** 返回上一页 */
-const onGoBack = () => {
-    emits('go-back')
+const handleBack = () => {
+    emits('back')
     router.back()
 }
 </script>
@@ -49,7 +49,7 @@ const onGoBack = () => {
             <div class="flex-y-center justify-end">
                 <!--  右侧插槽 -->
                 <slot name="right"></slot>
-                <div v-if="goBack" class="go-back" @click="onGoBack">
+                <div v-if="back" class="go-back" @click="handleBack">
                     <Icon name="ep:arrow-left" />
                     <span class="ml-5px">返回</span>
                 </div>
@@ -66,7 +66,7 @@ const onGoBack = () => {
 </template>
 <style lang="scss" scoped>
 .header {
-    height: auto;
+    @apply flex-y-center;
     box-shadow: 0 1px 13px 1px rgba(62, 72, 160, 10%);
     transition: all 0.3s;
 
@@ -79,7 +79,6 @@ const onGoBack = () => {
 
 .padding {
     box-shadow: 0 1px 13px 1px rgba(62, 72, 160, 10%);
-
     @apply plr-15px;
 }
 

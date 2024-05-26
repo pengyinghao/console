@@ -13,7 +13,6 @@ const tabStore = useTabStore()
 
 /** 所有路由 */
 const allRouters = router.getRoutes()
-
 /** 添加tab */
 const addTab = () => {
     if (!route.path) return

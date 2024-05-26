@@ -1,5 +1,5 @@
 import { Router, RouteRecordRaw } from 'vue-router'
-import { LOGIN_PATH, ALLOW_LIST } from '@/core/config'
+import { LOGIN_PATH, ALLOW_LIST, FORBIDDEN_PATH } from '@/core/config'
 import NProgress from '@/plugins/nprogress'
 import { useUserStore } from '@/store'
 import { clearPendingPool } from '@/service/request/baseRequest'
@@ -17,7 +17,10 @@ export function createRouterGuard(router: Router) {
 
         if (localStorage.getItem(ACCESS_TOKEN)) {
             if (userStore.dynamicRoute.length === 0) {
-                await userStore.getUserCurrent()
+                const current = await userStore.getUserCurrent()
+                //  未返回菜单，则跳到403
+                if (current.menu.length === 0) return next({ path: FORBIDDEN_PATH })
+
                 const routes = await userStore.generateRoutes()
                 routes.forEach((r: RouteRecordRaw) => {
                     userStore.dynamicRoute.push(router.addRoute(r))

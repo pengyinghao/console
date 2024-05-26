@@ -15,7 +15,7 @@ function importModule(path: string | undefined) {
 
 /** 路由 参数 */
 function markRoute(page: SystemMenu, component: any) {
-    const { name, id, parentId, icon, openType, url, hidden } = page
+    const { name, id, parentId, icon, openType, url, display } = page
     const currentRouter: RouteRecordRaw = {
         path: url || '',
         children: [],
@@ -26,7 +26,7 @@ function markRoute(page: SystemMenu, component: any) {
             parentId,
             icon,
             openType,
-            hidden
+            display
         }
     }
     return currentRouter
@@ -34,8 +34,8 @@ function markRoute(page: SystemMenu, component: any) {
 
 /** 构建单级路由 */
 function generatorSingleLevelRoute(menu: SystemMenu): RouteRecordRaw {
-    const { name, icon, componentLink } = menu
-    const currentRouter: RouteRecordRaw = markRoute(menu, importModule(componentLink))
+    const { name, icon, component } = menu
+    const currentRouter: RouteRecordRaw = markRoute(menu, importModule(component))
     return {
         component: Layout,
         path: '',
@@ -50,7 +50,7 @@ function generatorSingleLevelRoute(menu: SystemMenu): RouteRecordRaw {
 /** 构建动态路由 */
 function generatorDynamicRouter(pages: SystemMenu[]): RouteRecordRaw[] {
     const routers = pages.map((page) => {
-        const { parentId, componentLink, children } = page
+        const { parentId, component, children } = page
 
         // 嵌套一层layout 用于来装载单级路由页面
         if (page.parentId === null && page.children?.length === 0) {
@@ -60,7 +60,7 @@ function generatorDynamicRouter(pages: SystemMenu[]): RouteRecordRaw[] {
         // 多级菜单，顶级用来装载layout
         const currentRouter: RouteRecordRaw = markRoute(
             page,
-            parentId === null ? Layout : importModule(componentLink)
+            parentId === null ? Layout : importModule(component)
         )
         // 存在子级
         if (children && children.length > 0) {

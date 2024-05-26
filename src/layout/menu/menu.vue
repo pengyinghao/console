@@ -23,7 +23,7 @@ watchEffect(() => {
 
 /** 菜单信息 */
 const menus = dataToTree(
-    userStore.originMenus.filter((item) => !item.hidden),
+    userStore.originMenus.filter((item) => item.display === 0),
     'parentId'
 )
 
@@ -56,7 +56,7 @@ const onSelect = (menuId: number) => {
             >
                 <template v-for="(routeItem, index) in menus" :key="index">
                     <el-menu-item
-                        v-if="routeItem.children?.length === 0 && !routeItem.hidden"
+                        v-if="routeItem.children?.length === 0"
                         class="aside-sub-menu"
                         :index="`${routeItem.id}`"
                     >
