@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onClickOutside } from '@vueuse/core'
-import { RouteRecordRaw, useRoute, useRouter } from 'vue-router'
+import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router'
 import { ref, toRefs, watch } from 'vue'
 import { Icon } from '@/components'
 import contextMenu from './contextMenu.vue'
@@ -11,27 +11,14 @@ const route = useRoute()
 const router = useRouter()
 const tabStore = useTabStore()
 
-/** 所有路由 */
-const allRouters = router.getRoutes()
 /** 添加tab */
 const addTab = () => {
-    if (!route.path) return
-    const result = allRouters.find((item: RouteRecordRaw) => item.path === route.path)
-    result && tabStore.add(result)
+    tabStore.add(route)
 }
 
 watch(route, () => addTab(), { immediate: true })
 
 const { fixedTabs, tabs } = toRefs(tabStore)
-/** 初始化固定的tabs */
-const initAffixTabs = () => {
-    // 筛选所有固定的tab 添加至状态管理 中
-    allRouters.forEach((item: RouteRecordRaw) => {
-        if (fixedTabs.value.includes(item.path)) tabStore.add(item, 'unshift')
-    })
-}
-initAffixTabs()
-
 const tabViewContainer = ref<HTMLElement>()
 const refContextMenu = useCompRef(contextMenu)
 onClickOutside(tabViewContainer, () => {
@@ -40,7 +27,7 @@ onClickOutside(tabViewContainer, () => {
 
 const userStore = useUserStore()
 /** 关闭当前选项卡 */
-const onCloseCurrTab = (tab: RouteRecordRaw) => {
+const onCloseCurrTab = (tab: RouteLocationNormalizedLoaded) => {
     tabStore.remove(tab)
     if (tabs.value.length === 0) {
         return router.push(userStore.defaultRouterPath)

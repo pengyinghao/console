@@ -1,20 +1,20 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { RouteRecordRaw } from 'vue-router'
+import { RouteLocationNormalizedLoaded } from 'vue-router'
 
 export const useTabStore = defineStore('tab', () => {
     const fixedTabs = ref<string[]>([])
-    const tabs = ref<RouteRecordRaw[]>([])
+    const tabs = ref<RouteLocationNormalizedLoaded[]>([])
 
     /** 添加标签到集合 */
-    const add = (tag: RouteRecordRaw, type?: string) => {
+    const add = (tag: RouteLocationNormalizedLoaded, type?: string) => {
         if (tag.name === 'dashboard' || tabs.value.some((r) => r.path === tag.path)) return
         if (type === 'unshift') tabs.value.unshift(tag)
-        else tabs.value.push(tag)
+        else tabs.value.push({ ...tag })
     }
 
     /** 移除tab */
-    const remove = (tab: RouteRecordRaw) => {
+    const remove = (tab: RouteLocationNormalizedLoaded) => {
         tabs.value = tabs.value.filter((item) => item.path !== tab.path)
     }
     /** 关闭左侧标签 */

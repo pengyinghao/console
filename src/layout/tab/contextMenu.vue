@@ -1,11 +1,8 @@
 <script lang="ts" setup>
 import { CSSProperties, computed, ref, toRefs } from 'vue'
-import { RouteRecordRaw, useRoute, useRouter } from 'vue-router'
+import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router'
 import { Icon } from '@/components'
 import { useAppStore, useTabStore, useUserStore } from '@/store'
-defineOptions({
-    name: 'ContextMenu'
-})
 type Operation = 'refresh' | 'closeCurr' | 'closeLeft' | 'closeRight' | 'closeAll'
 /** 右键菜单选项 */
 interface ContentMenuOptions {
@@ -25,7 +22,7 @@ const router = useRouter()
 const route = useRoute()
 const { tabs } = toRefs(tabStore)
 /** 选中tab */
-const selectTab = ref<RouteRecordRaw>()
+const selectTab = ref<RouteLocationNormalizedLoaded>()
 /** 右键菜单是否显示 */
 const contextMenuVisible = ref(false)
 /** 菜单宽度 */
@@ -43,7 +40,7 @@ const contextMenuStyle = computed<CSSProperties>(() => {
 
 /** 打开tab右键菜单  */
 const openContextMenu = (
-    tab: RouteRecordRaw,
+    tab: RouteLocationNormalizedLoaded,
     tabViewContainer: HTMLElement | undefined,
     event: MouseEvent
 ) => {
@@ -124,7 +121,7 @@ const closeTabAll = () => {
 
 /** 关闭当前标签 */
 const closeTabCurr = () => {
-    tabStore.remove(selectTab.value as RouteRecordRaw)
+    tabStore.remove(selectTab.value as RouteLocationNormalizedLoaded)
     if (tabs.value.length === 0) {
         return router.push(userStore.defaultRouterPath)
     }
