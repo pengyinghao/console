@@ -72,7 +72,7 @@ const columns: TableColumn<Role>[] = [
         render: ({ row }) => {
             return (
                 <div>
-                    {row.type === 'CUSTOM' ? (
+                    {row.type === 'custom' ? (
                         <>
                             <a onclick={() => handleEditRole(row.id)}>修改</a>
                             <el-divider direction="vertical" />
