@@ -5,7 +5,7 @@ import { PageContainer, Table, TableColumn, StatusView } from '@/components'
 import { fetchRoleUser } from '@/service/api/system/role'
 import { User } from '@/service/api/system/user'
 import { setDefaultValue } from '@/utils'
-
+defineOptions({ name: 'RoleUser' })
 const route = useRoute()
 const queryParams = reactive({
     roleId: route.params.id
@@ -16,11 +16,10 @@ const columns: TableColumn<User>[] = [
     { label: '编号', prop: 'no' },
     {
         label: '状态',
-        prop: 'state',
         render: ({ row }) => {
             return (
-                <StatusView color={row.state === 0 ? 'danger' : 'success'}>
-                    {row.state === 0 ? '禁用' : '启用'}
+                <StatusView status={row.status}>
+                    {row.status === 'enable' ? '禁用' : '启用'}
                 </StatusView>
             )
         }
@@ -49,8 +48,7 @@ const columns: TableColumn<User>[] = [
 </script>
 
 <template>
-    <PageContainer back>
-        <template #header> 测试 </template>
+    <PageContainer>
         <Table
             :columns="columns"
             :request-api="fetchRoleUser"

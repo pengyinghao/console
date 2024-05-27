@@ -19,8 +19,8 @@ import AddUser from './components/addUser.vue'
 import EditUser from './components/editUser.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
-
 defineOptions({ name: 'User' })
+
 const queryParams = reactive({
     name: undefined,
     account: undefined
@@ -57,13 +57,17 @@ const handleDeleteBtnClick = async (row: User) => {
 }
 
 /** 启用、禁用 */
-const handleUpdateUserState = async ({ id, state }: User) => {
-    await window.$messageBox.confirm(`确定要${state === 0 ? '启用' : '禁用'}该用户吗?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-    })
-    await updateUserState(id, state === 0 ? 1 : 0)
+const handleUpdateUserState = async ({ id, status }: User) => {
+    await window.$messageBox.confirm(
+        `确定要${status === 'enable' ? '启用' : '禁用'}该用户吗?`,
+        '提示',
+        {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+        }
+    )
+    await updateUserState(id, status === 'enable' ? 'disabled' : 'enable')
     handleQuery()
 }
 
@@ -80,13 +84,13 @@ const handleUpdateUserFreezeState = async ({ id, freeze }: User) => {
 
 const moreButtons = (row: User) => {
     const moreButtons: MoreButtonProp[] = [
-        { label: row.state === 0 ? '启用' : '禁用', command: 'state' },
+        { label: row.status === 'disabled' ? '启用' : '禁用', command: 'status' },
         { label: row.freeze ? '解冻' : '冻结', command: 'freeze' }
     ]
     return moreButtons
 }
 const handleCommand = (command: string, row: User) => {
-    if (command === 'state') {
+    if (command === 'status') {
         handleUpdateUserState(row)
     } else {
         handleUpdateUserFreezeState(row)
@@ -98,11 +102,10 @@ const columns: TableColumn<User>[] = [
     { label: '编号', prop: 'no' },
     {
         label: '状态',
-        prop: 'state',
         render: ({ row }) => {
             return (
-                <StatusView color={row.state === 0 ? 'danger' : 'success'}>
-                    {row.state === 0 ? '禁用' : '启用'}
+                <StatusView status={row.status}>
+                    {row.status === 'enable' ? '禁用' : '启用'}
                 </StatusView>
             )
         }
@@ -119,7 +122,7 @@ const columns: TableColumn<User>[] = [
         prop: 'freeze',
         render: ({ row }) => (row.freeze ? '是' : '否')
     },
-    { label: '手机', prop: 'phone' },
+    { label: '手机', prop: 'phone', showOverflowTooltip: true },
     {
         label: '邮箱',
         prop: 'email',

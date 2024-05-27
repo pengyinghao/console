@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { StatusType, Colors } from './StatusTypes'
+import { Status, Colors } from './StatusTypes'
 const props = withDefaults(
     defineProps<{
         dot?: boolean
-        color: StatusType
+        status: Status
     }>(),
     {
         dot: false
@@ -17,7 +17,7 @@ const props = withDefaults(
 </template>
 <style lang="scss" scoped>
 span {
-    --color: v-bind(Colors[props.color]);
+    --color: v-bind(Colors[props.status]);
     --dot-size: 6px;
     @apply relative;
     color: var(--color);

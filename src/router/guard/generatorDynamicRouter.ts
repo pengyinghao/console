@@ -15,11 +15,20 @@ function importModule(path: string | undefined) {
 
 /** 路由 参数 */
 function markRoute(page: SystemMenu, component: any) {
-    const { name, id, parentId, icon, openType, url, display } = page
+    const { name, id, parentId, icon, component: componentUrl, openType, url, display } = page
+
+    let componentName = ''
+    if (componentUrl) {
+        const arr = componentUrl.split('/') || []
+        componentName = arr[arr.length - 1]
+        componentName = componentName.charAt(0).toUpperCase() + componentName.slice(1)
+    }
+
     const currentRouter: RouteRecordRaw = {
         path: url || '',
         children: [],
         component,
+        name: componentName,
         meta: {
             name,
             id: id.toString(),

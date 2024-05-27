@@ -13,9 +13,7 @@ const tabStore = useTabStore()
 const keepAliveNames = computed(() => {
     const names: string[] = []
     tabStore.tabs.forEach((it) => {
-        if (it.name && it.meta?.keepAlive) {
-            names.push(it.name as string)
-        }
+        names.push(it.name as string)
     })
     return names
 })

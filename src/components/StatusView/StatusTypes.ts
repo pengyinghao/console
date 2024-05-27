@@ -1,9 +1,11 @@
 export enum Colors {
     primary = 'var(--color-primary)',
+    enable = 'var(--el-color-success)',
     success = 'var(--el-color-success)',
     warning = 'var(--el-color-warning)',
     danger = 'var(--el-color-error)',
+    disabled = 'var(--el-color-error)',
     gray = 'var(--el-color-info)'
 }
 
-export type StatusType = keyof typeof Colors
+export type Status = keyof typeof Colors

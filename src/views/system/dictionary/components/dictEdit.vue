@@ -10,6 +10,7 @@ import {
     fetchDictTypeAllInfos
 } from '@/service/api/system/dictionary'
 import Modal from '@/components/Modal/Modal.vue'
+import { ruleHelper } from '@/utils/ruleHelper'
 
 const emits = defineEmits<{
     (e: 'close', refreshData: boolean): void
@@ -21,15 +22,29 @@ const formData = reactive<UpdateDictOption>({
     id: undefined,
     name: '',
     value: '',
-    state: 1,
+    status: 'enable',
     sort: 1,
     typeId: undefined,
     remark: undefined
 })
 
+const { unable_contain_special, only_alphanumeric_underline } = ruleHelper
 const rules = reactive<FormRules>({
-    no: [{ required: true, message: '请输入编号', trigger: 'blur' }],
-    name: [{ required: true, message: '请输入名称', trigger: 'blur' }]
+    no: [
+        { required: true, message: '请输入编号', trigger: 'blur' },
+        {
+            pattern: only_alphanumeric_underline.reg,
+            message: `编号${only_alphanumeric_underline.message}`
+        }
+    ],
+    name: [
+        { required: true, message: '请输入名称', trigger: 'blur' },
+        {
+            type: 'string',
+            pattern: unable_contain_special.reg,
+            message: `名称${unable_contain_special.message}`
+        }
+    ]
 })
 
 const visible = ref(false)
@@ -114,10 +129,10 @@ defineExpose({
             <el-form-item label="显示顺序" prop="sort">
                 <el-input-number v-model="formData.sort" :min="1" :max="99" :precision="0" />
             </el-form-item>
-            <el-form-item label="状态" prop="state">
-                <el-radio-group v-model="formData.state">
-                    <el-radio :value="1">启用</el-radio>
-                    <el-radio :value="0">禁用</el-radio>
+            <el-form-item label="状态" prop="status">
+                <el-radio-group v-model="formData.status">
+                    <el-radio value="enable">启用</el-radio>
+                    <el-radio value="disabled">禁用</el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="备注" prop="remark">

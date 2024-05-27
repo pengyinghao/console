@@ -1,4 +1,3 @@
-import { StateEnum } from '@/core/enums/stateEnum'
 import { requestDelete, requestGet, requestPost, requestPut } from '@/service/request'
 import { PagingResponse } from '@/types/pagingResponse'
 
@@ -8,8 +7,8 @@ export interface DictType {
     no: string
     /** 类型名称 */
     name: string
-    /** 状态(0:禁用,1:启用) */
-    state: StateEnum
+    /** 状态 */
+    status: Status
     /** 备注 */
     remark?: string
 }
@@ -44,10 +43,10 @@ export const deleteDictType = (id: number) => {
 }
 
 /** 修改字典类型状态 */
-export const updateDictTypeState = (id: number, state: StateEnum) => {
-    return requestPut(`/system/dict_type`, {
+export const updateDictTypeState = (id: number, status: Status) => {
+    return requestPut(`/system/dict_type/status`, {
         id,
-        state
+        status
     })
 }
 

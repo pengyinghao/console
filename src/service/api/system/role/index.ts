@@ -1,6 +1,7 @@
 import { requestDelete, requestGet, requestPost, requestPut } from '@/service/request'
 import { User } from '../user'
 
+export type RoleType = 'custom' | 'system'
 export interface Role {
     id: number
     /** 角色标识 */
@@ -10,7 +11,7 @@ export interface Role {
     /** 角色名称 */
     name: string
     /** 角色类型 */
-    type: number
+    type: RoleType
     /** 备注 */
     remark?: string
     createTime: string

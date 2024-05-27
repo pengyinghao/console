@@ -1,14 +1,13 @@
 import { requestDelete, requestGet, requestPost, requestPut } from '@/service/request'
 import { PagingResponse } from '@/types/pagingResponse'
 import { Buttons, SystemMenu } from '../menu'
-import { StateEnum } from '@/core/enums/stateEnum'
 
 /** 用户实体 */
 export interface User {
     /** id */
     id: number
     /** 状态 */
-    state: StateEnum
+    status: Status
     /** 编号 */
     no: string
     /** 姓名 */
@@ -80,10 +79,10 @@ export const updateUser = (formData: UpdateUserOption) => {
 }
 
 /** 更新用户状态 */
-export const updateUserState = (id: number, state: StateEnum) => {
-    return requestPut(`/system/user/state`, {
+export const updateUserState = (id: number, status: Status) => {
+    return requestPut(`/system/user/status`, {
         id,
-        state
+        status
     })
 }
 

@@ -23,7 +23,7 @@ const baseRequest = (opts: requestConfig) => {
 /** 初始化请求拦截器 */
 const requestInterceptor = (instance: AxiosInstance) => {
     instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-        const token = localStorage.getItem(ACCESS_TOKEN)
+        const token = sessionStorage.getItem(ACCESS_TOKEN)
 
         if (token) {
             config.headers.authorization = `Bearer ${token}`

@@ -17,10 +17,10 @@ export const handleRefreshToken = async (error: any) => {
 
     refreshing = true
 
-    const { data, status } = await fetchRefreshToken(localStorage.getItem(REFRESH_TOKEN) || '')
+    const { data, status } = await fetchRefreshToken(sessionStorage.getItem(REFRESH_TOKEN) || '')
     const accessToken = data.data.access_token
-    localStorage.setItem(ACCESS_TOKEN, accessToken || '')
-    localStorage.setItem(REFRESH_TOKEN, data.data.refresh_token || '')
+    sessionStorage.setItem(ACCESS_TOKEN, accessToken || '')
+    sessionStorage.setItem(REFRESH_TOKEN, data.data.refresh_token || '')
 
     refreshing = false
 

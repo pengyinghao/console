@@ -11,7 +11,6 @@ import DictTypeEdit from './dictTypeEdit.vue'
 import { useCompRef } from '@/composables/useCompRef'
 import { setDefaultValue } from '@/utils'
 import { useBusinessStore } from '@/store'
-import { StateEnum } from '@/core/enums/stateEnum'
 
 const reload = ref(false)
 const queryParams = reactive({
@@ -32,7 +31,7 @@ const handleClose = (refreshData: boolean) => {
 }
 
 const handleDeleteBtnClick = async (row: DictType) => {
-    if (row.state === 1) return window.$message.warning('请先禁用后再删除')
+    if (row.status === 'enable') return window.$message.warning('请先禁用后再删除')
     await window.$messageBox.confirm(
         <div>
             <p>确定要删除该字典吗?</p>
@@ -49,9 +48,9 @@ const handleDeleteBtnClick = async (row: DictType) => {
     handleQuery()
 }
 
-const handleUpdateUserState = async ({ state, id }: DictType) => {
+const handleUpdateUserState = async ({ status, id }: DictType) => {
     await window.$messageBox.confirm(
-        `确定要${state === StateEnum.DISABLED ? '启用' : '禁用'}该用户吗?`,
+        `确定要${status === 'disabled' ? '启用' : '禁用'}该用户吗?`,
         '提示',
         {
             confirmButtonText: '确定',
@@ -59,10 +58,7 @@ const handleUpdateUserState = async ({ state, id }: DictType) => {
             type: 'warning'
         }
     )
-    await updateDictTypeState(
-        id,
-        state === StateEnum.ENABLE ? StateEnum.DISABLED : StateEnum.DISABLED
-    )
+    await updateDictTypeState(id, status === 'enable' ? 'disabled' : 'enable')
     handleQuery()
 }
 
@@ -84,11 +80,10 @@ const columns: TableColumn<DictType>[] = [
     },
     {
         label: '状态',
-        prop: 'state',
         render: ({ row }) => {
             return (
-                <StatusView color={row.state === 0 ? 'danger' : 'success'}>
-                    {row.state === 0 ? '禁用' : '启用'}
+                <StatusView status={row.status}>
+                    {row.status === 'enable' ? '禁用' : '启用'}
                 </StatusView>
             )
         }
@@ -107,7 +102,7 @@ const columns: TableColumn<DictType>[] = [
                     <el-divider direction="vertical" />
                     {
                         <a onclick={() => handleUpdateUserState(row)}>
-                            {row.state === 0 ? '启用' : '禁用'}
+                            {row.status === 'disabled' ? '启用' : '禁用'}
                         </a>
                     }
                 </div>

@@ -5,6 +5,8 @@ import ParamsEdit from './components/paramsEdit.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
 import { fetchParamInfos, Param, deleteParam } from '@/service/api/system/param'
+// eslint-disable-next-line vue/no-reserved-component-names
+defineOptions({ name: 'Param' })
 const queryParams = reactive<{ name?: string }>({
     name: undefined
 })

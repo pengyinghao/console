@@ -15,7 +15,7 @@ export function createRouterGuard(router: Router) {
             return next()
         }
 
-        if (localStorage.getItem(ACCESS_TOKEN)) {
+        if (sessionStorage.getItem(ACCESS_TOKEN)) {
             if (userStore.dynamicRoute.length === 0) {
                 const current = await userStore.getUserCurrent()
                 //  未返回菜单，则跳到403

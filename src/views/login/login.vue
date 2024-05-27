@@ -46,8 +46,8 @@ const onLogin = async () => {
     loading.value = true
     try {
         const result = await login(formData)
-        localStorage.setItem(ACCESS_TOKEN, result.access_token)
-        localStorage.setItem(REFRESH_TOKEN, result.refresh_token)
+        sessionStorage.setItem(ACCESS_TOKEN, result.access_token)
+        sessionStorage.setItem(REFRESH_TOKEN, result.refresh_token)
     } finally {
         loading.value = false
     }

@@ -21,8 +21,8 @@ const handleMenuEdit = (id?: number) => {
     refMenuEdit.value?.showModal(id)
 }
 
-const handleDeleteSystemMenu = async ({ id, children, state }: Menu) => {
-    if (state === 1) return window.$message.error('请先禁用菜单')
+const handleDeleteSystemMenu = async ({ id, children, status }: Menu) => {
+    if (status === 'enable') return window.$message.error('请先禁用菜单')
     if (children!.length > 0) return window.$message.error('请先删除子菜单')
     await window.$messageBox.confirm(`确定要删除吗?`, '提示', {
         confirmButtonText: '确定',
@@ -43,8 +43,8 @@ const columns: TableColumn<Menu>[] = [
         label: '状态',
         render: ({ row }) => {
             return (
-                <StatusView color={row.state === 0 ? 'danger' : 'success'}>
-                    {row.state === 0 ? '禁用' : '启用'}
+                <StatusView status={row.status}>
+                    {row.status === 'enable' ? '禁用' : '启用'}
                 </StatusView>
             )
         }

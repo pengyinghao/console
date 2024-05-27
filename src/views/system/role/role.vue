@@ -8,6 +8,7 @@ import { useCompRef } from '@/composables/useCompRef'
 import { fetchRoleInfos, Role, deleteRole } from '@/service/api/system/role'
 import Accredit from './components/accredit.vue'
 
+defineOptions({ name: 'Role' })
 const queryParams = reactive<{ name?: string }>({
     name: undefined
 })
@@ -71,7 +72,7 @@ const columns: TableColumn<Role>[] = [
         render: ({ row }) => {
             return (
                 <div>
-                    {row.type === 1 ? (
+                    {row.type === 'CUSTOM' ? (
                         <>
                             <a onclick={() => handleEditRole(row.id)}>修改</a>
                             <el-divider direction="vertical" />

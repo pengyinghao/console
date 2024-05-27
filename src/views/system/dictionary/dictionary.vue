@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { PageContainer } from '@/components'
 import DictType from './components/dictType.vue'
 import Dict from './components/dict.vue'
-
+defineOptions({ name: 'Dictionary' })
 const activeName = ref('dictType')
 
 const handleNavigation = () => {
@@ -14,7 +14,7 @@ const handleNavigation = () => {
 <template>
     <PageContainer>
         <el-tabs v-model="activeName">
-            <el-tab-pane label="字典管理" name="dictType">
+            <el-tab-pane label="字典类型" name="dictType">
                 <dict-type
                     v-if="activeName === 'dictType'"
                     @navigation="handleNavigation"

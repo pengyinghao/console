@@ -1,11 +1,10 @@
 import { MenuOpenTypeEnum } from '@/core/enums/menuOpenTypeEnum'
-import { StateEnum } from '@/core/enums/stateEnum'
 import { requestDelete, requestGet, requestPost, requestPut } from '@/service/request'
 
 export interface Menu {
     id: number
-    /** 状态(0：禁用，1：启用) */
-    state: StateEnum
+    /** 状态 */
+    status: Status
     /** 菜单名称 */
     name: string
     /** 功能代码 */

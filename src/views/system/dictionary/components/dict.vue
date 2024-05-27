@@ -13,7 +13,6 @@ import DictEdit from './dictEdit.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
 import { useBusinessStore } from '@/store'
-import { StateEnum } from '@/core/enums/stateEnum'
 const queryParams = reactive<{ typeId?: number; name?: string }>({
     typeId: undefined,
     name: undefined
@@ -42,7 +41,7 @@ const handleModalClose = (refreshData: boolean) => {
 }
 
 const handleDeleteDict = async (row: Dict) => {
-    if (row.state === 1) return window.$message.warning('请先禁用后再删除')
+    if (row.status === 'enable') return window.$message.warning('请先禁用后再删除')
     await window.$messageBox.confirm('确定要删除该字典吗', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -52,9 +51,9 @@ const handleDeleteDict = async (row: Dict) => {
     handleQuery()
 }
 
-const handleUpdateDictState = async ({ state, id }: Dict) => {
+const handleUpdateDictState = async ({ status, id }: Dict) => {
     await window.$messageBox.confirm(
-        `确定要${state === StateEnum.DISABLED ? '启用' : '禁用'}该用户吗?`,
+        `确定要${status === 'disabled' ? '启用' : '禁用'}该用户吗?`,
         '提示',
         {
             confirmButtonText: '确定',
@@ -62,7 +61,7 @@ const handleUpdateDictState = async ({ state, id }: Dict) => {
             type: 'warning'
         }
     )
-    await updateDictState(id, state === StateEnum.DISABLED ? StateEnum.ENABLE : StateEnum.DISABLED)
+    await updateDictState(id, status === 'disabled' ? 'enable' : 'disabled')
     handleQuery()
 }
 
@@ -71,11 +70,11 @@ const columns: TableColumn<Dict>[] = [
     { label: '字典值', prop: 'value' },
     {
         label: '状态',
-        prop: 'state',
+        prop: 'status',
         render: ({ row }) => {
             return (
-                <StatusView color={row.state === 0 ? 'danger' : 'success'}>
-                    {row.state === 0 ? '禁用' : '启用'}
+                <StatusView status={row.status}>
+                    {row.status === 'enable' ? '禁用' : '启用'}
                 </StatusView>
             )
         }
@@ -100,7 +99,7 @@ const columns: TableColumn<Dict>[] = [
                     <el-divider direction="vertical" />
                     {
                         <a onclick={() => handleUpdateDictState(row)}>
-                            {row.state === 0 ? '启用' : '禁用'}
+                            {row.status === 'disabled' ? '启用' : '禁用'}
                         </a>
                     }
                 </div>

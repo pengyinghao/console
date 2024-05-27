@@ -3,6 +3,7 @@ import { reactive, ref } from 'vue'
 import { PageContainer, Table, TableColumn } from '@/components'
 import { Upload, fetchUploadInfos } from '@/service/api/upload'
 import { formatSize } from '@/utils'
+defineOptions({ name: 'Upload' })
 
 const reload = ref(false)
 const queryParams = reactive({ originalname: '' })

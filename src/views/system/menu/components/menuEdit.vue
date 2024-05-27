@@ -28,7 +28,7 @@ const formData = reactive<UpdateSystemMenuOption>({
     component: '',
     display: 0,
     type: 0,
-    state: 1,
+    status: 'disabled',
     openType: 0
 })
 
@@ -63,7 +63,7 @@ const rules = reactive<FormRules>({
 const close = (refreshData = false) => {
     formData.parentId = undefined
     formData.openType = 0
-    formData.state = 1
+    formData.status = 'disabled'
     formData.display = 0
 
     refForm.value?.resetFields()
@@ -172,7 +172,7 @@ defineExpose({
                 />
             </el-form-item>
             <div class="flex-y-center mb-8px">
-                <el-form-item label="状态" name="state" class="!mb-0 w-50%">
+                <el-form-item label="状态" name="status" class="!mb-0 w-50%">
                     <template #label>
                         <div class="form-item-slot">
                             <el-tooltip
@@ -186,9 +186,9 @@ defineExpose({
                             <span class="ml-4px">菜单状态</span>
                         </div>
                     </template>
-                    <el-radio-group v-model="formData.state">
-                        <el-radio :value="1">启用</el-radio>
-                        <el-radio :value="0">禁用</el-radio>
+                    <el-radio-group v-model="formData.status">
+                        <el-radio value="enable">启用</el-radio>
+                        <el-radio value="disabled">禁用</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item
