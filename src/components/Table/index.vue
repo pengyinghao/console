@@ -11,7 +11,7 @@ import {
     onBeforeMount
 } from 'vue'
 import { TableProps, TableColumnType, TableReactive, PaginationReactive } from './type'
-import { Icon } from '@/components'
+import { Icon, Search } from '@/components'
 import TableColumn from './components/TableColumn.vue'
 import initMethods from './methods'
 
@@ -20,11 +20,16 @@ const columnTypes: TableColumnType[] = ['selection', 'index', 'expand']
 
 const props = withDefaults(defineProps<TableProps>(), {
     rowKey: 'id',
-    load: true,
+    load: false,
     resetPage: false,
     showRefreshBtn: true,
     pagination: true,
-    tree: false
+    tree: false,
+    search: () => {
+        return {
+            options: []
+        }
+    }
 })
 
 const table = reactive<TableReactive>({
@@ -44,6 +49,13 @@ const dataSource = computed(() => {
     return props.data || table.dataSource
 })
 
+let searchParams: Record<string, any> = {}
+const handleSearch = (params: Record<string, any>) => {
+    searchParams = params
+    // eslint-disable-next-line no-use-before-define
+    getTableData()
+}
+
 const getTableData = async () => {
     try {
         // eslint-disable-next-line no-console
@@ -53,7 +65,8 @@ const getTableData = async () => {
         const params: Record<string, any> = {
             asc: table.asc,
             sortDataField: table.sortDataField,
-            ...props.requestParams
+            ...props.requestParams,
+            ...searchParams
         }
 
         if (props.pagination) {
@@ -130,11 +143,20 @@ defineExpose({
 </script>
 <template>
     <div class="c-table">
-        <div class="c-table-header">
-            <el-button @click="getTableData">
-                <Icon name="ep:refresh" />
-            </el-button>
-            <slot name="header"></slot>
+        <div class="c-table-header flex items-start justify-between">
+            <div class="c-table-header--left flex-y-center">
+                <el-button @click="getTableData">
+                    <Icon name="ep:refresh" />
+                </el-button>
+                <slot name="header-left"></slot>
+            </div>
+            <div class="c-table-header--right">
+                <Search
+                    v-if="search.options.length > 0"
+                    v-bind="search"
+                    @search="handleSearch"
+                ></Search>
+            </div>
         </div>
         <el-table
             v-bind="$attrs"

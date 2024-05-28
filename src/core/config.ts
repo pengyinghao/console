@@ -7,7 +7,7 @@ export const LOGIN_PATH = '/login'
 export const FORBIDDEN_PATH = '/forbidden'
 
 /** 白名单地址 */
-export const ALLOW_LIST = [LOGIN_PATH, FORBIDDEN_PATH]
+export const ALLOW_LIST = [LOGIN_PATH, FORBIDDEN_PATH, '/test']
 
 /**  默认值 */
 export const DEFAULT_APP_STORE: AppStore = {

@@ -1,9 +1,8 @@
 <script setup lang="tsx">
 import { reactive, ref } from 'vue'
-import { StatusView, Table, TableColumn } from '@/components'
+import { SearchOption, StatusView, Table, TableColumn } from '@/components'
 import {
     Dict,
-    DictType,
     deleteDict,
     fetchDictInfos,
     fetchDictTypeAllInfos,
@@ -13,24 +12,11 @@ import DictEdit from './dictEdit.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
 import { useBusinessStore } from '@/store'
-const queryParams = reactive<{ typeId?: number; name?: string }>({
-    typeId: undefined,
-    name: undefined
-})
-
 const reload = ref(false)
 
 const handleQuery = () => {
     reload.value = true
 }
-
-const dictTypeInfos = ref<DictType[]>([])
-/** 获取所有字典类型 */
-const getDictTypeInfos = async () => {
-    const res = await fetchDictTypeAllInfos()
-    dictTypeInfos.value = res
-}
-getDictTypeInfos()
 
 const refDictEdit = useCompRef(DictEdit)
 const handleEditDict = (id?: number) => {
@@ -109,44 +95,27 @@ const columns: TableColumn<Dict>[] = [
 ]
 
 const businessStore = useBusinessStore()
-if (businessStore.dictTypeId) {
-    queryParams.typeId = businessStore.dictTypeId
-    businessStore.dictTypeId = undefined
-}
-handleQuery()
+const options = reactive<SearchOption[]>([
+    {
+        mode: 'select',
+        requestApi: fetchDictTypeAllInfos,
+        field: 'typeId',
+        label: '字典类型',
+        displayLabel: 'name',
+        displayValue: 'id',
+        value: businessStore.dictTypeId,
+        valueLabel: businessStore.dictTypeName
+    },
+    { mode: 'input', label: '字典名称', field: 'name' }
+])
 </script>
 <template>
-    <el-form inline class="search-form" label-width="75px" @submit.prevent>
-        <el-form-item label="字典类型">
-            <el-select
-                v-model="queryParams.typeId"
-                clearable
-                style="width: 240px"
-                @change="handleQuery"
-                @clear="handleQuery"
-            >
-                <el-option
-                    v-for="item in dictTypeInfos"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                />
-            </el-select>
-        </el-form-item>
-        <el-form-item label="字典名称">
-            <el-input v-model="queryParams.name" clearable @change="handleQuery" />
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click.stop="handleQuery"> 查询 </el-button>
-            <el-button> 重置 </el-button>
-        </el-form-item>
-    </el-form>
     <Table
         v-model:reload="reload"
         :columns="columns"
         :request-api="fetchDictInfos"
-        :request-params="queryParams"
         :load="false"
+        :search="{ options, labelWidth: 110 }"
     >
         <template #header>
             <el-button type="primary" @click="handleEditDict()"> 新增 </el-button>

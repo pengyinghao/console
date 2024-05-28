@@ -1,5 +1,6 @@
 import { TableColumnCtx } from 'element-plus'
 import { VNode } from 'vue'
+import { SearchProps } from '../Search'
 
 export type TableColumnType = 'default' | 'selection' | 'index' | 'expand'
 
@@ -61,6 +62,9 @@ export interface TableProps {
 
     /** 行数据的 Key，（默认为 id） */
     rowKey?: string
+
+    /** 查询条件 */
+    search: SearchProps
 }
 
 export interface TableReactive {

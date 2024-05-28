@@ -1,17 +1,13 @@
 <script setup lang="tsx">
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Table, TableColumn, PageContainer } from '@/components'
+import { Table, TableColumn, PageContainer, SearchOption } from '@/components'
 import RoleEdit from './components/roleEdit.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
 import { fetchRoleInfos, Role, deleteRole } from '@/service/api/system/role'
 import Accredit from './components/accredit.vue'
-
 defineOptions({ name: 'Role' })
-const queryParams = reactive<{ name?: string }>({
-    name: undefined
-})
 
 const reload = ref(false)
 const handleQuery = () => {
@@ -88,26 +84,17 @@ const columns: TableColumn<Role>[] = [
         }
     }
 ]
+
+const options = reactive<SearchOption[]>([{ mode: 'input', label: '角色名称', field: 'name' }])
 </script>
 <template>
     <PageContainer>
-        <template #header>
-            <el-form inline class="search-form" label-width="75px" @submit.prevent>
-                <el-form-item label="角色名称">
-                    <el-input v-model="queryParams.name" clearable @change="handleQuery" />
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click.stop="handleQuery">查询</el-button>
-                    <el-button> 重置 </el-button>
-                </el-form-item>
-            </el-form>
-        </template>
         <Table
             v-model:reload="reload"
             :columns="columns"
             :request-api="fetchRoleInfos"
-            :request-params="queryParams"
             :pagination="false"
+            :search="{ options: options, labelWidth: 110 }"
         >
             <template #header>
                 <el-button type="primary" @click="handleEditRole()">创建</el-button>

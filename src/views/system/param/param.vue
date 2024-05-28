@@ -1,15 +1,12 @@
 <script setup lang="tsx">
 import { reactive, ref } from 'vue'
-import { PageContainer, Table, TableColumn } from '@/components'
+import { PageContainer, SearchOption, Table, TableColumn } from '@/components'
 import ParamsEdit from './components/paramsEdit.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
 import { fetchParamInfos, Param, deleteParam } from '@/service/api/system/param'
 // eslint-disable-next-line vue/no-reserved-component-names
 defineOptions({ name: 'Param' })
-const queryParams = reactive<{ name?: string }>({
-    name: undefined
-})
 
 const reload = ref(false)
 
@@ -64,27 +61,18 @@ const columns: TableColumn<Param>[] = [
         }
     }
 ]
+
+const options = reactive<SearchOption[]>([{ mode: 'input', label: '参数名', field: 'name' }])
 </script>
 <template>
     <PageContainer>
-        <template #header>
-            <el-form inline class="search-form" label-width="75px" @submit.prevent>
-                <el-form-item label="参数名">
-                    <el-input v-model="queryParams.name" clearable @change="handleQuery" />
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click.stop="handleQuery"> 查询 </el-button>
-                    <el-button> 重置 </el-button>
-                </el-form-item>
-            </el-form>
-        </template>
         <Table
             v-model:reload="reload"
             :columns="columns"
             :request-api="fetchParamInfos"
-            :request-params="queryParams"
+            :search="{ options: options, labelWidth: 100 }"
         >
-            <template #header>
+            <template #header-left>
                 <el-button type="primary" @click="handleEditParam()"> 新增 </el-button>
             </template>
         </Table>

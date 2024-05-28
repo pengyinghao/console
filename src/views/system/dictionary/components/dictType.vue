@@ -1,6 +1,6 @@
 <script setup lang="tsx">
 import { reactive, ref } from 'vue'
-import { StatusView, Table, TableColumn } from '@/components'
+import { SearchOption, StatusView, Table, TableColumn } from '@/components'
 import {
     deleteDictType,
     fetchDictTypeInfos,
@@ -13,10 +13,6 @@ import { setDefaultValue } from '@/utils'
 import { useBusinessStore } from '@/store'
 
 const reload = ref(false)
-const queryParams = reactive({
-    name: undefined,
-    no: undefined
-})
 
 const refEditDictType = useCompRef(DictTypeEdit)
 const handleQuery = () => {
@@ -64,8 +60,9 @@ const handleUpdateUserState = async ({ status, id }: DictType) => {
 
 const emit = defineEmits(['navigation'])
 const businessStore = useBusinessStore()
-const handleNavigationDictInfo = (id: number) => {
-    businessStore.dictTypeId = id
+const handleNavigationDictInfo = (row: DictType) => {
+    businessStore.dictTypeId = row.id
+    businessStore.dictTypeName = row.name
     emit('navigation')
 }
 
@@ -75,7 +72,7 @@ const columns: TableColumn<DictType>[] = [
         label: '类型名称',
         prop: 'name',
         render: ({ row }) => {
-            return <a onclick={() => handleNavigationDictInfo(row.id)}>{row.name}</a>
+            return <a onclick={() => handleNavigationDictInfo(row)}>{row.name}</a>
         }
     },
     {
@@ -110,25 +107,18 @@ const columns: TableColumn<DictType>[] = [
         }
     }
 ]
+
+const options = reactive<SearchOption[]>([
+    { mode: 'input', label: '编号', field: 'no' },
+    { mode: 'input', label: '名称', field: 'name' }
+])
 </script>
 <template>
-    <el-form inline class="search-form" label-width="75px" @submit.prevent>
-        <el-form-item label="编号">
-            <el-input v-model="queryParams.no" clearable @change="handleQuery" />
-        </el-form-item>
-        <el-form-item label="名称">
-            <el-input v-model="queryParams.name" clearable @change="handleQuery" />
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click.stop="handleQuery"> 查询 </el-button>
-            <el-button> 重置 </el-button>
-        </el-form-item>
-    </el-form>
     <Table
         v-model:reload="reload"
         :columns="columns"
         :request-api="fetchDictTypeInfos"
-        :request-params="queryParams"
+        :search="{ options }"
     >
         <template #header>
             <el-button type="primary" @click="handleEditDictType()"> 新增 </el-button>

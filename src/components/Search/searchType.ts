@@ -1,6 +1,7 @@
-import { FormProps } from 'element-plus'
-import { SearchControlOption } from './searchControl'
+import { SearchOption } from './searchControl'
 
 export type SearchProps = {
-    options: SearchControlOption[]
-} & Partial<FormProps>
+    options: SearchOption[]
+    /** 条件下拉的宽度 */
+    labelWidth?: number
+}

@@ -6,7 +6,8 @@ import {
     Table,
     TableColumn,
     MoreButton,
-    MoreButtonProp
+    MoreButtonProp,
+    SearchOption
 } from '@/components'
 import {
     deleteUser,
@@ -20,11 +21,6 @@ import EditUser from './components/editUser.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
 defineOptions({ name: 'User' })
-
-const queryParams = reactive({
-    name: undefined,
-    account: undefined
-})
 
 const reload = ref(false)
 const handleQuery = () => {
@@ -160,29 +156,20 @@ const columns: TableColumn<User>[] = [
         }
     }
 ]
+
+const options = reactive<SearchOption[]>([
+    { mode: 'input', label: '姓名', field: 'name' },
+    { mode: 'input', label: '账号', field: 'account' }
+])
 </script>
 
 <template>
     <PageContainer>
-        <template #header>
-            <el-form inline class="search-form" label-width="75px" @submit.prevent>
-                <el-form-item label="姓名">
-                    <el-input v-model="queryParams.name" clearable @change="handleQuery" />
-                </el-form-item>
-                <el-form-item label="账号">
-                    <el-input v-model="queryParams.account" clearable @change="handleQuery" />
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click.stop="handleQuery"> 查询 </el-button>
-                    <el-button> 重置 </el-button>
-                </el-form-item>
-            </el-form>
-        </template>
         <Table
             v-model:reload="reload"
             :columns="columns"
             :request-api="fetchUserInfos"
-            :request-params="queryParams"
+            :search="{ options: options }"
         >
             <template #header>
                 <el-button type="primary" @click="handleAddUser()"> 新增用户 </el-button>

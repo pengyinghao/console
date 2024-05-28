@@ -1,6 +1,6 @@
 <script lang="tsx" setup>
 import { reactive, ref } from 'vue'
-import { PageContainer, StatusView, Table, TableColumn } from '@/components'
+import { PageContainer, SearchOption, StatusView, Table, TableColumn } from '@/components'
 import { Menu, deleteMenu, fetchMenuInfos } from '@/service/api/system/menu'
 import MenuEdit from './components/menuEdit.vue'
 import { useCompRef } from '@/composables/useCompRef'
@@ -8,9 +8,6 @@ import { copyText, setDefaultValue } from '@/utils'
 import Icon from '@/components/Icon/Icon.vue'
 
 const reload = ref(false)
-const queryParams = reactive({
-    name: undefined
-})
 
 const handleSearch = () => {
     reload.value = true
@@ -93,28 +90,19 @@ const columns: TableColumn<Menu>[] = [
         }
     }
 ]
+
+const options = reactive<SearchOption[]>([{ mode: 'input', label: '菜单名称', field: 'name' }])
 </script>
 <template>
     <PageContainer>
-        <template #header>
-            <el-form inline class="search-form" label-width="75px" @submit.prevent>
-                <el-form-item label="菜单名称">
-                    <el-input v-model="queryParams.name" clearable @change="handleSearch" />
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click.stop="handleSearch"> 查询 </el-button>
-                    <el-button>重置</el-button>
-                </el-form-item>
-            </el-form>
-        </template>
         <Table
             v-model:reload="reload"
             :columns="columns"
             :request-api="fetchMenuInfos"
-            :request-params="queryParams"
             :pagination="false"
+            :search="{ options: options, labelWidth: 110 }"
         >
-            <template #header>
+            <template #header-left>
                 <el-button type="primary" @click="handleMenuEdit()"> 新增 </el-button>
             </template>
         </Table>
