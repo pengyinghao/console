@@ -74,7 +74,7 @@ const handleUpdateUserFreezeState = async ({ id, freeze }: User) => {
         cancelButtonText: '取消',
         type: 'warning'
     })
-    await updateUserFreeze(id, !freeze)
+    await updateUserFreeze(id, freeze === 0 ? 1 : 0)
     handleQuery()
 }
 

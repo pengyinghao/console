@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import { reactive, ref } from 'vue'
 import { PageContainer, Table, TableColumn } from '@/components'
-import { Upload, fetchUploadInfos } from '@/service/api/upload'
+import { Upload, fetchUploadInfos } from '@/service/api/system/upload'
 import { formatSize } from '@/utils'
 
 const reload = ref(false)

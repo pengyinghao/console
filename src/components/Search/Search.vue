@@ -15,9 +15,13 @@ const handleQuery = () => {
     const formData: Record<string, any> = {}
     queryConditions.value.forEach((item) => {
         if (!item.value) {
-            delete formData[item.field]
+            delete formData[item.field!]
+        } else if (item.mode === 'date' && Array.isArray(item.value)) {
+            // 如果为日期段 ，则拆分开来
+            formData[item.startField!] = item.value[0]
+            formData[item.endField!] = item.value[1]
         } else {
-            formData[item.field] = item.value
+            formData[item.field!] = item.value
         }
     })
     emit('search', formData)

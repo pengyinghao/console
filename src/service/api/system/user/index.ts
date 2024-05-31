@@ -87,7 +87,7 @@ export const updateUserState = (id: number, status: Status) => {
 }
 
 /** 更新用户冻结状态 */
-export const updateUserFreeze = (id: number, freeze: boolean) => {
+export const updateUserFreeze = (id: number, freeze: number) => {
     return requestPut(`/system/user/freeze`, {
         id,
         freeze

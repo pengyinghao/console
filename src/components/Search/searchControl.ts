@@ -44,7 +44,7 @@ type ControlOption = {
     value?: any
     valueLabel?: any
     /** 传递给后端的字段 */
-    field: string
+    field?: string
     /** 标题 */
     label: string
     width?: string | number

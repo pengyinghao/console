@@ -19,7 +19,7 @@ export interface Upload {
 
 /** 文件上传 */
 export const upload = (formData: FormData) => {
-    return requestPost<string>('/upload', formData, {
+    return requestPost<string>('/system/upload', formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         },
@@ -33,7 +33,7 @@ export const uploadMultiple = (files: File[]) => {
     files.forEach((file) => {
         formData.append('files', file)
     })
-    return requestPost('/upload/upload-multiple', formData, {
+    return requestPost('/system/upload/upload-multiple', formData, {
         headers: {
             'Content-type': 'multipart/form-data'
         }
@@ -42,5 +42,5 @@ export const uploadMultiple = (files: File[]) => {
 
 /** 分页获取上传的文件信息 */
 export const fetchUploadInfos = (params: Record<string, any>) => {
-    return requestGet('/upload', { params })
+    return requestGet('/system/upload', { params })
 }
