@@ -6,9 +6,9 @@ import { requestConfig, ResponseData, ResponseEnum } from './types'
  * 处理 axios 返回信息
  * @param response 相应对象
  */
-export const handleResponse = <T>(response: AxiosResponse) => {
-    return new Promise((resolve, reject) => {
-        const { code, message, data } = response.data as ResponseData<T>
+export const handleResponse = <T>(response: AxiosResponse<ResponseData<T>>) => {
+    return new Promise<T>((resolve, reject) => {
+        const { code, message, data } = response.data
 
         // 是否处理消息提示
         const handleMessage = (response.config as requestConfig).handleMessage
@@ -22,7 +22,7 @@ export const handleResponse = <T>(response: AxiosResponse) => {
             if (handleMessage) {
                 ElMessage({ type: 'error', message })
             }
-            reject(new Error(message))
+            reject(response.data)
         }
     })
 }

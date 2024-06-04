@@ -38,6 +38,7 @@ export const useUserStore = defineStore(
         const loginOut = () => {
             // 通过动态路由移出 路由信息
             dynamicRoute.value.forEach((fn) => fn())
+            dynamicRoute.value = []
         }
 
         const getUserCurrent = async () => {

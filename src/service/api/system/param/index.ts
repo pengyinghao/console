@@ -8,8 +8,8 @@ export interface Param {
     label: string
     /** 参数值 */
     value: string
-    /** 是否系统内置 */
-    sys: boolean
+    /** 是否系统内置(0：是，1：否) */
+    sys: number
     /** 备注 */
     remark?: string
     /** 创建时间 */

@@ -1,6 +1,6 @@
 <script lang="ts" setup></script>
 <template>
-    <el-dialog :close-on-click-modal="false" :close-on-press-escape="false" v-bind="$attrs">
+    <el-dialog :close-on-click-modal="false" v-bind="$attrs">
         <template #header>
             <slot name="header"></slot>
         </template>

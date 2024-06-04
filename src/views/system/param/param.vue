@@ -5,8 +5,7 @@ import ParamsEdit from './components/paramsEdit.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
 import { fetchParamInfos, Param, deleteParam } from '@/service/api/system/param'
-// eslint-disable-next-line vue/no-reserved-component-names
-defineOptions({ name: 'Param' })
+defineOptions({ name: 'Params' })
 
 const reload = ref(false)
 
@@ -53,7 +52,7 @@ const columns: TableColumn<Param>[] = [
                 <div>
                     <a onclick={() => handleEditParam(row.id)}>修改</a>
                     <el-divider direction="vertical" />
-                    <a disabled={row.sys} onclick={() => handleDeleteParam(row)}>
+                    <a disabled={row.sys === 0} onclick={() => handleDeleteParam(row)}>
                         删除
                     </a>
                 </div>

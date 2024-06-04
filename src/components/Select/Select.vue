@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
 
 /** 是否重新加载 */
 const reload = defineModel('reload', { type: Boolean, default: false })
-const value = defineModel({ type: Object })
+const value = defineModel({ type: String })
 
 const options = ref<any[]>([])
 const init = async () => {

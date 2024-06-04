@@ -19,7 +19,7 @@ export enum ResponseEnum {
     unauthorized = 401
 }
 
-export interface ResponseData<T> {
+export interface ResponseData<T = any> {
     /** 业务响应码 */
     code: number
     /** 返回的数据 */

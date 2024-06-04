@@ -28,7 +28,7 @@ const formData = reactive<UpdateSystemMenuOption>({
     component: '',
     display: 0,
     type: 0,
-    status: 'disabled',
+    status: 'enable',
     openType: 0
 })
 
@@ -63,7 +63,7 @@ const rules = reactive<FormRules>({
 const close = (refreshData = false) => {
     formData.parentId = undefined
     formData.openType = 0
-    formData.status = 'disabled'
+    formData.status = 'enable'
     formData.display = 0
 
     refForm.value?.resetFields()
@@ -73,6 +73,9 @@ const close = (refreshData = false) => {
 
 const handleConfirm = async () => {
     await refForm.value?.validate()
+    if (formData.id === formData.parentId) {
+        return window.$message.error('上级菜单不能为当前菜单')
+    }
     formData.id ? await updateMenu(formData) : await createMenu(formData)
     close(true)
 }

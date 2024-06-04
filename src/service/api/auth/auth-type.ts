@@ -3,6 +3,7 @@ export interface UserLoginParams {
     account: string
     password: string
     code: string
+    uuid: string
 }
 
 /** 用户登录相应实体 */

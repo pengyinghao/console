@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import { defineProps } from 'vue'
 import { TableColumn, TableColumnScope, TableHeaderScope } from '../type'
-import { dateFormat } from '@/utils'
+import { dateFormat, setDefaultValue } from '@/utils'
 defineProps<{ column: TableColumn }>()
 
 const renderColumn = (item: TableColumn) => {
@@ -20,7 +20,7 @@ const renderColumn = (item: TableColumn) => {
                     if (item.dateFormat)
                         return dateFormat((scope.row || {})[item.prop!], item.format)
 
-                    return (scope.row || {})[item.prop!]
+                    return setDefaultValue((scope.row || {})[item.prop!])
                 },
                 header: (scope: TableHeaderScope<any>) => {
                     if (item.renderHeader) return item.renderHeader(scope)

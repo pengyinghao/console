@@ -96,8 +96,8 @@ const options = reactive<SearchOption[]>([{ mode: 'input', label: '角色名称'
             :pagination="false"
             :search="{ options: options, labelWidth: 110 }"
         >
-            <template #header>
-                <el-button type="primary" @click="handleEditRole()">创建</el-button>
+            <template #header-left>
+                <el-button type="primary" @click="handleEditRole()">新增</el-button>
             </template>
         </Table>
         <!-- 新增、编辑 -->

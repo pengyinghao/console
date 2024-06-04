@@ -11,7 +11,7 @@ export interface Log {
     actionName: string
     /** 操作人ip */
     actionIp?: string
-    /** 操作内容 */
+    /** 操作描述 */
     actionMessage: string
     /** 操作人地址 */
     actionAddress?: string

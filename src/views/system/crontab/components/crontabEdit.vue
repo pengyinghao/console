@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { FormInstance, FormRules } from 'element-plus'
 import { reactive, ref } from 'vue'
-import Modal from '@/components/Modal/Modal.vue'
-import {
-    UpdateRoleOption,
-    createRole,
-    fetchRoleDetail,
-    updateRole
-} from '@/service/api/system/role'
 import { ruleHelper } from '@/utils/ruleHelper'
+import { Modal, Select } from '@/components'
+import {
+    UpdateCrontabOption,
+    createCrontab,
+    fetchCrontabDetail,
+    updateCrontab
+} from '@/service/api/system/crontab'
 
 const emits = defineEmits<{
     (e: 'close', refreshData: boolean): void
@@ -16,10 +16,10 @@ const emits = defineEmits<{
 
 const refForm = ref<FormInstance>()
 
-const formData = reactive<UpdateRoleOption>({
-    id: undefined,
+const formData = reactive<UpdateCrontabOption>({
     name: '',
-    code: '',
+    type: 'task',
+    expression: '',
     remark: undefined
 })
 
@@ -49,12 +49,12 @@ const rules = reactive<FormRules>({
 const visible = ref(false)
 const loading = ref(false)
 
-/** 获取角色详情 */
-const getRoleDetail = async () => {
+/** 获取定时任务详情 */
+const getCrontabDetail = async () => {
     if (!formData.id) return
     try {
         loading.value = true
-        const result = await fetchRoleDetail(formData.id)
+        const result = await fetchCrontabDetail(formData.id)
         Object.assign(formData, result)
     } finally {
         loading.value = false
@@ -63,7 +63,7 @@ const getRoleDetail = async () => {
 
 const showModal = (id?: number) => {
     formData.id = id
-    id && getRoleDetail()
+    id && getCrontabDetail()
     visible.value = true
 }
 
@@ -76,7 +76,7 @@ const close = (refreshData = false) => {
 const saveData = async () => {
     try {
         loading.value = true
-        formData.id ? await updateRole(formData) : await createRole(formData)
+        formData.id ? await updateCrontab(formData) : await createCrontab(formData)
         close(true)
     } finally {
         loading.value = false
@@ -95,24 +95,48 @@ defineExpose({
 <template>
     <Modal
         v-model="visible"
-        :title="formData.id ? '修改角色' : '新增角色'"
+        :title="formData.id ? '修改定时任务' : '添加定时任务'"
         width="500"
         :before-close="() => close()"
     >
-        <el-form ref="refForm" :model="formData" :rules="rules" label-width="85px">
-            <el-form-item label="角色标识" prop="50">
-                <el-input v-model="formData.code" maxlength="50" placeholder="请输入角色标识" />
+        <el-form ref="refForm" :model="formData" :rules="rules" label-width="100px">
+            <el-form-item label="任务名称" prop="name">
+                <el-input v-model="formData.name" maxlength="20" placeholder="请输入任务名称" />
             </el-form-item>
-            <el-form-item label="角色名称" prop="name">
-                <el-input v-model="formData.name" maxlength="20" placeholder="请输入角色名称" />
+            <el-form-item label="任务类型" prop="type">
+                <Select
+                    v-model="formData.type"
+                    :data="[
+                        { label: '系统', value: 'sys' },
+                        { label: '任务', value: 'task' }
+                    ]"
+                    placeholder="请选择任务类型"
+                >
+                </Select>
             </el-form-item>
-            <el-form-item label="角色描述" prop="remark">
+            <el-form-item label="定时表达式" prop="expression">
+                <el-input
+                    v-model="formData.expression"
+                    maxlength="20"
+                    placeholder="请输入定时表达式"
+                />
+            </el-form-item>
+            <el-form-item label="任务执行参数" prop="params">
+                <el-input
+                    v-model="formData.params"
+                    :rows="2"
+                    type="textarea"
+                    maxlength="200"
+                    placeholder="请输入任务执行参数"
+                />
+            </el-form-item>
+            <el-form-item label="任务描述" prop="remark">
                 <el-input
                     v-model="formData.remark"
                     :rows="2"
                     type="textarea"
                     maxlength="200"
-                    placeholder="请输入角色描述"
+                    placeholder="请输入任务描述"
                 />
             </el-form-item>
         </el-form>

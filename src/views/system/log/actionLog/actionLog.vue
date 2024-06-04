@@ -1,8 +1,9 @@
 <script setup lang="tsx">
 import { reactive } from 'vue'
 import { Table, TableColumn, PageContainer, SearchOption } from '@/components'
-import { Log, fetchLogInfos, ActionType } from '@/service/api/system/log'
+import { Log, fetchLogInfos, ActionType } from '@/service/api/system/log/actionLog'
 import { setDefaultValue } from '@/utils'
+defineOptions({ name: 'ActionLog' })
 
 const actionTypeText: Record<ActionType, string> = {
     create: '创建',
@@ -48,6 +49,7 @@ const options = reactive<SearchOption[]>([
     {
         mode: 'date',
         type: 'daterange',
+        field: 'actionTime',
         startField: 'startDate',
         endField: 'endDate',
         label: '操作时间'
@@ -64,5 +66,3 @@ const options = reactive<SearchOption[]>([
         </Table>
     </PageContainer>
 </template>
-
-<style scoped></style>

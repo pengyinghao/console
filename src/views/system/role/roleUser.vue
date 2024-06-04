@@ -1,5 +1,5 @@
 <script setup lang="tsx">
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { PageContainer, Table, TableColumn, StatusView } from '@/components'
 import { fetchRoleUser } from '@/service/api/system/role'
@@ -7,9 +7,12 @@ import { User } from '@/service/api/system/user'
 import { setDefaultValue } from '@/utils'
 defineOptions({ name: 'RoleUser' })
 const route = useRoute()
+
+const reload = ref(false)
 const queryParams = reactive({
     roleId: route.params.id
 })
+reload.value = true
 
 const columns: TableColumn<User>[] = [
     { label: '账号', prop: 'account' },
@@ -50,6 +53,7 @@ const columns: TableColumn<User>[] = [
 <template>
     <PageContainer>
         <Table
+            v-model:reload="reload"
             :columns="columns"
             :request-api="fetchRoleUser"
             :request-params="queryParams"

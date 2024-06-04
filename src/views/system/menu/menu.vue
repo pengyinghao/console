@@ -7,6 +7,8 @@ import { useCompRef } from '@/composables/useCompRef'
 import { copyText, setDefaultValue } from '@/utils'
 import Icon from '@/components/Icon/Icon.vue'
 
+// eslint-disable-next-line vue/no-reserved-component-names
+defineOptions({ name: 'Menu' })
 const reload = ref(false)
 
 const handleSearch = () => {
@@ -41,7 +43,7 @@ const columns: TableColumn<Menu>[] = [
         render: ({ row }) => {
             return (
                 <StatusView status={row.status}>
-                    {row.status === 'enable' ? '禁用' : '启用'}
+                    {row.status === 'enable' ? '启用' : '禁用'}
                 </StatusView>
             )
         }

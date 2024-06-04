@@ -5,9 +5,7 @@ import { ResponseData } from '../../request/types'
 
 /** 登录 */
 export const login = (params: UserLoginParams) => {
-    return requestPost<UserLoginResponse>('/system/user/login', params, {
-        handleMessage: false
-    })
+    return requestPost<UserLoginResponse>('/system/user/login', params)
 }
 
 /** 刷新token */

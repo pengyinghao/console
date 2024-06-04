@@ -60,7 +60,7 @@ const columns: TableColumn<Dict>[] = [
         render: ({ row }) => {
             return (
                 <StatusView status={row.status}>
-                    {row.status === 'enable' ? '禁用' : '启用'}
+                    {row.status === 'enable' ? '启用' : '禁用'}
                 </StatusView>
             )
         }
@@ -117,7 +117,7 @@ const options = reactive<SearchOption[]>([
         :load="false"
         :search="{ options, labelWidth: 110 }"
     >
-        <template #header>
+        <template #header-left>
             <el-button type="primary" @click="handleEditDict()"> 新增 </el-button>
         </template>
     </Table>

@@ -12,9 +12,11 @@ interface FormData {
     password: string
     /** 验证码 */
     code: string
+    uuid: string
 }
 
 const formData = reactive<FormData>({
+    uuid: '',
     account: 'admin',
     password: '123456',
     code: ''
@@ -22,8 +24,9 @@ const formData = reactive<FormData>({
 
 const captcha = ref('')
 const getCaptcha = async () => {
-    const captchaResult = await fetchCaptcha()
-    const blob = new Blob([captchaResult.data], { type: 'image/svg+xml' })
+    const { code, uuid } = await fetchCaptcha()
+    formData.uuid = uuid
+    const blob = new Blob([atob(code)], { type: 'image/svg+xml' })
     const fileReader = new FileReader()
     fileReader.readAsDataURL(blob)
     fileReader.onloadend = (e: any) => {
@@ -40,19 +43,22 @@ const router = useRouter()
 /** 登录 */
 const onLogin = async () => {
     if (!formData.account) return window.$message.warning('请输入账号')
-
     if (!formData.password) return window.$message.warning('请输入密码')
     if (!formData.code) return window.$message.warning('请输入验证码')
     loading.value = true
     try {
         const result = await login(formData)
+        // 登录成功
         sessionStorage.setItem(ACCESS_TOKEN, result.access_token)
         sessionStorage.setItem(REFRESH_TOKEN, result.refresh_token)
+        router.push({ path: '/' })
+    } catch (ex: any) {
+        if (ex.code === 10000 || ex.code === 10001) {
+            getCaptcha()
+        }
     } finally {
         loading.value = false
     }
-
-    router.push({ path: '/' })
 }
 </script>
 <template>

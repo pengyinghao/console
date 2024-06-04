@@ -1,6 +1,11 @@
-import { AxiosResponse } from 'axios'
-import { request } from '@/service/request/baseRequest'
+import { requestGet } from '@/service/request'
+
+interface CaptchaResponse {
+    code: string
+    uuid: string
+}
+
 /** 获取验证码 */
-export const fetchCaptcha = (): Promise<AxiosResponse> => {
-    return request({ url: '/captcha', responseType: 'arraybuffer', handleData: false })
+export const fetchCaptcha = () => {
+    return requestGet<CaptchaResponse>('/captcha')
 }

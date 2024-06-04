@@ -80,7 +80,7 @@ const columns: TableColumn<DictType>[] = [
         render: ({ row }) => {
             return (
                 <StatusView status={row.status}>
-                    {row.status === 'enable' ? '禁用' : '启用'}
+                    {row.status === 'disabled' ? '禁用' : '启用'}
                 </StatusView>
             )
         }
@@ -120,7 +120,7 @@ const options = reactive<SearchOption[]>([
         :request-api="fetchDictTypeInfos"
         :search="{ options }"
     >
-        <template #header>
+        <template #header-left>
             <el-button type="primary" @click="handleEditDictType()"> 新增 </el-button>
         </template>
     </Table>

@@ -65,7 +65,7 @@ export const fetchUserInfos = (params: Record<string, string>) => {
 
 /** 获取用户详情 */
 export const fetchUserDetail = (id: number) => {
-    return requestGet(`/system/user/${id}`)
+    return requestGet<User>(`/system/user/${id}`)
 }
 
 /** 创建用户 */
