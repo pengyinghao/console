@@ -73,7 +73,7 @@ const close = (refreshData = false) => {
 
 const handleConfirm = async () => {
     await refForm.value?.validate()
-    if (formData.id === formData.parentId) {
+    if (formData.id && formData.parentId && formData.id === formData.parentId) {
         return window.$message.error('上级菜单不能为当前菜单')
     }
     formData.id ? await updateMenu(formData) : await createMenu(formData)
