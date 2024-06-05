@@ -21,7 +21,14 @@ watch(route, () => addTab(), { immediate: true })
 const { fixedTabs, tabs } = toRefs(tabStore)
 const tabViewContainer = ref<HTMLElement>()
 const refContextMenu = useCompRef(contextMenu)
-onClickOutside(tabViewContainer, () => {
+
+const pointerElement = ref<HTMLElement>()
+const tabItemRightClick = (tab: RouteLocationNormalizedLoaded, event: PointerEvent) => {
+    pointerElement.value = event.target as HTMLElement
+    refContextMenu.value?.openContextMenu(tab, tabViewContainer.value, event)
+}
+
+onClickOutside(pointerElement, () => {
     refContextMenu.value?.hideContextMenu()
 })
 
@@ -46,9 +53,7 @@ const onCloseCurrTab = (tab: RouteLocationNormalizedLoaded) => {
                     :to="tab.path"
                     :class="{ active: tab.path === route.path }"
                     class="tab-item"
-                    @contextmenu.prevent="
-                        refContextMenu?.openContextMenu(tab, tabViewContainer, $event)
-                    "
+                    @contextmenu.prevent="tabItemRightClick(tab, $event)"
                 >
                     <span>{{ tab.meta?.name }}</span>
                     <Icon

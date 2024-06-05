@@ -26,9 +26,7 @@ const selectTab = ref<RouteLocationNormalizedLoaded>()
 /** 右键菜单是否显示 */
 const contextMenuVisible = ref(false)
 /** 菜单宽度 */
-const menuWidth = computed(() =>
-    appStore.menuIsCollapse ? appStore.menuCollapseWidth : appStore.menuWidth
-)
+const menuWidth = computed(() => (appStore.menuIsCollapse ? appStore.menuCollapseWidth : appStore.menuWidth))
 
 /** 右键菜单样式 */
 const contextMenuStyle = computed<CSSProperties>(() => {
@@ -42,7 +40,7 @@ const contextMenuStyle = computed<CSSProperties>(() => {
 const openContextMenu = (
     tab: RouteLocationNormalizedLoaded,
     tabViewContainer: HTMLElement | undefined,
-    event: MouseEvent
+    event: PointerEvent
 ) => {
     const offsetLeft = tabViewContainer?.getBoundingClientRect().left || 0 // 相对于视口的位置距离左侧像素
     const offsetWidth = tabViewContainer?.offsetWidth ?? 0 // tab container的宽度
@@ -63,7 +61,7 @@ const contentMenuOptions = computed<ContentMenuOptions[]>(() => {
     return [
         { icon: 'ep:refresh', label: '刷新当前', operation: 'refresh' },
         {
-            icon: 'ep:close',
+            icon: 'mingcute:close-line',
             label: '关闭当前',
             hide,
             operation: 'closeCurr'
@@ -85,10 +83,8 @@ const hideContextMenu = () => {
 }
 
 const tabCurrentIndex = computed(() => {
-    return (
-        (selectTab.value && tabs.value.findIndex((item) => item.path === selectTab.value?.path)) ||
-        0
-    )
+    if (!selectTab.value) return 0
+    return tabs.value.findIndex((item) => item.path === selectTab.value?.path) || 0
 })
 
 /** 关闭左侧标签 */
@@ -161,30 +157,29 @@ defineExpose({
 
 <template>
     <teleport to="body">
-        <div
+        <ul
             v-show="contextMenuVisible"
             :style="{
                 ...contextMenuStyle,
                 backgroundColor: 'var(--el-color-white)'
             }"
-            class="w-140px fixed z-1000 text-gray context-menu"
+            class="context-menu"
         >
             <template v-for="item in contentMenuOptions" :key="item.icon">
-                <div v-show="!item.hide" class="menu-item" @click="onContextClick(item.operation)">
+                <li v-show="!item.hide" class="menu-item" @click="onContextClick(item.operation)">
                     <Icon :name="item.icon" />
                     <span class="pl-8px">{{ item.label }}</span>
-                </div>
+                </li>
             </template>
-        </div>
+        </ul>
     </teleport>
 </template>
 <style lang="scss" scoped>
 .context-menu {
+    @apply w-140px fixed z-1000 rounded-4px z-99999 p-0 m-0;
     border-right: none;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 15%);
-
-    @apply rounded-4px z-99999;
-
+    color: var(--el-text-color-primary);
     .menu-item {
         transition: background-color var(--el-transition-duration);
         transition-timing-function: var(--el-transition-function-ease-in-out-bezier);
@@ -197,7 +192,6 @@ defineExpose({
 
         &:hover {
             background-color: var(--el-color-primary-light-9);
-
             @apply dark:bg-dark-1;
         }
     }
