@@ -1,15 +1,5 @@
 <script setup lang="ts">
-import {
-    withDefaults,
-    defineProps,
-    ref,
-    reactive,
-    computed,
-    watch,
-    watchEffect,
-    toRefs,
-    onBeforeMount
-} from 'vue'
+import { withDefaults, defineProps, ref, reactive, computed, watch, watchEffect, toRefs, onBeforeMount } from 'vue'
 import { TableProps, TableColumnType, TableReactive, PaginationReactive } from './type'
 import { Icon, Search } from '@/components'
 import TableColumn from './components/TableColumn.vue'
@@ -151,20 +141,10 @@ defineExpose({
                 <slot name="header-left"></slot>
             </div>
             <div class="c-table-header--right">
-                <Search
-                    v-if="search.options.length > 0"
-                    v-bind="search"
-                    @search="handleSearch"
-                ></Search>
+                <Search v-if="search.options.length > 0" v-bind="search" @search="handleSearch"></Search>
             </div>
         </div>
-        <el-table
-            v-bind="$attrs"
-            ref="tableRef"
-            v-loading="table.loading"
-            :data="dataSource"
-            :row-key="rowKey"
-        >
+        <el-table v-bind="$attrs" ref="tableRef" v-loading="table.loading" :data="dataSource" :row-key="rowKey">
             <template v-for="column in columns" :key="column[rowKey]">
                 <el-table-column
                     v-if="column.type && columnTypes.includes(column.type)"

@@ -67,10 +67,7 @@ function generatorDynamicRouter(pages: SystemMenu[]): RouteRecordRaw[] {
         }
 
         // 多级菜单，顶级用来装载layout
-        const currentRouter: RouteRecordRaw = markRoute(
-            page,
-            parentId === null ? Layout : importModule(component)
-        )
+        const currentRouter: RouteRecordRaw = markRoute(page, parentId === null ? Layout : importModule(component))
         // 存在子级
         if (children && children.length > 0) {
             currentRouter.children = generatorDynamicRouter(children)

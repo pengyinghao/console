@@ -38,17 +38,7 @@ export type UpdateSystemMenuOption = Omit<Optional<Menu, 'id'>, 'createTime' | '
 export type PartialMenu = Partial<Menu>
 export type SystemMenu = { children: SystemMenu[] } & Pick<
     Menu,
-    | 'id'
-    | 'component'
-    | 'display'
-    | 'icon'
-    | 'openType'
-    | 'params'
-    | 'parentId'
-    | 'sort'
-    | 'url'
-    | 'name'
-    | 'type'
+    'id' | 'component' | 'display' | 'icon' | 'openType' | 'params' | 'parentId' | 'sort' | 'url' | 'name' | 'type'
 >
 export type Buttons = { menuId: number } & Pick<Menu, 'id' | 'code' | 'icon'>
 export type DefaultNavigate = Pick<Menu, 'name' | 'url'>

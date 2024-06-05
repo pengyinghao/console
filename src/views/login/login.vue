@@ -104,9 +104,7 @@ const onLogin = async () => {
             <div class="text-right color-#999 mt-18px cursor-pointer">
                 <el-link type="info" :underline="false" class="font-400">忘记密码</el-link>
             </div>
-            <el-button v-loading="loading" type="primary" class="w-100% mt-40px" @click="onLogin">
-                登录
-            </el-button>
+            <el-button v-loading="loading" type="primary" class="w-100% mt-40px" @click="onLogin"> 登录 </el-button>
         </div>
     </div>
 </template>

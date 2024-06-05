@@ -60,12 +60,7 @@ const onSelect = (menuId: number) => {
                         class="aside-sub-menu"
                         :index="`${routeItem.id}`"
                     >
-                        <Icon
-                            v-if="routeItem.icon"
-                            :name="routeItem.icon"
-                            size="20"
-                            class="mr-5px"
-                        />
+                        <Icon v-if="routeItem.icon" :name="routeItem.icon" size="20" class="mr-5px" />
                         <template #title>{{ routeItem.name }}</template>
                     </el-menu-item>
                     <sub-menu v-else :menu="routeItem"></sub-menu>

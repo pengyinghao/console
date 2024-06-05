@@ -1,10 +1,4 @@
-import {
-    defineConfig,
-    presetUno,
-    presetAttributify,
-    transformerDirectives,
-    transformerVariantGroup
-} from 'unocss'
+import { defineConfig, presetUno, presetAttributify, transformerDirectives, transformerVariantGroup } from 'unocss'
 
 export default defineConfig({
     exclude: ['node_modules', '.git', 'dist'],

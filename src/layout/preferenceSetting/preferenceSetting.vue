@@ -9,9 +9,7 @@
             <PageFunction />
             <!-- 界面展示 -->
             <PageView />
-            <el-button type="danger" class="w-100% mt-15px" @click="appStore.$reset()">
-                重置
-            </el-button>
+            <el-button type="danger" class="w-100% mt-15px" @click="appStore.$reset()"> 重置 </el-button>
         </div>
     </el-drawer>
 </template>

@@ -14,18 +14,8 @@ import ObjectStorageItem from './objectStorageItem.vue'
                 unit-value="(G)"
                 :options="{ decimalPlaces: 2 }"
             />
-            <ObjectStorageItem
-                icon-name="material-symbols:folder"
-                desc="文件数量"
-                counter="200"
-                unit-value="(个)"
-            />
-            <ObjectStorageItem
-                icon-name="clarity:storage-solid"
-                desc="数据资源总量"
-                counter="1100"
-                unit-value="(个)"
-            />
+            <ObjectStorageItem icon-name="material-symbols:folder" desc="文件数量" counter="200" unit-value="(个)" />
+            <ObjectStorageItem icon-name="clarity:storage-solid" desc="数据资源总量" counter="1100" unit-value="(个)" />
         </el-row>
     </el-card>
 </template>

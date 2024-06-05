@@ -14,12 +14,7 @@ const appStore = useAppStore()
         <el-switch v-model="appStore.keepAlive" />
     </Description>
     <Description label="多页签缓存条数">
-        <el-input-number
-            v-model="appStore.keepAliveCounter"
-            :min="1"
-            :max="20"
-            :disabled="!appStore.keepAlive"
-        />
+        <el-input-number v-model="appStore.keepAliveCounter" :min="1" :max="20" :disabled="!appStore.keepAlive" />
     </Description>
     <Description label="组件大小">
         <el-radio-group v-model="appStore.size">

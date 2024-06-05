@@ -30,13 +30,7 @@ const columns: TableColumn<Upload>[] = [
 <template>
     <PageContainer>
         <template #header>
-            <el-form
-                inline
-                class="search-form"
-                label-suffix="："
-                label-width="75px"
-                @submit.prevent
-            >
+            <el-form inline class="search-form" label-suffix="：" label-width="75px" @submit.prevent>
                 <el-form-item label="原文件名">
                     <el-input v-model="queryParams.originalname" clearable @change="handleQuery" />
                 </el-form-item>
@@ -46,12 +40,7 @@ const columns: TableColumn<Upload>[] = [
                 </el-form-item>
             </el-form>
         </template>
-        <Table
-            v-model:reload="reload"
-            :columns="columns"
-            :request-api="fetchUploadInfos"
-            :request-params="queryParams"
-        >
+        <Table v-model:reload="reload" :columns="columns" :request-api="fetchUploadInfos" :request-params="queryParams">
         </Table>
     </PageContainer>
 </template>

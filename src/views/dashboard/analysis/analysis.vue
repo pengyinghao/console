@@ -27,30 +27,10 @@ onUnmounted(() => {
     <div class="pb-30px flex">
         <div class="flex-1 overflow-hidden">
             <el-row :gutter="20">
-                <card-item
-                    icon-name="fa6-solid:user"
-                    icon-color="#40c9c6"
-                    label="总用户数"
-                    value="3201"
-                />
-                <card-item
-                    icon-name="lucide:locate"
-                    icon-color="#36a3f7"
-                    label="总访问数"
-                    value="1320"
-                />
-                <card-item
-                    icon-name="mdi:message-processing-outline"
-                    icon-color="#f4516c"
-                    label="消息"
-                    value="20"
-                />
-                <card-item
-                    icon-name="ph:bug-bold"
-                    icon-color="#e6a23c"
-                    label="异常日志"
-                    value="10"
-                />
+                <card-item icon-name="fa6-solid:user" icon-color="#40c9c6" label="总用户数" value="3201" />
+                <card-item icon-name="lucide:locate" icon-color="#36a3f7" label="总访问数" value="1320" />
+                <card-item icon-name="mdi:message-processing-outline" icon-color="#f4516c" label="消息" value="20" />
+                <card-item icon-name="ph:bug-bold" icon-color="#e6a23c" label="异常日志" value="10" />
             </el-row>
             <!-- 作业实时统计 -->
             <job-statistics ref="refJobStatistics" class="mt-2px p-20px" />

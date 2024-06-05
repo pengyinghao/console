@@ -36,10 +36,7 @@ const contentStyle = computed<CSSProperties>(() => {
         <main class="app-container-body" :style="contentStyle">
             <div class="app-container-inner">
                 <router-view v-slot="{ Component }">
-                    <transition
-                        :name="!appStore.disableAnimation ? appStore.animationType : ''"
-                        mode="out-in"
-                    >
+                    <transition :name="!appStore.disableAnimation ? appStore.animationType : ''" mode="out-in">
                         <keep-alive
                             v-if="appStore.keepAlive"
                             :include="keepAliveNames"

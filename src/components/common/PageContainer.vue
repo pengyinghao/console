@@ -35,11 +35,7 @@ onMounted(() => {
                 <slot name="header"></slot>
             </div>
         </section>
-        <section
-            class="content"
-            :style="{ height: contentHeight }"
-            :class="[contentPadding ? 'padding' : '']"
-        >
+        <section class="content" :style="{ height: contentHeight }" :class="[contentPadding ? 'padding' : '']">
             <slot></slot>
         </section>
     </div>

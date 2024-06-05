@@ -26,17 +26,8 @@ const appStore = useAppStore()
         <el-switch v-model="appStore.disableAnimation" />
     </Description>
     <Description label="动画类型">
-        <el-select
-            v-model="appStore.animationType"
-            :disabled="appStore.disableAnimation"
-            class="w-200px"
-        >
-            <el-option
-                v-for="item in animationTypeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-            />
+        <el-select v-model="appStore.animationType" :disabled="appStore.disableAnimation" class="w-200px">
+            <el-option v-for="item in animationTypeOptions" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
     </Description>
 </template>

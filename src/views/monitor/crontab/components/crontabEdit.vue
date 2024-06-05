@@ -3,12 +3,7 @@ import { FormInstance, FormRules } from 'element-plus'
 import { reactive, ref } from 'vue'
 import { ruleHelper } from '@/utils/ruleHelper'
 import { Modal, Select } from '@/components'
-import {
-    UpdateCrontabOption,
-    createCrontab,
-    fetchCrontabDetail,
-    updateCrontab
-} from '@/service/api/system/crontab'
+import { UpdateCrontabOption, createCrontab, fetchCrontabDetail, updateCrontab } from '@/service/api/system/crontab'
 
 const emits = defineEmits<{
     (e: 'close', refreshData: boolean): void
@@ -115,11 +110,7 @@ defineExpose({
                 </Select>
             </el-form-item>
             <el-form-item label="定时表达式" prop="expression">
-                <el-input
-                    v-model="formData.expression"
-                    maxlength="20"
-                    placeholder="请输入定时表达式"
-                />
+                <el-input v-model="formData.expression" maxlength="20" placeholder="请输入定时表达式" />
             </el-form-item>
             <el-form-item label="任务执行参数" prop="params">
                 <el-input

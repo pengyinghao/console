@@ -77,9 +77,7 @@ const close = (refreshData = false) => {
 const saveData = async () => {
     try {
         loading.value = true
-        dataId.value
-            ? await updateDictType(+dataId.value, formData)
-            : await createDictType(formData)
+        dataId.value ? await updateDictType(+dataId.value, formData) : await createDictType(formData)
         close(true)
     } finally {
         loading.value = false
@@ -105,12 +103,7 @@ defineExpose({
     >
         <el-form ref="refForm" :model="formData" :rules="rules" label-width="85px">
             <el-form-item label="编号" prop="no">
-                <el-input
-                    v-model="formData.no"
-                    :disabled="dataId"
-                    maxlength="20"
-                    placeholder="请输入编号"
-                />
+                <el-input v-model="formData.no" :disabled="dataId" maxlength="20" placeholder="请输入编号" />
             </el-form-item>
             <el-form-item label="名称" prop="name">
                 <el-input v-model="formData.name" maxlength="20" placeholder="请输入名称" />

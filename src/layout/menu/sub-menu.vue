@@ -20,11 +20,7 @@ defineProps<{ menu: SystemMenu }>()
             <!-- 判断是否隐藏菜单 -->
 
             <!-- 二级菜单 -->
-            <el-menu-item
-                v-if="sub.children && sub.children.length === 0"
-                :index="`${sub.id}`"
-                class="aside-sub-menu"
-            >
+            <el-menu-item v-if="sub.children && sub.children.length === 0" :index="`${sub.id}`" class="aside-sub-menu">
                 {{ sub.name }}
             </el-menu-item>
             <!-- 三级菜单及n级菜单 -->

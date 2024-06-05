@@ -111,12 +111,7 @@ defineExpose({
 })
 </script>
 <template>
-    <Modal
-        v-model="visible"
-        :title="formData.id ? '修改菜单' : '新增菜单'"
-        width="600"
-        :before-close="() => close()"
-    >
+    <Modal v-model="visible" :title="formData.id ? '修改菜单' : '新增菜单'" width="600" :before-close="() => close()">
         <el-form ref="refForm" :model="formData" :rules="rules" label-width="100px">
             <el-form-item label="上级菜单" prop="parentId">
                 <el-tree-select
@@ -146,19 +141,10 @@ defineExpose({
             </el-form-item>
             <el-form-item v-if="formData.type === 1" label="打开方式" prop="openType">
                 <el-select v-model="formData.openType" class="w-250px">
-                    <el-option
-                        v-for="item in openTypeList"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                    />
+                    <el-option v-for="item in openTypeList" :key="item.value" :label="item.label" :value="item.value" />
                 </el-select>
             </el-form-item>
-            <el-form-item
-                v-if="formData.type === 1 && formData.openType === 0"
-                label="组件地址"
-                prop="component"
-            >
+            <el-form-item v-if="formData.type === 1 && formData.openType === 0" label="组件地址" prop="component">
                 <el-input v-model="formData.component"></el-input>
             </el-form-item>
             <el-form-item v-if="formData.type === 1" label="页面地址" prop="url">
@@ -194,12 +180,7 @@ defineExpose({
                         <el-radio value="disabled">禁用</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item
-                    v-if="formData.type !== 2"
-                    label="显示状态"
-                    name="hidden"
-                    class="!mb-0"
-                >
+                <el-form-item v-if="formData.type !== 2" label="显示状态" name="hidden" class="!mb-0">
                     <template #label>
                         <div class="form-item-slot">
                             <el-tooltip

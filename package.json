@@ -10,7 +10,8 @@
         "build": "vue-tsc && vite build",
         "preview": "vite preview",
         "lint": "eslint ./src/ --ext .ts,.tsx,.vue",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "prettier": "npx prettier --write ."
     },
     "keywords": [
         "Vue",

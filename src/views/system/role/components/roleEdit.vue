@@ -2,12 +2,7 @@
 import { FormInstance, FormRules } from 'element-plus'
 import { reactive, ref } from 'vue'
 import Modal from '@/components/Modal/Modal.vue'
-import {
-    UpdateRoleOption,
-    createRole,
-    fetchRoleDetail,
-    updateRole
-} from '@/service/api/system/role'
+import { UpdateRoleOption, createRole, fetchRoleDetail, updateRole } from '@/service/api/system/role'
 import { ruleHelper } from '@/utils/ruleHelper'
 
 const emits = defineEmits<{
@@ -93,12 +88,7 @@ defineExpose({
 })
 </script>
 <template>
-    <Modal
-        v-model="visible"
-        :title="formData.id ? '修改角色' : '新增角色'"
-        width="500"
-        :before-close="() => close()"
-    >
+    <Modal v-model="visible" :title="formData.id ? '修改角色' : '新增角色'" width="500" :before-close="() => close()">
         <el-form ref="refForm" :model="formData" :rules="rules" label-width="85px">
             <el-form-item label="角色标识" prop="50">
                 <el-input v-model="formData.code" maxlength="50" placeholder="请输入角色标识" />

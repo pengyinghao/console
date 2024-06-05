@@ -58,11 +58,6 @@ const options = reactive<SearchOption[]>([
 </script>
 <template>
     <PageContainer>
-        <Table
-            :columns="columns"
-            :request-api="fetchLogInfos"
-            :search="{ options: options, labelWidth: 110 }"
-        >
-        </Table>
+        <Table :columns="columns" :request-api="fetchLogInfos" :search="{ options: options, labelWidth: 110 }"> </Table>
     </PageContainer>
 </template>

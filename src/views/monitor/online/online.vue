@@ -23,11 +23,7 @@ const options = reactive<SearchOption[]>([
 </script>
 <template>
     <PageContainer>
-        <Table
-            :columns="columns"
-            :request-api="fetchOnlineUserInfos"
-            :search="{ options: options, labelWidth: 110 }"
-        >
+        <Table :columns="columns" :request-api="fetchOnlineUserInfos" :search="{ options: options, labelWidth: 110 }">
         </Table>
     </PageContainer>
 </template>

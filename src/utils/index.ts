@@ -71,10 +71,7 @@ export function copyText(sourceText: string, message = true) {
  * @param idField  节点id字段
  * @returns
  */
-export const dataToTree = <
-    T extends { id: number; parentId?: number; children?: T[] },
-    K extends keyof T
->(
+export const dataToTree = <T extends { id: number; parentId?: number; children?: T[] }, K extends keyof T>(
     data: T[],
     parentIdField: K,
     idField: K = 'id' as K

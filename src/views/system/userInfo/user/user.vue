@@ -1,21 +1,7 @@
 <script lang="tsx" setup>
 import { reactive, ref } from 'vue'
-import {
-    PageContainer,
-    StatusView,
-    Table,
-    TableColumn,
-    MoreButton,
-    MoreButtonProp,
-    SearchOption
-} from '@/components'
-import {
-    deleteUser,
-    fetchUserInfos,
-    updateUserState,
-    updateUserFreeze,
-    User
-} from '@/service/api/system/user'
+import { PageContainer, StatusView, Table, TableColumn, MoreButton, MoreButtonProp, SearchOption } from '@/components'
+import { deleteUser, fetchUserInfos, updateUserState, updateUserFreeze, User } from '@/service/api/system/user'
 import AddUser from './components/addUser.vue'
 import EditUser from './components/editUser.vue'
 import { setDefaultValue } from '@/utils'
@@ -54,15 +40,11 @@ const handleDeleteBtnClick = async (row: User) => {
 
 /** 启用、禁用 */
 const handleUpdateUserState = async ({ id, status }: User) => {
-    await window.$messageBox.confirm(
-        `确定要${status === 'enable' ? '启用' : '禁用'}该用户吗?`,
-        '提示',
-        {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-        }
-    )
+    await window.$messageBox.confirm(`确定要${status === 'enable' ? '启用' : '禁用'}该用户吗?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+    })
     await updateUserState(id, status === 'enable' ? 'disabled' : 'enable')
     handleQuery()
 }
@@ -99,11 +81,7 @@ const columns: TableColumn<User>[] = [
     {
         label: '状态',
         render: ({ row }) => {
-            return (
-                <StatusView status={row.status}>
-                    {row.status === 'enable' ? '启用' : '禁用'}
-                </StatusView>
-            )
+            return <StatusView status={row.status}>{row.status === 'enable' ? '启用' : '禁用'}</StatusView>
         }
     },
     { label: '姓名', prop: 'name' },
@@ -142,7 +120,6 @@ const columns: TableColumn<User>[] = [
                     </a>
                     {row.sysUser === 1 ? (
                         <>
-                            {' '}
                             <el-divider direction="vertical" />
                             <MoreButton
                                 buttons={moreButtons(row)}
@@ -165,12 +142,7 @@ const options = reactive<SearchOption[]>([
 
 <template>
     <PageContainer>
-        <Table
-            v-model:reload="reload"
-            :columns="columns"
-            :request-api="fetchUserInfos"
-            :search="{ options: options }"
-        >
+        <Table v-model:reload="reload" :columns="columns" :request-api="fetchUserInfos" :search="{ options: options }">
             <template #header-left>
                 <el-button type="primary" @click="handleAddUser()"> 新增 </el-button>
             </template>

@@ -38,15 +38,11 @@ const handleDeleteDict = async (row: Dict) => {
 }
 
 const handleUpdateDictState = async ({ status, id }: Dict) => {
-    await window.$messageBox.confirm(
-        `确定要${status === 'disabled' ? '启用' : '禁用'}该用户吗?`,
-        '提示',
-        {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-        }
-    )
+    await window.$messageBox.confirm(`确定要${status === 'disabled' ? '启用' : '禁用'}该用户吗?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+    })
     await updateDictState(id, status === 'disabled' ? 'enable' : 'disabled')
     handleQuery()
 }
@@ -58,11 +54,7 @@ const columns: TableColumn<Dict>[] = [
         label: '状态',
         prop: 'status',
         render: ({ row }) => {
-            return (
-                <StatusView status={row.status}>
-                    {row.status === 'enable' ? '启用' : '禁用'}
-                </StatusView>
-            )
+            return <StatusView status={row.status}>{row.status === 'enable' ? '启用' : '禁用'}</StatusView>
         }
     },
     { label: '排序', prop: 'sort' },
@@ -83,11 +75,7 @@ const columns: TableColumn<Dict>[] = [
                     <el-divider direction="vertical" />
                     <a onclick={() => handleDeleteDict(row)}>删除</a>
                     <el-divider direction="vertical" />
-                    {
-                        <a onclick={() => handleUpdateDictState(row)}>
-                            {row.status === 'disabled' ? '启用' : '禁用'}
-                        </a>
-                    }
+                    {<a onclick={() => handleUpdateDictState(row)}>{row.status === 'disabled' ? '启用' : '禁用'}</a>}
                 </div>
             )
         }

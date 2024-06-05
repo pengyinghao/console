@@ -52,13 +52,7 @@ const handleClose = () => {
 <template>
     <div class="pt-20px pl-20px wh-full bg-white">
         <Search :options="options" @search="handleSearch"></Search>
-        <el-tag
-            v-for="tag in dynamicTags"
-            :key="tag"
-            closable
-            :disable-transitions="false"
-            @close="handleClose"
-        >
+        <el-tag v-for="tag in dynamicTags" :key="tag" closable :disable-transitions="false" @close="handleClose">
             {{ tag }}
         </el-tag>
     </div>

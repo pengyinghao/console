@@ -1,12 +1,7 @@
 <script setup lang="tsx">
 import { reactive, ref } from 'vue'
 import { SearchOption, StatusView, Table, TableColumn } from '@/components'
-import {
-    deleteDictType,
-    fetchDictTypeInfos,
-    updateDictTypeState,
-    DictType
-} from '@/service/api/system/dictionary'
+import { deleteDictType, fetchDictTypeInfos, updateDictTypeState, DictType } from '@/service/api/system/dictionary'
 import DictTypeEdit from './dictTypeEdit.vue'
 import { useCompRef } from '@/composables/useCompRef'
 import { setDefaultValue } from '@/utils'
@@ -45,15 +40,11 @@ const handleDeleteBtnClick = async (row: DictType) => {
 }
 
 const handleUpdateUserState = async ({ status, id }: DictType) => {
-    await window.$messageBox.confirm(
-        `确定要${status === 'disabled' ? '启用' : '禁用'}该用户吗?`,
-        '提示',
-        {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-        }
-    )
+    await window.$messageBox.confirm(`确定要${status === 'disabled' ? '启用' : '禁用'}该用户吗?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+    })
     await updateDictTypeState(id, status === 'enable' ? 'disabled' : 'enable')
     handleQuery()
 }
@@ -78,11 +69,7 @@ const columns: TableColumn<DictType>[] = [
     {
         label: '状态',
         render: ({ row }) => {
-            return (
-                <StatusView status={row.status}>
-                    {row.status === 'disabled' ? '禁用' : '启用'}
-                </StatusView>
-            )
+            return <StatusView status={row.status}>{row.status === 'disabled' ? '禁用' : '启用'}</StatusView>
         }
     },
     { label: '备注', prop: 'remark', render: ({ row }) => setDefaultValue(row.remark) },
@@ -97,11 +84,7 @@ const columns: TableColumn<DictType>[] = [
                     <el-divider direction="vertical" />
                     <a onclick={() => handleDeleteBtnClick(row)}>删除</a>
                     <el-divider direction="vertical" />
-                    {
-                        <a onclick={() => handleUpdateUserState(row)}>
-                            {row.status === 'disabled' ? '启用' : '禁用'}
-                        </a>
-                    }
+                    {<a onclick={() => handleUpdateUserState(row)}>{row.status === 'disabled' ? '启用' : '禁用'}</a>}
                 </div>
             )
         }
@@ -114,12 +97,7 @@ const options = reactive<SearchOption[]>([
 ])
 </script>
 <template>
-    <Table
-        v-model:reload="reload"
-        :columns="columns"
-        :request-api="fetchDictTypeInfos"
-        :search="{ options }"
-    >
+    <Table v-model:reload="reload" :columns="columns" :request-api="fetchDictTypeInfos" :search="{ options }">
         <template #header-left>
             <el-button type="primary" @click="handleEditDictType()"> 新增 </el-button>
         </template>

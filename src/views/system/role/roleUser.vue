@@ -20,11 +20,7 @@ const columns: TableColumn<User>[] = [
     {
         label: '状态',
         render: ({ row }) => {
-            return (
-                <StatusView status={row.status}>
-                    {row.status === 'enable' ? '禁用' : '启用'}
-                </StatusView>
-            )
+            return <StatusView status={row.status}>{row.status === 'enable' ? '禁用' : '启用'}</StatusView>
         }
     },
     { label: '姓名', prop: 'name' },

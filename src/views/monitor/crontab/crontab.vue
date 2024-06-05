@@ -35,11 +35,7 @@ const columns: TableColumn<Crontab>[] = [
     {
         label: '状态',
         render: ({ row }) => {
-            return (
-                <StatusView status={row.status}>
-                    {row.status === 'enable' ? '禁用' : '启用'}
-                </StatusView>
-            )
+            return <StatusView status={row.status}>{row.status === 'enable' ? '禁用' : '启用'}</StatusView>
         }
     },
     {

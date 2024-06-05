@@ -46,9 +46,7 @@ const addQueryCondition = (item: SearchOption, displayLabel = '', execute = true
 
 /** 查询条件关闭按钮单击事件 */
 const handleConditionClose = (item: SearchOption) => {
-    queryConditions.value = queryConditions.value.filter(
-        (condition) => condition.field !== item.field
-    )
+    queryConditions.value = queryConditions.value.filter((condition) => condition.field !== item.field)
     for (let i = 0; i < props.options.length; i++) {
         if (props.options[i].field === item.field) {
             // eslint-disable-next-line vue/no-mutating-props

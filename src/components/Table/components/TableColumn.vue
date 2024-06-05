@@ -17,8 +17,7 @@ const renderColumn = (item: TableColumn) => {
                     if (item.render) return item.render(scope)
 
                     // 格式化日期
-                    if (item.dateFormat)
-                        return dateFormat((scope.row || {})[item.prop!], item.format)
+                    if (item.dateFormat) return dateFormat((scope.row || {})[item.prop!], item.format)
 
                     return setDefaultValue((scope.row || {})[item.prop!])
                 },

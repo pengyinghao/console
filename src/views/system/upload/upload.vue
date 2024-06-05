@@ -41,12 +41,7 @@ const columns: TableColumn<Upload>[] = [
                 </el-form-item>
             </el-form>
         </template>
-        <Table
-            v-model:reload="reload"
-            :columns="columns"
-            :request-api="fetchUploadInfos"
-            :request-params="queryParams"
-        >
+        <Table v-model:reload="reload" :columns="columns" :request-api="fetchUploadInfos" :request-params="queryParams">
         </Table>
     </PageContainer>
 </template>

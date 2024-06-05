@@ -2,13 +2,7 @@
 import { FormInstance, FormRules } from 'element-plus'
 import { reactive, ref } from 'vue'
 import Modal from '@/components/Modal/Modal.vue'
-import {
-    UpdateParam,
-    fetchParamDetail,
-    createParam,
-    updateParam,
-    Param
-} from '@/service/api/system/param'
+import { UpdateParam, fetchParamDetail, createParam, updateParam, Param } from '@/service/api/system/param'
 import { ruleHelper } from '@/utils/ruleHelper'
 
 const emit = defineEmits<{

@@ -112,12 +112,7 @@ defineExpose({
         <el-form ref="refForm" :model="formData" :rules="rules" label-width="85px">
             <el-form-item label="字典类型" name="typeId">
                 <el-select v-model="formData.typeId" :disabled="formData.id">
-                    <el-option
-                        v-for="item in dictTypeInfos"
-                        :key="item.id"
-                        :label="item.name"
-                        :value="item.id"
-                    />
+                    <el-option v-for="item in dictTypeInfos" :key="item.id" :label="item.name" :value="item.id" />
                 </el-select>
             </el-form-item>
             <el-form-item label="名称" prop="name">

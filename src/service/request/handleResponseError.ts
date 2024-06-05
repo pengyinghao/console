@@ -20,8 +20,7 @@ export const handleResponseError = async (error: any) => {
     }
 
     if (error.response.status !== 200) {
-        const message =
-            error.response.data.message || ERROR_STATUS[error.response.status] || '服务器错误'
+        const message = error.response.data.message || ERROR_STATUS[error.response.status] || '服务器错误'
         ElMessage({
             type: 'error',
             message

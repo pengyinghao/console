@@ -5,8 +5,7 @@ import echarts from '@/plugins/echarts'
 import { useEChartsColors } from '@/composables/useEChartsColors'
 import { useAppStore } from '@/store'
 
-const { lineColor, titleColor, tipBgColor, tipBorderColor, axisPointerLineColor } =
-    useEChartsColors()
+const { lineColor, titleColor, tipBgColor, tipBorderColor, axisPointerLineColor } = useEChartsColors()
 
 const getDates = () => {
     const dates: string[] = []

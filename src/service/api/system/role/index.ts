@@ -46,11 +46,7 @@ export const deleteRole = (id: number) => {
 }
 
 /** 授权 */
-export const authorize = (option: {
-    roleId: number
-    menuIds: number[]
-    defaultNavigate: string
-}) => {
+export const authorize = (option: { roleId: number; menuIds: number[]; defaultNavigate: string }) => {
     return requestPost(`/system/role/authorize`, option)
 }
 

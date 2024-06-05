@@ -26,13 +26,5 @@
     "[html]": {
         "editor.defaultFormatter": "vscode.html-language-features"
     },
-    "cSpell.words": [
-        "composables",
-        "countup",
-        "echarts",
-        "iconify",
-        "nprogress",
-        "pinia",
-        "vueuse"
-    ]
+    "cSpell.words": ["composables", "countup", "echarts", "iconify", "nprogress", "pinia", "vueuse"]
 }

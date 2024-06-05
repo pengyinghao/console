@@ -15,10 +15,7 @@ const handleNavigation = () => {
     <PageContainer>
         <el-tabs v-model="activeName">
             <el-tab-pane label="字典类型" name="dictType">
-                <dict-type
-                    v-if="activeName === 'dictType'"
-                    @navigation="handleNavigation"
-                ></dict-type>
+                <dict-type v-if="activeName === 'dictType'" @navigation="handleNavigation"></dict-type>
             </el-tab-pane>
             <el-tab-pane label="字典信息" name="dict">
                 <dict v-if="activeName === 'dict'"></dict>

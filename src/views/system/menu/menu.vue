@@ -41,11 +41,7 @@ const columns: TableColumn<Menu>[] = [
     {
         label: '状态',
         render: ({ row }) => {
-            return (
-                <StatusView status={row.status}>
-                    {row.status === 'enable' ? '启用' : '禁用'}
-                </StatusView>
-            )
+            return <StatusView status={row.status}>{row.status === 'enable' ? '启用' : '禁用'}</StatusView>
         }
     },
     {

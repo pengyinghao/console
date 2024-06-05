@@ -69,13 +69,7 @@ defineExpose({
 </script>
 
 <template>
-    <el-drawer
-        v-model="visible"
-        title="角色授权"
-        :size="350"
-        :close-on-click-modal="false"
-        :before-close="handleClose"
-    >
+    <el-drawer v-model="visible" title="角色授权" :size="350" :close-on-click-modal="false" :before-close="handleClose">
         <div v-loading="loading">
             <el-form label-width="85px">
                 <el-form-item label="角色名称" class="!mb-4px">

@@ -10,10 +10,7 @@ export const login = (params: UserLoginParams) => {
 
 /** 刷新token */
 export const fetchRefreshToken = (token: string) => {
-    return requestGet<AxiosResponse<ResponseData<UserLoginResponse>>>(
-        `/system/user/refresh?refresh_token=${token}`,
-        {
-            handleData: false
-        }
-    )
+    return requestGet<AxiosResponse<ResponseData<UserLoginResponse>>>(`/system/user/refresh?refresh_token=${token}`, {
+        handleData: false
+    })
 }

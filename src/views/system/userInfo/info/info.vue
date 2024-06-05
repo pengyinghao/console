@@ -1,12 +1,7 @@
 <template>
     <PageContainer>
         <div class="flex-y-center">
-            <el-avatar
-                :size="60"
-                :src="info.avatar"
-                class="cursor-pointer"
-                @click="handleUpdateAvatar"
-            />
+            <el-avatar :size="60" :src="info.avatar" class="cursor-pointer" @click="handleUpdateAvatar" />
             <div class="ml-25px">
                 <div>用户名：{{ info.account }}</div>
                 <div class="mt-10px flex-y-center">
@@ -34,9 +29,7 @@
             <template v-if="info.email">
                 您已经绑定了邮箱，{{ info.email }}，将方便您获取系统消息、重置密码等
             </template>
-            <template v-else>
-                您未绑定邮箱，如需要绑定，请单击绑定,将方便您获取系统消息、重置密码等
-            </template>
+            <template v-else> 您未绑定邮箱，如需要绑定，请单击绑定,将方便您获取系统消息、重置密码等 </template>
         </Item>
         <update-avatar ref="refUpdateAvatar"></update-avatar>
     </PageContainer>

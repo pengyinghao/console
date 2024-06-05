@@ -14,11 +14,7 @@ const columns: TableColumn<LoginInfo>[] = [
     {
         label: '登录状态',
         render: ({ row }) => {
-            return (
-                <StatusView status={row.status}>
-                    {row.status === 'success' ? '成功' : '失败'}
-                </StatusView>
-            )
+            return <StatusView status={row.status}>{row.status === 'success' ? '成功' : '失败'}</StatusView>
         }
     },
     { label: '消息内容', prop: 'message' },

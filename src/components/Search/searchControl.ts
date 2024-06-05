@@ -28,13 +28,7 @@ type DateOption = {
 } & Optional<
     Pick<
         DatePickerProps,
-        | 'type'
-        | 'valueFormat'
-        | 'clearable'
-        | 'format'
-        | 'placeholder'
-        | 'startPlaceholder'
-        | 'endPlaceholder'
+        'type' | 'valueFormat' | 'clearable' | 'format' | 'placeholder' | 'startPlaceholder' | 'endPlaceholder'
     >,
     'clearable' | 'format' | 'valueFormat' | 'startPlaceholder' | 'endPlaceholder' | 'placeholder'
 >
