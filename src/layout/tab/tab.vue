@@ -58,9 +58,9 @@ const onCloseCurrTab = (tab: RouteLocationNormalizedLoaded) => {
                     <span>{{ tab.meta?.name }}</span>
                     <Icon
                         v-if="!fixedTabs.includes(tab.path)"
-                        name="ep:close"
-                        size="12"
-                        class="ml-5px"
+                        name="icon-park-outline:close-small"
+                        size="14"
+                        class="ml-5px hover:(c-primary) transition"
                         @click.prevent.stop="onCloseCurrTab(tab)"
                     />
                 </router-link>

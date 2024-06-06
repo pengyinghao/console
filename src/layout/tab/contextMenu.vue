@@ -61,19 +61,19 @@ const contentMenuOptions = computed<ContentMenuOptions[]>(() => {
     return [
         { icon: 'ep:refresh', label: '刷新当前', operation: 'refresh' },
         {
-            icon: 'mingcute:close-line',
+            icon: 'icon-park-outline:close-small',
             label: '关闭当前',
             hide,
             operation: 'closeCurr'
         },
         {
-            icon: 'mdi:arrow-expand-left',
+            icon: 'icon-park-outline:go-start',
             label: '关闭左侧',
             hide,
             operation: 'closeLeft'
         },
-        { icon: 'mdi:arrow-expand-right', label: '关闭右侧', operation: 'closeRight' },
-        { icon: 'mdi:arrow-expand-horizontal', label: '关闭全部', operation: 'closeAll' }
+        { icon: 'icon-park-outline:go-end', label: '关闭右侧', operation: 'closeRight' },
+        { icon: 'icon-park-outline:fullwidth', label: '关闭全部', operation: 'closeAll' }
     ]
 })
 
