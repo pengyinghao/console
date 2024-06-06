@@ -25,7 +25,7 @@ export function createRouterGuard(router: Router) {
                 routes.forEach((r: RouteRecordRaw) => {
                     userStore.dynamicRoute.push(router.addRoute(r))
                 })
-                return next({ ...to, replace: true })
+                return next({ path: current.redirect, replace: true })
             }
             return next()
         }
