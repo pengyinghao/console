@@ -137,7 +137,7 @@ defineExpose({
                 <el-input v-model="formData.name" maxlength="20"></el-input>
             </el-form-item>
             <el-form-item label="图标" prop="icon">
-                <el-input v-model="formData.icon"></el-input>
+                <el-input v-model="formData.icon" maxlength="50"></el-input>
             </el-form-item>
             <el-form-item v-if="formData.type === 1" label="打开方式" prop="openType">
                 <el-select v-model="formData.openType" class="w-250px">
