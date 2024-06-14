@@ -23,7 +23,7 @@ export interface LoginInfo {
 
 /** 获取登录日志 分页信息 */
 export const fetchLoginInfoInfos = (params: Record<string, string>) => {
-    return requestGet<PagingResponse<LoginInfo>>('/system/login-info/list', {
+    return requestGet<PagingResponse<LoginInfo>>('/system/login-log/list', {
         params
     })
 }

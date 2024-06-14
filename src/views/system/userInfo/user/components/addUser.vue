@@ -5,6 +5,7 @@ import { Modal, Select } from '@/components'
 import { createUser } from '@/service/api/system/user'
 import { ruleHelper } from '@/utils/ruleHelper'
 import { Role, fetchRoleInfos } from '@/service/api/system/role'
+import { encrypt } from '@/utils/crypto'
 
 const emits = defineEmits<{
     (e: 'close', refreshData: boolean): void
@@ -97,7 +98,9 @@ const close = (refreshData = false) => {
 const saveUser = async () => {
     try {
         loading.value = true
-        await createUser(formData)
+        const newFormData = { ...formData }
+        newFormData.password = encrypt(newFormData.password)
+        await createUser(newFormData)
         close(true)
     } finally {
         loading.value = false

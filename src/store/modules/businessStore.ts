@@ -6,8 +6,12 @@ export const useBusinessStore = defineStore('business', () => {
     const dictTypeId = ref<number>()
     const dictTypeName = ref<string>()
 
+    // 任务名称
+    const jobName = ref<string>()
+
     return {
         dictTypeId,
-        dictTypeName
+        dictTypeName,
+        jobName
     }
 })

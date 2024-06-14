@@ -34,20 +34,14 @@ const contentStyle = computed<CSSProperties>(() => {
         <Tab v-show="appStore.showTab" class="app-container-tab"></Tab>
         <Menu class="app-container-aside"></Menu>
         <main class="app-container-body" :style="contentStyle">
-            <div class="app-container-inner">
-                <router-view v-slot="{ Component }">
-                    <transition :name="!appStore.disableAnimation ? appStore.animationType : ''" mode="out-in">
-                        <keep-alive
-                            v-if="appStore.keepAlive"
-                            :include="keepAliveNames"
-                            :max="appStore.keepAliveCounter"
-                        >
-                            <component :is="Component" />
-                        </keep-alive>
-                        <component :is="Component" v-else />
-                    </transition>
-                </router-view>
-            </div>
+            <router-view v-slot="{ Component }">
+                <transition :name="!appStore.disableAnimation ? appStore.animationType : ''" mode="out-in">
+                    <keep-alive v-if="appStore.keepAlive" :include="keepAliveNames" :max="appStore.keepAliveCounter">
+                        <component :is="Component" />
+                    </keep-alive>
+                    <component :is="Component" v-else />
+                </transition>
+            </router-view>
         </main>
     </div>
 </template>
@@ -88,12 +82,7 @@ const contentStyle = computed<CSSProperties>(() => {
         width: calc(100% - v-bind(sideWidth));
         transition: all var(--el-transition-duration) ease-in-out;
     }
-
-    &-inner {
-        @apply h-full p-12px;
-    }
 }
-
 .dark {
     .app-container-header {
         box-shadow: 0 1px 2px #fcfdfd14;

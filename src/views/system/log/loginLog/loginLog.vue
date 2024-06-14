@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import { reactive, ref } from 'vue'
 import { Table, TableColumn, PageContainer, SearchOption, StatusView } from '@/components'
-import { LoginInfo, fetchLoginInfoInfos } from '@/service/api/system/loginInfo'
+import { LoginInfo, fetchLoginInfoInfos } from '@/service/api/system/loginLog'
 defineOptions({ name: 'LoginInfo' })
 
 const reload = ref(false)

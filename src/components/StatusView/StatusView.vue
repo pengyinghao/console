@@ -1,5 +1,17 @@
 <script lang="ts" setup>
-import { Status, Colors } from './StatusTypes'
+enum Colors {
+    primary = 'var(--el-color-primary)',
+    enable = 'var(--el-color-success)',
+    success = 'var(--el-color-success)',
+    warning = 'var(--el-color-warning)',
+    danger = 'var(--el-color-error)',
+    fail = 'var(--el-color-error)',
+    disabled = 'var(--el-color-error)',
+    gray = 'var(--el-color-info)'
+}
+
+type Status = keyof typeof Colors
+
 const props = withDefaults(
     defineProps<{
         dot?: boolean

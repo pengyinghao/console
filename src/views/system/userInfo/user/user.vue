@@ -40,12 +40,12 @@ const handleDeleteBtnClick = async (row: User) => {
 
 /** 启用、禁用 */
 const handleUpdateUserState = async ({ id, status }: User) => {
-    await window.$messageBox.confirm(`确定要${status === 'enable' ? '启用' : '禁用'}该用户吗?`, '提示', {
+    await window.$messageBox.confirm(`确定要${status === 0 ? '启用' : '禁用'}该用户吗?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
     })
-    await updateUserState(id, status === 'enable' ? 'disabled' : 'enable')
+    await updateUserState(id, status === 1 ? 0 : 1)
     handleQuery()
 }
 
@@ -62,7 +62,7 @@ const handleUpdateUserFreezeState = async ({ id, freeze }: User) => {
 
 const moreButtons = (row: User) => {
     const moreButtons: MoreButtonProp[] = [
-        { label: row.status === 'disabled' ? '启用' : '禁用', command: 'status' },
+        { label: row.status === 0 ? '启用' : '禁用', command: 'status' },
         { label: row.freeze ? '解冻' : '冻结', command: 'freeze' }
     ]
     return moreButtons
@@ -81,7 +81,11 @@ const columns: TableColumn<User>[] = [
     {
         label: '状态',
         render: ({ row }) => {
-            return <StatusView status={row.status}>{row.status === 'enable' ? '启用' : '禁用'}</StatusView>
+            return (
+                <StatusView status={row.status === 0 ? 'danger' : 'success'}>
+                    {row.status === 1 ? '启用' : '禁用'}
+                </StatusView>
+            )
         }
     },
     { label: '姓名', prop: 'name' },

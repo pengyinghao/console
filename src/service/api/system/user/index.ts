@@ -79,7 +79,7 @@ export const updateUser = (formData: UpdateUserOption) => {
 }
 
 /** 更新用户状态 */
-export const updateUserState = (id: number, status: Status) => {
+export const updateUserState = (id: number, status: number) => {
     return requestPut(`/system/user/status`, {
         id,
         status

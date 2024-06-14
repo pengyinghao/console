@@ -5,6 +5,7 @@ import { fetchCaptcha } from '@/service/api/common'
 import { login } from '@/service/api/auth'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/core/constant'
 import { Icon } from '@/components'
+import { encrypt } from '@/utils/crypto'
 interface FormData {
     /** 账号 */
     account: string
@@ -47,7 +48,9 @@ const onLogin = async () => {
     if (!formData.code) return window.$message.warning('请输入验证码')
     loading.value = true
     try {
-        const result = await login(formData)
+        const newFormData = { ...formData }
+        newFormData.password = encrypt(formData.password)
+        const result = await login(newFormData)
         // 登录成功
         sessionStorage.setItem(ACCESS_TOKEN, result.access_token)
         sessionStorage.setItem(REFRESH_TOKEN, result.refresh_token)

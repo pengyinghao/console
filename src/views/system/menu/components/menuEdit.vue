@@ -28,7 +28,7 @@ const formData = reactive<UpdateSystemMenuOption>({
     component: '',
     display: 0,
     type: 0,
-    status: 'enable',
+    status: 1,
     openType: 0
 })
 
@@ -63,7 +63,7 @@ const rules = reactive<FormRules>({
 const close = (refreshData = false) => {
     formData.parentId = undefined
     formData.openType = 0
-    formData.status = 'enable'
+    formData.status = 1
     formData.display = 0
 
     refForm.value?.resetFields()
@@ -176,8 +176,8 @@ defineExpose({
                         </div>
                     </template>
                     <el-radio-group v-model="formData.status">
-                        <el-radio value="enable">启用</el-radio>
-                        <el-radio value="disabled">禁用</el-radio>
+                        <el-radio :value="1">启用</el-radio>
+                        <el-radio :value="0">禁用</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item v-if="formData.type !== 2" label="显示状态" name="hidden" class="!mb-0">

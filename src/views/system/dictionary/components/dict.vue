@@ -27,7 +27,7 @@ const handleModalClose = (refreshData: boolean) => {
 }
 
 const handleDeleteDict = async (row: Dict) => {
-    if (row.status === 'enable') return window.$message.warning('请先禁用后再删除')
+    if (row.status === 1) return window.$message.warning('请先禁用后再删除')
     await window.$messageBox.confirm('确定要删除该字典吗', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -38,12 +38,12 @@ const handleDeleteDict = async (row: Dict) => {
 }
 
 const handleUpdateDictState = async ({ status, id }: Dict) => {
-    await window.$messageBox.confirm(`确定要${status === 'disabled' ? '启用' : '禁用'}该用户吗?`, '提示', {
+    await window.$messageBox.confirm(`确定要${status === 0 ? '启用' : '禁用'}该用户吗?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
     })
-    await updateDictState(id, status === 'disabled' ? 'enable' : 'disabled')
+    await updateDictState(id, status === 0 ? 1 : 0)
     handleQuery()
 }
 
@@ -54,7 +54,11 @@ const columns: TableColumn<Dict>[] = [
         label: '状态',
         prop: 'status',
         render: ({ row }) => {
-            return <StatusView status={row.status}>{row.status === 'enable' ? '启用' : '禁用'}</StatusView>
+            return (
+                <StatusView status={row.status === 0 ? 'danger' : 'success'}>
+                    {row.status === 1 ? '启用' : '禁用'}
+                </StatusView>
+            )
         }
     },
     { label: '排序', prop: 'sort' },
@@ -75,7 +79,7 @@ const columns: TableColumn<Dict>[] = [
                     <el-divider direction="vertical" />
                     <a onclick={() => handleDeleteDict(row)}>删除</a>
                     <el-divider direction="vertical" />
-                    {<a onclick={() => handleUpdateDictState(row)}>{row.status === 'disabled' ? '启用' : '禁用'}</a>}
+                    {<a onclick={() => handleUpdateDictState(row)}>{row.status === 0 ? '启用' : '禁用'}</a>}
                 </div>
             )
         }
@@ -96,6 +100,8 @@ const options = reactive<SearchOption[]>([
     },
     { mode: 'input', label: '字典名称', field: 'name' }
 ])
+businessStore.dictTypeId = undefined
+businessStore.dictTypeName = undefined
 </script>
 <template>
     <Table

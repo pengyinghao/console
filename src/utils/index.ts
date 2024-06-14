@@ -133,11 +133,11 @@ export const formatSize = (sizeInBytes: number): string => {
     return `${size.toFixed(2)} ${units[unitIndex]}`
 }
 
-export const isMatchDynamicRoute = (url: string, pattern: string) => {
-    // eslint-disable-next-line no-useless-escape
-    const escapedPattern = pattern.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1')
-    // Replace :param with a regex pattern to match any non-slash character
-    // eslint-disable-next-line no-useless-escape
-    const regexPattern = new RegExp(`^${escapedPattern.replace(/\/:([^\/]+)/g, '/([^/]+)')}$`)
-    return regexPattern.test(url)
+/**
+ * json 序列化
+ * @param {*} text 字符串
+ * @param {*} format 是否格式化
+ */
+export const textJsonStringify = (text: string, format: boolean) => {
+    return JSON.stringify(JSON.parse(text), null, format ? 4 : undefined)
 }

@@ -13,7 +13,7 @@ export const ALLOW_LIST = [LOGIN_PATH, FORBIDDEN_PATH, '/test']
 export const DEFAULT_APP_STORE: AppStore = {
     themeMode: 'light',
     followSystemTheme: false,
-    theme: '#0072ff',
+    theme: '#0960bd',
     menuIsCollapse: false,
     menuCollapseWidth: 68,
     menuWidth: 220,

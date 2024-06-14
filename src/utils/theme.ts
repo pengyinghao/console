@@ -13,6 +13,7 @@ const BLACK = '#000000'
 const html = document.documentElement
 
 export const themeColorList = [
+    '#0960bd',
     '#0072ff',
     '#5856D6',
     '#536dfe',
