@@ -9,8 +9,8 @@ const columns: TableColumn<LoginInfo>[] = [
     { label: '账号', prop: 'account' },
     { label: '登录IP', prop: 'loginIp' },
     { label: '登录地址', prop: 'loginAddr' },
-    { label: '浏览器', prop: 'browser' },
-    { label: '操作系统', prop: 'os' },
+    { label: '浏览器', prop: 'browser', minWidth: 120 },
+    { label: '操作系统', prop: 'os', minWidth: 150 },
     {
         label: '登录状态',
         render: ({ row }) => {
@@ -18,7 +18,7 @@ const columns: TableColumn<LoginInfo>[] = [
         }
     },
     { label: '消息内容', prop: 'message' },
-    { label: '登录时间', prop: 'loginTime', dateFormat: true }
+    { label: '登录时间', prop: 'loginTime', dateFormat: true, minWidth: 160 }
 ]
 
 const options = reactive<SearchOption[]>([

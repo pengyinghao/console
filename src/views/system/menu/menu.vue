@@ -75,11 +75,12 @@ const columns: TableColumn<Menu>[] = [
             return setDefaultValue()
         }
     },
-    { label: '创建时间', prop: 'createTime', dateFormat: true },
-    { label: '更新时间', prop: 'updateTime', dateFormat: true },
+    { label: '创建时间', prop: 'createTime', dateFormat: true, width: 160 },
+    { label: '更新时间', prop: 'updateTime', dateFormat: true, width: 160 },
     {
         label: '操作',
         prop: 'operation',
+        fixed: 'right',
         width: 100,
         render: ({ row }) => {
             return (

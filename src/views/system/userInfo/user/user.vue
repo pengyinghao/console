@@ -1,6 +1,6 @@
 <script lang="tsx" setup>
 import { reactive, ref } from 'vue'
-import { PageContainer, StatusView, Table, TableColumn, MoreButton, MoreButtonProp, SearchOption } from '@/components'
+import { PageContainer, StatusView, Table, TableColumn, SearchOption } from '@/components'
 import { deleteUser, fetchUserInfos, updateUserState, updateUserFreeze, User } from '@/service/api/system/user'
 import AddUser from './components/addUser.vue'
 import EditUser from './components/editUser.vue'
@@ -60,21 +60,6 @@ const handleUpdateUserFreezeState = async ({ id, freeze }: User) => {
     handleQuery()
 }
 
-const moreButtons = (row: User) => {
-    const moreButtons: MoreButtonProp[] = [
-        { label: row.status === 0 ? '启用' : '禁用', command: 'status' },
-        { label: row.freeze ? '解冻' : '冻结', command: 'freeze' }
-    ]
-    return moreButtons
-}
-const handleCommand = (command: string, row: User) => {
-    if (command === 'status') {
-        handleUpdateUserState(row)
-    } else {
-        handleUpdateUserFreezeState(row)
-    }
-}
-
 const columns: TableColumn<User>[] = [
     { label: '账号', prop: 'account' },
     { label: '编号', prop: 'no' },
@@ -88,8 +73,8 @@ const columns: TableColumn<User>[] = [
             )
         }
     },
-    { label: '姓名', prop: 'name' },
-    { label: '角色', prop: 'roleName' },
+    { label: '姓名', prop: 'name', minWidth: 100 },
+    { label: '角色', prop: 'roleName', minWidth: 100 },
     {
         label: '系统用户',
         prop: 'sysUser',
@@ -100,7 +85,7 @@ const columns: TableColumn<User>[] = [
         prop: 'freeze',
         render: ({ row }) => (row.freeze ? '是' : '否')
     },
-    { label: '手机', prop: 'phone', showOverflowTooltip: true },
+    { label: '手机', prop: 'phone', width: 120, showOverflowTooltip: true },
     {
         label: '邮箱',
         prop: 'email',
@@ -114,24 +99,19 @@ const columns: TableColumn<User>[] = [
         label: '操作',
         prop: 'operation',
         width: 200,
+        fixed: 'right',
         render: ({ row }) => {
             return (
                 <div class="flex-y-center">
                     <a onclick={() => handleEditUser(row.id)}>修改</a>
                     <el-divider direction="vertical" />
+                    <a onclick={() => handleUpdateUserState(row)}>{row.status === 0 ? '启用' : '禁用'}</a>
+                    <el-divider direction="vertical" />
+                    <a onclick={() => handleUpdateUserFreezeState(row)}>{row.freeze ? '解冻' : '冻结'}</a>
+                    <el-divider direction="vertical" />
                     <a disabled={row.sysUser === 0} onclick={() => handleDeleteBtnClick(row)}>
                         删除
                     </a>
-                    {row.sysUser === 1 ? (
-                        <>
-                            <el-divider direction="vertical" />
-                            <MoreButton
-                                buttons={moreButtons(row)}
-                                onCommand={(command) => handleCommand(command, row)}></MoreButton>
-                        </>
-                    ) : (
-                        ''
-                    )}
                 </div>
             )
         }

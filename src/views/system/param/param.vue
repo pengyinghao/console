@@ -32,17 +32,18 @@ const handleDeleteParam = async (row: Param) => {
 }
 
 const columns: TableColumn<Param>[] = [
-    { label: '参数名称', prop: 'name' },
+    { label: '参数名称', prop: 'name', width: 160 },
     { label: '参数键', prop: 'label' },
     { label: '参数值', prop: 'value' },
     {
         label: '备注',
         prop: 'remark',
+        width: 160,
         showOverflowTooltip: true,
         render: ({ row }) => setDefaultValue(row.remark)
     },
-    { label: '创建时间', prop: 'createTime', dateFormat: true },
-    { label: '更新时间', prop: 'updateTime', dateFormat: true },
+    { label: '创建时间', prop: 'createTime', dateFormat: true, width: 160 },
+    { label: '更新时间', prop: 'updateTime', dateFormat: true, width: 160 },
     {
         label: '操作',
         prop: 'operation',

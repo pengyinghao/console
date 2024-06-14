@@ -13,14 +13,14 @@ const actionTypeText: Record<ActionType, string> = {
 }
 const columns: TableColumn<Log>[] = [
     { label: '操作模块', prop: 'moduleName' },
-    { label: '操作描述', prop: 'actionMessage' },
+    { label: '操作描述', prop: 'actionMessage', minWidth: 150 },
     {
         label: '操作类型',
         prop: 'actionType',
         showOverflowTooltip: true,
         render: ({ row }) => actionTypeText[row.actionType]
     },
-    { label: '操作人员', prop: 'actionName', showOverflowTooltip: true },
+    { label: '操作人员', prop: 'actionName', showOverflowTooltip: true, minWidth: 100 },
     { label: '操作地址', prop: 'actionIp', showOverflowTooltip: true },
     {
         label: '操作地点',
@@ -29,7 +29,7 @@ const columns: TableColumn<Log>[] = [
         render: ({ row }) => setDefaultValue(row.actionAddress)
     },
     { label: '耗时(ms)', prop: 'costTime', showOverflowTooltip: true },
-    { label: '操作日期', prop: 'createTime', showOverflowTooltip: true, dateFormat: true }
+    { label: '操作日期', prop: 'createTime', showOverflowTooltip: true, dateFormat: true, minWidth: 160 }
 ]
 
 const options = reactive<SearchOption[]>([
