@@ -1,4 +1,5 @@
 import { requestGet } from '@/service/request'
+import { PagingResponse } from '@/types/pagingResponse'
 
 export interface OnlineUser {
     uuid: string

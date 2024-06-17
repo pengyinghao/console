@@ -1,7 +1,7 @@
 import { ElMessage } from 'element-plus'
 import { handleRefreshToken } from './handleRefreshToken'
 import { eventEmitter } from '@/utils/eventEmitter'
-import { ERROR_STATUS } from './types'
+import { ERROR_STATUS, ResponseEnum } from './types'
 
 export const handleResponseError = async (error: any) => {
     if (error.code === 'ERR_CANCELED') {
@@ -10,12 +10,13 @@ export const handleResponseError = async (error: any) => {
 
     const { config } = error.response
 
-    if (error.response.status === 401 && !config.url.includes('/user/refresh')) {
+    // 刷新token
+    if (error.response.status === ResponseEnum.UNAUTHORIZED && !config.url.includes('/user/refresh')) {
         return handleRefreshToken(error)
     }
 
     // 刷新token遇到 token过期 ，重新登录
-    if (error.response.status === 401 && config.url.includes('/user/refresh')) {
+    if (error.response.status === ResponseEnum.UNAUTHORIZED && config.url.includes('/user/refresh')) {
         return eventEmitter.emit('API:UN_AUTH', error.response.data)
     }
 

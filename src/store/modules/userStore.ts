@@ -2,9 +2,10 @@ import { defineStore } from 'pinia'
 import { RouteRecordRaw } from 'vue-router'
 import { reactive, ref } from 'vue'
 import createRoute from '@/router/guard/generatorDynamicRouter'
-import { UserDetail, fetchUserCurrent } from '@/service/api/system/user'
+import { UserDetail, fetchUserCurrent, userLoginOut } from '@/service/api/system/user'
 import { Buttons, SystemMenu } from '@/service/api/system/menu'
 import defaultAvatar from '@/assets/images/default-avatar.png'
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/core/constant'
 
 export const useUserStore = defineStore(
     'user',
@@ -13,7 +14,8 @@ export const useUserStore = defineStore(
             account: '',
             name: '',
             id: 0,
-            phone: ''
+            phone: '',
+            uuid: ''
         })
 
         const setAvatar = (url: string) => {
@@ -34,11 +36,19 @@ export const useUserStore = defineStore(
         /** 动态路由 */
         const dynamicRoute = ref<(() => void)[]>([])
 
-        /** 退出登录 */
-        const loginOut = () => {
+        /**
+         * 退出登录
+         * @param callLoginOut  是否需要调用退出登录接口
+         */
+        const loginOut = async (callLoginOut = true) => {
+            if (callLoginOut) {
+                await userLoginOut()
+            }
             // 通过动态路由移出 路由信息
             dynamicRoute.value.forEach((fn) => fn())
             dynamicRoute.value = []
+            sessionStorage.removeItem(ACCESS_TOKEN)
+            sessionStorage.removeItem(REFRESH_TOKEN)
         }
 
         const getUserCurrent = async () => {

@@ -17,13 +17,11 @@ const router = createRouter({
     }
 })
 
-eventEmitter.on('API:UN_AUTH', (response) => {
-    ElMessageBox.alert(response.message, '提示', {
-        callback: () => {
-            useUserStore().loginOut()
-            router.replace('/login')
-        }
-    })
+// 刷新token 会话过期
+eventEmitter.on('API:UN_AUTH', async (response) => {
+    await ElMessageBox.alert(response.message, '提示', { type: 'warning' })
+    await useUserStore().loginOut(false)
+    router.replace('/login')
 })
 
 export default router

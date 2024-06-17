@@ -48,7 +48,7 @@ export type UpdateUserOption = Optional<
     'id' | 'roleId' | 'roleName'
 >
 
-export type UserDetail = Pick<User, 'id' | 'name' | 'account' | 'phone' | 'email' | 'avatar'>
+export type UserDetail = Pick<User, 'id' | 'name' | 'account' | 'phone' | 'email' | 'avatar'> & { uuid: string }
 export type UserCurrent = {
     menu: SystemMenu[]
     user: UserDetail
@@ -107,4 +107,9 @@ export const fetchUserCurrent = () => {
 /** 修改用户头像 */
 export const uploadUserAvatar = (url: string) => {
     return requestPut(`/system/user/avatar?url=${url}`)
+}
+
+/** 退出登录 */
+export const userLoginOut = () => {
+    return requestPost('/system/user/loginOut', {}, { handleMessage: false })
 }

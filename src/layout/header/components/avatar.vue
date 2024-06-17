@@ -11,13 +11,13 @@ const appStore = useAppStore()
 const userStore = useUserStore()
 const router = useRouter()
 const { info } = toRefs(userStore)
-const onCommand = (value: 'preferenceSetting' | 'loginOut' | 'info') => {
+const onCommand = async (value: 'preferenceSetting' | 'loginOut' | 'info') => {
     if (value === 'info') {
         return router.push('/info')
     }
     if (value === 'loginOut') {
+        await userStore.loginOut()
         router.push('/login')
-        return userStore.loginOut()
     }
     if (value === 'preferenceSetting') {
         appStore.showPreferenceSetting = true

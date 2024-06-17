@@ -16,7 +16,7 @@ export enum ResponseEnum {
     /** 请求失败 */
     error = 1000,
     /** 未授权 */
-    unauthorized = 401
+    UNAUTHORIZED = 401
 }
 
 export interface ResponseData<T = any> {
