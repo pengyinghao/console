@@ -3,7 +3,7 @@ import { CSSProperties, computed, ref, toRefs } from 'vue'
 import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router'
 import { Icon } from '@/components'
 import { useAppStore, useTabStore, useUserStore } from '@/store'
-type Operation = 'refresh' | 'closeCurr' | 'closeLeft' | 'closeRight' | 'closeAll'
+type Operation = 'refresh' | 'closeCurr' | 'closeLeft' | 'closeRight' | 'closeOther'
 /** 右键菜单选项 */
 interface ContentMenuOptions {
     /** 图标 */
@@ -14,6 +14,8 @@ interface ContentMenuOptions {
     hide?: boolean
     /** 操作 */
     operation: Operation
+    /** 是否禁用 */
+    disabled?: boolean
 }
 
 const appStore = useAppStore()
@@ -57,23 +59,37 @@ const openContextMenu = (
 
 /** 右键菜单选项 */
 const contentMenuOptions = computed<ContentMenuOptions[]>(() => {
-    const hide = tabStore.fixedTabs.includes(selectTab.value?.path as string)
+    const currPath = selectTab.value?.path as string
+    const hide = tabStore.fixedTabs.includes(currPath)
+    const tabs = tabStore.tabs
     return [
         { icon: 'ep:refresh', label: '刷新当前', operation: 'refresh' },
         {
             icon: 'icon-park-outline:close-small',
             label: '关闭当前',
             hide,
-            operation: 'closeCurr'
+            operation: 'closeCurr',
+            disabled: tabs.length === 1
         },
         {
             icon: 'icon-park-outline:go-start',
             label: '关闭左侧',
             hide,
-            operation: 'closeLeft'
+            operation: 'closeLeft',
+            disabled: tabs[0].path === currPath
         },
-        { icon: 'icon-park-outline:go-end', label: '关闭右侧', operation: 'closeRight' },
-        { icon: 'icon-park-outline:fullwidth', label: '关闭全部', operation: 'closeAll' }
+        {
+            icon: 'icon-park-outline:go-end',
+            label: '关闭右侧',
+            operation: 'closeRight',
+            disabled: tabs[tabs.length - 1].path === currPath
+        },
+        {
+            icon: 'icon-park-outline:fullwidth',
+            label: '关闭其他',
+            operation: 'closeOther',
+            disabled: tabs.length === 1
+        }
     ]
 })
 
@@ -107,12 +123,8 @@ const closeRightTab = () => {
 
 const userStore = useUserStore()
 /** 关闭所有标签 */
-const closeTabAll = () => {
-    tabStore.removeAllTabs()
-    if (tabs.value.length === 0) {
-        return router.push(userStore.defaultRouterPath)
-    }
-    router.push(tabs.value[0].path)
+const closeOther = () => {
+    tabStore.removeOtherTabs(route.path)
 }
 
 /** 关闭当前标签 */
@@ -134,7 +146,7 @@ const refreshTab = () => {
 const contextOperation: Record<Operation, () => void> = {
     closeLeft: closeLeftTab,
     closeRight: closeRightTab,
-    closeAll: closeTabAll,
+    closeOther,
     closeCurr: closeTabCurr,
     refresh: refreshTab
 }
@@ -166,7 +178,12 @@ defineExpose({
             class="context-menu"
         >
             <template v-for="item in contentMenuOptions" :key="item.icon">
-                <li v-show="!item.hide" class="menu-item" @click="onContextClick(item.operation)">
+                <li
+                    v-show="!item.hide"
+                    class="menu-item"
+                    :class="{ disabled: item.disabled }"
+                    @click="onContextClick(item.operation)"
+                >
                     <Icon :name="item.icon" />
                     <span class="pl-8px">{{ item.label }}</span>
                 </li>
@@ -187,10 +204,11 @@ defineExpose({
         @apply flex items-center  plr-15px h-35px cursor-pointer dark:bg-dark dark:c-white;
 
         &.disabled {
-            cursor: not-allowed;
+            @apply cursor-not-allowed;
+            color: var(--el-text-color-placeholder);
         }
 
-        &:hover {
+        &:not(.disabled):hover {
             background-color: var(--el-color-primary-light-9);
             @apply dark:bg-dark-1;
         }

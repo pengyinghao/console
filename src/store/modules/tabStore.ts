@@ -30,10 +30,11 @@ export const useTabStore = defineStore('tab', () => {
     const removeRightTabs = (currentIndex: number) => {
         tabs.value = tabs.value.filter((item, index) => index <= currentIndex)
     }
-    /** 移除所有标签 */
-    const removeAllTabs = () => {
+
+    /** 移除其他标签 */
+    const removeOtherTabs = (path: string) => {
         tabs.value = tabs.value.filter((item) => {
-            return fixedTabs.value.includes(item.path)
+            return fixedTabs.value.includes(item.path) || item.path === path
         })
     }
 
@@ -44,6 +45,6 @@ export const useTabStore = defineStore('tab', () => {
         remove,
         removeLeftTabs,
         removeRightTabs,
-        removeAllTabs
+        removeOtherTabs
     }
 })
