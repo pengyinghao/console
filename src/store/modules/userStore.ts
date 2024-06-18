@@ -6,6 +6,7 @@ import { UserDetail, fetchUserCurrent, userLoginOut } from '@/service/api/system
 import { Buttons, SystemMenu } from '@/service/api/system/menu'
 import defaultAvatar from '@/assets/images/default-avatar.png'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/core/constant'
+import router from '@/router'
 
 export const useUserStore = defineStore(
     'user',
@@ -20,7 +21,7 @@ export const useUserStore = defineStore(
 
         const setAvatar = (url: string) => {
             if (url) {
-                info.avatar = import.meta.env.DEV ? import.meta.env.VITE_BASE_URL + url : url
+                info.avatar = import.meta.env.DEV ? `${import.meta.env.VITE_BASE_URL}/${url}` : url
             } else {
                 info.avatar = defaultAvatar
             }
@@ -49,6 +50,7 @@ export const useUserStore = defineStore(
             dynamicRoute.value = []
             sessionStorage.removeItem(ACCESS_TOKEN)
             sessionStorage.removeItem(REFRESH_TOKEN)
+            router.replace('/login')
         }
 
         const getUserCurrent = async () => {

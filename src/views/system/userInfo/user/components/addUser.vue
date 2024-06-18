@@ -135,8 +135,8 @@ defineExpose({
             <el-form-item label="密码" prop="password">
                 <el-input v-model="formData.password" maxlength="20" type="password" placeholder="请输入密码" />
             </el-form-item>
-            <el-form-item label="确认密码" maxlength="20" prop="password2">
-                <el-input v-model="formData.password2" type="password" placeholder="请输入确认密码" />
+            <el-form-item label="确认密码" prop="password2">
+                <el-input v-model="formData.password2" maxlength="20" type="password" placeholder="请输入确认密码" />
             </el-form-item>
             <el-form-item label="手机号码" prop="phone">
                 <el-input v-model="formData.phone" maxlength="11" placeholder="请输入账号" />

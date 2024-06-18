@@ -113,3 +113,13 @@ export const uploadUserAvatar = (url: string) => {
 export const userLoginOut = () => {
     return requestPost('/system/user/loginOut', {}, { handleMessage: false })
 }
+
+/**
+ * 修改密码
+ * @param oldPassword 旧密码
+ * @param newPassword 新密码
+ * @returns
+ */
+export const updatePassword = (oldPassword: string, newPassword: string) => {
+    return requestPost('/system/user/updatePassword', { oldPassword, newPassword })
+}

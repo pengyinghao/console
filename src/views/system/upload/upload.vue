@@ -5,7 +5,7 @@ import { Upload, fetchUploadInfos } from '@/service/api/system/upload'
 import { formatSize } from '@/utils'
 defineOptions({ name: 'Upload' })
 
-const reload = ref(false)
+const reload = ref(true)
 const queryParams = reactive({ originalname: '' })
 const handleQuery = () => {
     reload.value = true
