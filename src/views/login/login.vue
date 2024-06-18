@@ -19,7 +19,7 @@ interface FormData {
 const formData = reactive<FormData>({
     uuid: '',
     account: 'admin',
-    password: '123456',
+    password: '1q2w3e4r%T',
     code: ''
 })
 
@@ -95,7 +95,7 @@ const onLogin = async () => {
                     </el-input>
                 </el-form-item>
                 <div class="flex items-center mt-28px">
-                    <el-input v-model="formData.code" placeholder="请输入验证码"></el-input>
+                    <el-input v-model="formData.code" placeholder="请输入验证码" @keydown.enter="onLogin"></el-input>
                     <div
                         class="captcha w-150px h-32px ml-34px border border-#DCDFE6 rounded-4px cursor-pointer"
                         @click="getCaptcha"
