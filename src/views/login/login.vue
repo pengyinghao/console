@@ -54,7 +54,7 @@ const onLogin = async () => {
         // 登录成功
         sessionStorage.setItem(ACCESS_TOKEN, result.access_token)
         sessionStorage.setItem(REFRESH_TOKEN, result.refresh_token)
-        router.push({ path: '/' })
+        router.replace({ path: '/' })
     } catch (ex: any) {
         if (ex.code === 10000 || ex.code === 10001) {
             getCaptcha()
