@@ -12,8 +12,8 @@ const props = withDefaults(defineProps<SelectProps>(), {
 })
 
 /** 是否重新加载 */
-const reload = defineModel('reload', { type: Boolean, default: false })
-const value = defineModel({ type: String })
+const reload = defineModel<boolean>('reload', { default: false })
+const value = defineModel<string | number>({ required: true, default: undefined })
 
 const options = ref<any[]>([])
 const init = async () => {
