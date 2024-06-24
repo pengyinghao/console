@@ -13,10 +13,10 @@ for (let i = 1; i <= 20; i++) {
 }
 </script>
 <template>
-    <el-dropdown trigger="click" placement="bottom-start" :style="{ width: messageCounter > 0 ? '55px' : '40px' }">
-        <div :style="{ width: messageCounter > 0 ? '55px' : '40px' }" class="h-full flex-y-center">
-            <el-badge :value="messageCounter">
-                <icon name="ep:bell" size="20" class="pt-2px" />
+    <el-dropdown trigger="click" placement="bottom-start">
+        <div class="h-full flex-y-center">
+            <el-badge is-dot>
+                <icon name="icon-park-outline:remind" size="18" class="c-[var(--el-text-color-regular)]" />
             </el-badge>
         </div>
         <template #dropdown>

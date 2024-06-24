@@ -15,7 +15,7 @@ const onFullScreen = () => {
 <template>
     <div class="flex items-center h-full">
         <div class="header-item" @click="onFullScreen">
-            <icon name="ep:full-screen" size="18"></icon>
+            <icon name="icon-park-outline:full-screen" size="18" class="c-[var(--el-text-color-regular)]"></icon>
         </div>
         <message class="header-item" />
         <avatar class="header-item !w-auto" />

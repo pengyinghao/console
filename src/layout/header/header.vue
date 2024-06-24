@@ -10,7 +10,7 @@ import headerRightContent from './header-right-content.vue'
 </template>
 <style lang="scss" scoped>
 :deep(.header-item) {
-    @apply w-40px h-full flex items-center plr-10px cursor-pointer;
+    @apply w-46px h-full flex-center plr-10px cursor-pointer;
 }
 
 :deep(.header-item:hover) {

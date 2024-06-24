@@ -28,7 +28,7 @@ const onCommand = (value: 'preferenceSetting' | 'loginOut' | 'info') => {
     <el-dropdown @command="onCommand">
         <div class="h-full flex flex-center username">
             <el-avatar :size="26" :src="info.avatar" />
-            <span class="pl-10px">{{ info.name }}</span>
+            <span class="pl-10px c-[var(--el-text-color-regular)]">{{ info.name }}</span>
         </div>
         <template #dropdown>
             <el-dropdown-menu>
