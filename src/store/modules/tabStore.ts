@@ -1,9 +1,19 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { RouteLocationNormalizedLoaded } from 'vue-router'
 
+interface FixedMenu {
+    name: string
+    componentName: string
+    path: string
+}
+
 export const useTabStore = defineStore('tab', () => {
-    const fixedTabs = ref<string[]>([])
+    const fixedMenu = ref<FixedMenu[]>([])
+
+    const fixedTabs = computed<string[]>(() => {
+        return fixedMenu.value.map((item) => item.path) as string[]
+    })
     const tabs = ref<RouteLocationNormalizedLoaded[]>([])
 
     /** 添加标签到集合 */
@@ -40,6 +50,7 @@ export const useTabStore = defineStore('tab', () => {
 
     return {
         tabs,
+        fixedMenu,
         fixedTabs,
         add,
         remove,

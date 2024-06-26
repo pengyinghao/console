@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router'
 import Layout from '@/layout/index.vue'
 import { SystemMenu } from '@/service/api/system/menu'
-import { dataToTree } from '@/utils'
+import { dataToTree, getComponentName } from '@/utils'
 
 /** 导入模块 */
 const allPages = import.meta.glob('@/views/**/**/*.vue') // views 下的所有vue文件
@@ -17,12 +17,7 @@ function importModule(path: string | undefined) {
 function markRoute(page: SystemMenu, component: any) {
     const { name, id, parentId, icon, component: componentUrl, openType, url, display } = page
 
-    let componentName = ''
-    if (componentUrl) {
-        const arr = componentUrl.split('/') || []
-        componentName = arr[arr.length - 1]
-        componentName = componentName.charAt(0).toUpperCase() + componentName.slice(1)
-    }
+    const componentName = getComponentName(componentUrl as string)
 
     const currentRouter: RouteRecordRaw = {
         path: url || '',

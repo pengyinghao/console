@@ -29,7 +29,8 @@ const formData = reactive<UpdateSystemMenuOption>({
     display: 0,
     type: 0,
     status: 1,
-    openType: 0
+    openType: 0,
+    fixed: 1
 })
 
 const openTypeList = [
@@ -65,6 +66,7 @@ const close = (refreshData = false) => {
     formData.openType = 0
     formData.status = 1
     formData.display = 0
+    formData.fixed = 1
 
     refForm.value?.resetFields()
     visible.value = false
@@ -76,7 +78,11 @@ const handleConfirm = async () => {
     if (formData.id && formData.parentId && formData.id === formData.parentId) {
         return window.$message.error('上级菜单不能为当前菜单')
     }
-    formData.id ? await updateMenu(formData) : await createMenu(formData)
+    const newFormData = { ...formData }
+    if (newFormData.type !== 1) {
+        newFormData.fixed = 1
+    }
+    newFormData.id ? await updateMenu(newFormData) : await createMenu(newFormData)
     close(true)
 }
 
@@ -197,6 +203,14 @@ defineExpose({
                     <el-radio-group v-model="formData.display">
                         <el-radio :value="0">显示</el-radio>
                         <el-radio :value="1">隐藏</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+            </div>
+            <div v-if="formData.type === 1" class="flex-y-center mb-8px">
+                <el-form-item label="固定页签" name="fixed" class="!mb-0 w-50%">
+                    <el-radio-group v-model="formData.fixed">
+                        <el-radio :value="0">固定</el-radio>
+                        <el-radio :value="1">不固定</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </div>

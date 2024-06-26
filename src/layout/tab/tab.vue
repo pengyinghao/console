@@ -11,14 +11,16 @@ const route = useRoute()
 const router = useRouter()
 const tabStore = useTabStore()
 
+const { fixedTabs, tabs, fixedMenu } = toRefs(tabStore)
+
 /** 添加tab */
 const addTab = () => {
+    if (fixedTabs.value.includes(route.path)) return
     tabStore.add(route)
 }
 
 watch(route, () => addTab(), { immediate: true })
 
-const { fixedTabs, tabs } = toRefs(tabStore)
 const tabViewContainer = ref<HTMLElement>()
 const refContextMenu = useCompRef(contextMenu)
 
@@ -47,6 +49,16 @@ const onCloseCurrTab = (tab: RouteLocationNormalizedLoaded) => {
     <div ref="tabViewContainer">
         <el-scrollbar>
             <div class="tab-item-container">
+                <router-link
+                    v-for="tab in fixedMenu"
+                    :key="tab.path"
+                    :to="tab.path as string"
+                    :class="{ active: tab.path === route.path }"
+                    class="tab-item"
+                    @contextmenu.prevent="() => {}"
+                >
+                    <span>{{ tab.name }}</span>
+                </router-link>
                 <router-link
                     v-for="tab in tabs"
                     :key="tab.path"

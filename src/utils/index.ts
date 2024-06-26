@@ -141,3 +141,14 @@ export const formatSize = (sizeInBytes: number): string => {
 export const textJsonStringify = (text: string, format: boolean) => {
     return JSON.stringify(JSON.parse(text), null, format ? 4 : undefined)
 }
+
+/** 通过组件地址 获取组件名称（以最后一级为组件名） */
+export const getComponentName = (componentUrl: string) => {
+    if (!componentUrl) return ''
+
+    let componentName = ''
+    const arr = componentUrl.split('/') || []
+    componentName = arr[arr.length - 1]
+    componentName = componentName.charAt(0).toUpperCase() + componentName.slice(1)
+    return componentName
+}

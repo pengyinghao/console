@@ -15,6 +15,9 @@ const keepAliveNames = computed(() => {
     tabStore.tabs.forEach((it) => {
         names.push(it.name as string)
     })
+    tabStore.fixedMenu.forEach((it) => {
+        names.push(it.componentName as string)
+    })
     return names
 })
 /** 菜单宽度 */

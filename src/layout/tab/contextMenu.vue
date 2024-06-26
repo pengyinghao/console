@@ -62,6 +62,7 @@ const contentMenuOptions = computed<ContentMenuOptions[]>(() => {
     const currPath = selectTab.value?.path as string
     const hide = tabStore.fixedTabs.includes(currPath)
     const tabs = tabStore.tabs
+    if (tabs.length === 0) return []
     return [
         { icon: 'ep:refresh', label: '刷新当前', operation: 'refresh' },
         {

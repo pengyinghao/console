@@ -31,6 +31,8 @@ export interface Menu {
     createTime: string
     /** 更新时间 */
     updateTime: string
+    /** 固定页签(0:固定，1：不固定) */
+    fixed: 0 | 1
     children?: Menu[]
 }
 
@@ -38,7 +40,18 @@ export type UpdateSystemMenuOption = Omit<Optional<Menu, 'id'>, 'createTime' | '
 export type PartialMenu = Partial<Menu>
 export type SystemMenu = { children: SystemMenu[] } & Pick<
     Menu,
-    'id' | 'component' | 'display' | 'icon' | 'openType' | 'params' | 'parentId' | 'sort' | 'url' | 'name' | 'type'
+    | 'id'
+    | 'component'
+    | 'display'
+    | 'icon'
+    | 'openType'
+    | 'params'
+    | 'parentId'
+    | 'sort'
+    | 'url'
+    | 'name'
+    | 'type'
+    | 'fixed'
 >
 export type Buttons = { menuId: number } & Pick<Menu, 'id' | 'code' | 'icon'>
 export type DefaultNavigate = Pick<Menu, 'name' | 'url'>
