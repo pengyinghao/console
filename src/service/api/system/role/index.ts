@@ -1,5 +1,4 @@
 import { requestDelete, requestGet, requestPost, requestPut } from '@/service/request'
-import { User } from '../user'
 
 export type RoleType = 'custom' | 'system'
 export interface Role {
@@ -53,9 +52,4 @@ export const authorize = (option: { roleId: number; menuIds: number[]; defaultNa
 /** 获取授权的菜单集合 */
 export const fetchAuthorizeMenuIds = (roleId: number) => {
     return requestGet<number[]>(`/system/role/${roleId}/authorize`)
-}
-
-/** 获取角色下的用户 */
-export const fetchRoleUser = (params: Record<string, any>) => {
-    return requestGet<User[]>('system/role/user', { params })
 }

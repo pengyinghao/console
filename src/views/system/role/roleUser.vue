@@ -2,8 +2,7 @@
 import { reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { PageContainer, Table, TableColumn, StatusView } from '@/components'
-import { fetchRoleUser } from '@/service/api/system/role'
-import { User } from '@/service/api/system/user'
+import { fetchRoleUser, User } from '@/service/api/system/user'
 import { setDefaultValue } from '@/utils'
 defineOptions({ name: 'RoleUser' })
 const route = useRoute()
@@ -20,7 +19,7 @@ const columns: TableColumn<User>[] = [
     {
         label: '状态',
         render: ({ row }) => {
-            return <StatusView status={row.status}>{row.status === 'enable' ? '禁用' : '启用'}</StatusView>
+            return <StatusView status={row.status}>{row.status === 0 ? '禁用' : '启用'}</StatusView>
         }
     },
     { label: '姓名', prop: 'name' },

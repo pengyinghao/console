@@ -111,7 +111,7 @@ export const uploadUserAvatar = (url: string) => {
 
 /** 退出登录 */
 export const userLoginOut = () => {
-    return requestPost('/system/user/loginOut', {}, { handleMessage: false })
+    return requestPost('/system/user/login_out', {}, { handleMessage: false })
 }
 
 /**
@@ -121,5 +121,10 @@ export const userLoginOut = () => {
  * @returns
  */
 export const updatePassword = (oldPassword: string, newPassword: string) => {
-    return requestPost('/system/user/updatePassword', { oldPassword, newPassword })
+    return requestPost('/system/user/update_password', { oldPassword, newPassword })
+}
+
+/** 获取角色下的用户 */
+export const fetchRoleUser = (params: Record<string, any>) => {
+    return requestGet<User[]>('system/user/role_user', { params })
 }
