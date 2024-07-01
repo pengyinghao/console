@@ -1,5 +1,6 @@
 import { io, Socket } from 'socket.io-client'
 import { Emit, Events } from './event'
+import { useUserStore } from '@/store'
 
 export class SocketService {
     private socket: Socket | undefined
@@ -12,16 +13,14 @@ export class SocketService {
     }
 
     private createSocket() {
+        const userStore = useUserStore()
         const socket = io(import.meta.env.VITE_BASE_URL, {
             transports: ['websocket'],
             autoConnect: true,
             reconnection: true,
             reconnectionAttempts: 3,
-            reconnectionDelay: 1000,
-            extraHeaders: {
-                token: 'xxx'
-            },
-            query: { token: 'your-token' }
+            reconnectionDelay: 1000 * 60 * 5, // 5分钟重试一次
+            query: { userId: userStore.info.id }
         })
         this.socket = socket
     }
