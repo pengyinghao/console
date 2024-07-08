@@ -8,10 +8,16 @@ import {
     fetchMenuDetail,
     updateMenu,
     Menu,
-    fetchTreeMenu
+    fetchTreeMenu,
+    MenuType,
+    MenuDisplay,
+    MenuOpenType,
+    MenuFixed
 } from '@/service/api/system/menu'
 import { ruleHelper } from '@/utils/ruleHelper'
 import { isJSON } from '@/utils'
+import { Status } from '@/core/enums/status'
+import { STATUS_FORM_ITEM } from '@/core/constant'
 
 const emit = defineEmits<{
     close: [refreshData: boolean]
@@ -26,18 +32,12 @@ const formData = reactive<UpdateSystemMenuOption>({
     sort: 1,
     icon: '',
     component: '',
-    display: 0,
-    type: 0,
-    status: 1,
-    openType: 0,
-    fixed: 1
+    display: MenuDisplay.SHOW,
+    type: MenuType.DIRECTORY,
+    status: Status.ENABLE,
+    openType: MenuOpenType.ROUTE,
+    fixed: MenuFixed.NOT_FIXED
 })
-
-const openTypeList = [
-    { value: 0, label: '路由' },
-    { value: 1, label: '内嵌' },
-    { value: 2, label: '链接' }
-]
 
 const { unable_contain_special } = ruleHelper
 const paramsValidation = (rule: any, value: string, callback: any) => {
@@ -79,8 +79,8 @@ const handleConfirm = async () => {
         return window.$message.error('上级菜单不能为当前菜单')
     }
     const newFormData = { ...formData }
-    if (newFormData.type !== 1) {
-        newFormData.fixed = 1
+    if (newFormData.type !== MenuType.MENU) {
+        newFormData.fixed = MenuFixed.NOT_FIXED
     }
     newFormData.id ? await updateMenu(newFormData) : await createMenu(newFormData)
     close(true)
@@ -112,6 +112,32 @@ const showModal = (id?: number) => {
     visible.value = true
 }
 
+/** 菜单打开方式 */
+const openTypeList = [
+    { value: MenuOpenType.ROUTE, label: '路由' },
+    { value: MenuOpenType.IFRAME, label: '内嵌' },
+    { value: MenuOpenType.LINK, label: '链接' }
+]
+
+/** 菜单类型 */
+const type = [
+    { value: MenuType.DIRECTORY, label: '目录' },
+    { value: MenuType.MENU, label: '菜单' },
+    { value: MenuType.BUTTON, label: '按钮' }
+]
+
+/** 菜单显示状态 */
+const display = [
+    { value: MenuDisplay.SHOW, label: '显示' },
+    { value: MenuDisplay.HIDE, label: '隐藏' }
+]
+
+/** 菜单是否固定 */
+const fixed = [
+    { value: MenuFixed.FIXED, label: '固定' },
+    { value: MenuFixed.NOT_FIXED, label: '不固定' }
+]
+
 defineExpose({
     showModal
 })
@@ -131,12 +157,10 @@ defineExpose({
             </el-form-item>
             <el-form-item label="菜单类型" prop="type">
                 <el-radio-group v-model="formData.type">
-                    <el-radio :value="0">目录</el-radio>
-                    <el-radio :value="1">菜单</el-radio>
-                    <el-radio :value="2">按钮</el-radio>
+                    <el-radio v-for="item in type" :key="item.value" :value="item.value">{{ item.label }}</el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="formData.type === 2" label="功能代码" prop="code">
+            <el-form-item v-if="formData.type === MenuType.BUTTON" label="功能代码" prop="code">
                 <el-input v-model="formData.code" maxlength="20"></el-input>
             </el-form-item>
             <el-form-item label="菜单名称" prop="name">
@@ -145,15 +169,19 @@ defineExpose({
             <el-form-item label="图标" prop="icon">
                 <el-input v-model="formData.icon" maxlength="50"></el-input>
             </el-form-item>
-            <el-form-item v-if="formData.type === 1" label="打开方式" prop="openType">
+            <el-form-item v-if="formData.type === MenuType.MENU" label="打开方式" prop="openType">
                 <el-select v-model="formData.openType" class="w-250px">
                     <el-option v-for="item in openTypeList" :key="item.value" :label="item.label" :value="item.value" />
                 </el-select>
             </el-form-item>
-            <el-form-item v-if="formData.type === 1 && formData.openType === 0" label="组件地址" prop="component">
+            <el-form-item
+                v-if="formData.type === MenuType.MENU && formData.openType === MenuOpenType.ROUTE"
+                label="组件地址"
+                prop="component"
+            >
                 <el-input v-model="formData.component"></el-input>
             </el-form-item>
-            <el-form-item v-if="formData.type === 1" label="页面地址" prop="url">
+            <el-form-item v-if="formData.type === MenuType.MENU" label="页面地址" prop="url">
                 <el-input v-model="formData.url"></el-input>
             </el-form-item>
             <el-form-item label="显示顺序" prop="sort">
@@ -182,11 +210,12 @@ defineExpose({
                         </div>
                     </template>
                     <el-radio-group v-model="formData.status">
-                        <el-radio :value="1">启用</el-radio>
-                        <el-radio :value="0">禁用</el-radio>
+                        <el-radio v-for="item in STATUS_FORM_ITEM" :key="item.value" :value="item.value">
+                            {{ item.label }}
+                        </el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item v-if="formData.type !== 2" label="显示状态" name="hidden" class="!mb-0">
+                <el-form-item v-if="formData.type !== MenuType.BUTTON" label="显示状态" name="hidden" class="!mb-0">
                     <template #label>
                         <div class="form-item-slot">
                             <el-tooltip
@@ -201,35 +230,39 @@ defineExpose({
                         </div>
                     </template>
                     <el-radio-group v-model="formData.display">
-                        <el-radio :value="0">显示</el-radio>
-                        <el-radio :value="1">隐藏</el-radio>
+                        <el-radio v-for="item in display" :key="item.value" :value="item.value">
+                            {{ item.label }}
+                        </el-radio>
                     </el-radio-group>
                 </el-form-item>
             </div>
-            <div v-if="formData.type === 1" class="flex-y-center mb-8px">
-                <el-form-item label="固定页签" name="fixed" class="!mb-0 w-50%">
-                    <el-radio-group v-model="formData.fixed">
-                        <el-radio :value="0">固定</el-radio>
-                        <el-radio :value="1">不固定</el-radio>
-                    </el-radio-group>
+            <template v-if="formData.type === MenuType.MENU">
+                <div class="flex-y-center mb-8px">
+                    <el-form-item label="固定页签" name="fixed" class="!mb-0 w-50%">
+                        <el-radio-group v-model="formData.fixed">
+                            <el-radio v-for="item in fixed" :key="item.value" :value="item.value">
+                                {{ item.label }}
+                            </el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                </div>
+                <el-form-item label="路由参数" prop="params">
+                    <template #label>
+                        <div class="form-item-slot">
+                            <el-tooltip
+                                class="box-item"
+                                effect="dark"
+                                content='路由参数必须是json格式，例如：{"id":1,"name":"test"}'
+                                placement="bottom"
+                            >
+                                <Icon name="ep:question-filled"></Icon>
+                            </el-tooltip>
+                            <span class="ml-4px">路由参数</span>
+                        </div>
+                    </template>
+                    <el-input v-model="formData.params" :rows="2" type="textarea" />
                 </el-form-item>
-            </div>
-            <el-form-item v-if="formData.type === 1" label="路由参数" prop="params">
-                <template #label>
-                    <div class="form-item-slot">
-                        <el-tooltip
-                            class="box-item"
-                            effect="dark"
-                            content='路由参数必须是json格式，例如：{"id":1,"name":"test"}'
-                            placement="bottom"
-                        >
-                            <Icon name="ep:question-filled"></Icon>
-                        </el-tooltip>
-                        <span class="ml-4px">路由参数</span>
-                    </div>
-                </template>
-                <el-input v-model="formData.params" :rows="2" type="textarea" />
-            </el-form-item>
+            </template>
         </el-form>
         <template #footer>
             <div class="dialog-footer">

@@ -1,5 +1,6 @@
 import { requestDelete, requestGet, requestPost, requestPut } from '@/service/request'
 
+/** 角色类型 */
 export type RoleType = 'custom' | 'system'
 export interface Role {
     id: number
@@ -17,7 +18,8 @@ export interface Role {
     updateTime: string
 }
 
-export type UpdateRoleOption = Optional<Omit<Role, 'createTime' | 'updateTime'>, 'id' | 'type'>
+/** 添加修改角色 */
+export type RoleOption = Optional<Omit<Role, 'createTime' | 'updateTime'>, 'id' | 'type'>
 
 /** 获取所有的角色信息 */
 export const fetchRoleInfos = (params: Record<string, any>) => {
@@ -25,12 +27,12 @@ export const fetchRoleInfos = (params: Record<string, any>) => {
 }
 
 /** 创建角色 */
-export const createRole = (option: UpdateRoleOption) => {
+export const createRole = (option: RoleOption) => {
     return requestPost('/system/role', option)
 }
 
 /** 修改角色 */
-export const updateRole = (option: UpdateRoleOption) => {
+export const updateRole = (option: RoleOption) => {
     return requestPut('/system/role', option)
 }
 

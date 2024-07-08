@@ -18,8 +18,7 @@ export interface Param {
     updateTime: string
 }
 
-/** 查询条件 */
-export type ParamsQueryParams = Partial<Pick<Param, 'name'>>
+/** 添加、修改参数 */
 export type UpdateParam = Omit<Optional<Param, 'id'>, 'createTime' | 'updateTime' | 'sys'>
 
 /** 获取参数分页列表 */

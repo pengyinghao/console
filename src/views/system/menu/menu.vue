@@ -40,13 +40,7 @@ const columns: TableColumn<Menu>[] = [
     { label: '菜单名称', prop: 'name', width: 200 },
     {
         label: '状态',
-        render: ({ row }) => {
-            return (
-                <StatusView status={row.status === 0 ? 'danger' : 'success'}>
-                    {row.status === 1 ? '启用' : '禁用'}
-                </StatusView>
-            )
-        }
+        render: ({ row }) => <StatusView status={row.status}></StatusView>
     },
     {
         label: '图标',

@@ -1,5 +1,40 @@
-import { MenuOpenTypeEnum } from '@/core/enums/menuOpenTypeEnum'
+import { Status } from '@/core/enums/status'
 import { requestDelete, requestGet, requestPost, requestPut } from '@/service/request'
+/** 枚举定义菜单打开方式 */
+export enum MenuOpenType {
+    /** 路由 */
+    ROUTE = 0,
+    /** 内嵌 */
+    IFRAME = 1,
+    /**  链接 */
+    LINK = 2
+}
+
+/** 枚举定义菜单类型 */
+export enum MenuType {
+    /** 目录 */
+    DIRECTORY = 0,
+    /** 菜单 */
+    MENU = 1,
+    /** 按钮 */
+    BUTTON = 2
+}
+
+/** 枚举定义菜单显示状态 */
+export enum MenuDisplay {
+    /** 显示 */
+    SHOW = 0,
+    /** 隐藏 */
+    HIDE = 1
+}
+
+/** 枚举定义菜单固定状态 */
+export enum MenuFixed {
+    /** 固定 */
+    FIXED = 0,
+    /** 不固定 */
+    NOT_FIXED = 1
+}
 
 export interface Menu {
     id: number
@@ -12,9 +47,9 @@ export interface Menu {
     /** 菜单图标 */
     icon?: string
     /** 菜单类型(0：目录，1：菜单，2：按钮) */
-    type: number
+    type: MenuType
     /** 打开方式 (0：路由，1：内嵌，2：链接) */
-    openType: MenuOpenTypeEnum
+    openType: MenuOpenType
     /** 显示顺序 */
     sort: number
     /** 上级菜单id */
@@ -24,7 +59,7 @@ export interface Menu {
     /** 页面地址 */
     url?: string
     /** 显示状态(0：显示，1：隐藏) */
-    display: number
+    display: MenuDisplay
     /** 路由参数 */
     params?: string
     /** 创建时间 */
@@ -32,12 +67,15 @@ export interface Menu {
     /** 更新时间 */
     updateTime: string
     /** 固定页签(0:固定，1：不固定) */
-    fixed: 0 | 1
+    fixed: MenuFixed
     children?: Menu[]
 }
 
+/** 更新菜单选项类型 */
 export type UpdateSystemMenuOption = Omit<Optional<Menu, 'id'>, 'createTime' | 'updateTime'>
+/** 菜单只读 */
 export type PartialMenu = Partial<Menu>
+/** 系统菜单类型 */
 export type SystemMenu = { children: SystemMenu[] } & Pick<
     Menu,
     | 'id'
@@ -53,7 +91,9 @@ export type SystemMenu = { children: SystemMenu[] } & Pick<
     | 'type'
     | 'fixed'
 >
+/** 按钮类型 */
 export type Buttons = { menuId: number } & Pick<Menu, 'id' | 'code' | 'icon'>
+/** 默认导航类型 */
 export type DefaultNavigate = Pick<Menu, 'name' | 'url'>
 
 /**  获取所有菜单(树形结构) */

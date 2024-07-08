@@ -9,6 +9,8 @@ import {
 } from '@/service/api/system/dictionary'
 import Modal from '@/components/Modal/Modal.vue'
 import { ruleHelper } from '@/utils/ruleHelper'
+import { Status } from '@/core/enums/status'
+import { STATUS_FORM_ITEM } from '@/core/constant'
 
 const emits = defineEmits<{
     (e: 'close', refreshData: boolean): void
@@ -20,7 +22,7 @@ const dataId = ref<number>()
 const formData = reactive<UpdateDictTypeOption>({
     no: '',
     name: '',
-    status: 'enable',
+    status: Status.ENABLE,
     remark: undefined
 })
 
@@ -103,15 +105,21 @@ defineExpose({
     >
         <el-form ref="refForm" :model="formData" :rules="rules" label-width="85px">
             <el-form-item label="编号" prop="no">
-                <el-input v-model="formData.no" :disabled="dataId" maxlength="20" placeholder="请输入编号" />
+                <el-input
+                    v-model="formData.no"
+                    :disabled="dataId !== undefined"
+                    maxlength="20"
+                    placeholder="请输入编号"
+                />
             </el-form-item>
             <el-form-item label="名称" prop="name">
                 <el-input v-model="formData.name" maxlength="20" placeholder="请输入名称" />
             </el-form-item>
             <el-form-item label="状态" prop="status">
                 <el-radio-group v-model="formData.status">
-                    <el-radio value="enable">启用</el-radio>
-                    <el-radio value="disabled">禁用</el-radio>
+                    <el-radio v-for="item in STATUS_FORM_ITEM" :key="item.value" :value="item.value">
+                        {{ item.label }}
+                    </el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="备注" prop="remark">

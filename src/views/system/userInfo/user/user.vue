@@ -65,13 +65,7 @@ const columns: TableColumn<User>[] = [
     { label: '编号', prop: 'no' },
     {
         label: '状态',
-        render: ({ row }) => {
-            return (
-                <StatusView status={row.status === 0 ? 'danger' : 'success'}>
-                    {row.status === 1 ? '启用' : '禁用'}
-                </StatusView>
-            )
-        }
+        render: ({ row }) => <StatusView status={row.status}></StatusView>
     },
     { label: '姓名', prop: 'name', minWidth: 100 },
     { label: '角色', prop: 'roleName', minWidth: 100 },

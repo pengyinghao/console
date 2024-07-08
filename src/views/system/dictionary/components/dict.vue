@@ -53,13 +53,7 @@ const columns: TableColumn<Dict>[] = [
     {
         label: '状态',
         prop: 'status',
-        render: ({ row }) => {
-            return (
-                <StatusView status={row.status === 0 ? 'danger' : 'success'}>
-                    {row.status === 1 ? '启用' : '禁用'}
-                </StatusView>
-            )
-        }
+        render: ({ row }) => <StatusView status={row.status}></StatusView>
     },
     { label: '排序', prop: 'sort' },
     {

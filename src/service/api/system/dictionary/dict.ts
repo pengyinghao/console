@@ -1,3 +1,4 @@
+import { Status } from '@/core/enums/status'
 import { requestDelete, requestGet, requestPost, requestPut } from '@/service/request'
 
 export interface Dict {

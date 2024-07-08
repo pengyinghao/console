@@ -1,3 +1,4 @@
+import { Status } from '@/core/enums/status'
 import { requestDelete, requestGet, requestPost, requestPut } from '@/service/request'
 import { PagingResponse } from '@/types/pagingResponse'
 
@@ -13,6 +14,7 @@ export interface DictType {
     remark?: string
 }
 
+/** 新增、修改字典类型 */
 export type UpdateDictTypeOption = Omit<DictType, 'id'>
 
 /** 获取字典分类分页信息 */

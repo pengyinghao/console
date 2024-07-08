@@ -1,35 +1,51 @@
 <script lang="ts" setup>
-enum Colors {
-    primary = 'var(--el-color-primary)',
-    enable = 'var(--el-color-success)',
-    success = 'var(--el-color-success)',
-    warning = 'var(--el-color-warning)',
-    danger = 'var(--el-color-error)',
-    fail = 'var(--el-color-error)',
-    disabled = 'var(--el-color-error)',
-    gray = 'var(--el-color-info)'
-}
+import { computed } from 'vue'
+import { Status } from '@/core/enums/status'
 
-type Status = keyof typeof Colors
+type StatusType = 'primary' | 'enable' | 'success' | 'warning' | 'danger' | 'fail' | 'disabled' | 'gray'
+const Colors: Record<StatusType, string> = {
+    primary: 'var(--el-color-primary)',
+    enable: 'var(--el-color-success)',
+    success: 'var(--el-color-success)',
+    warning: 'var(--el-color-warning)',
+    danger: 'var(--el-color-error)',
+    fail: 'var(--el-color-error)',
+    disabled: 'var(--el-color-error)',
+    gray: 'var(--el-color-info)'
+}
 
 const props = withDefaults(
     defineProps<{
+        /** 是否显示点(跟随状态颜色) */
         dot?: boolean
-        status: Status
+        /** 类型 */
+        type?: StatusType
+        /** 状态  */
+        status?: Status
+        /**  状态颜色 */
+        statusText?: string
     }>(),
     {
-        dot: false
+        dot: false,
+        type: undefined,
+        status: undefined,
+        statusText: undefined
     }
 )
+
+const status = computed(() => props.type || (props.status === Status.ENABLE ? 'success' : 'fail'))
+const statusText = computed(() => props.statusText || (props.status === 1 ? '启用' : '禁用'))
 </script>
 <template>
     <span :class="{ dot: dot }">
-        <slot></slot>
+        <slot>
+            {{ statusText }}
+        </slot>
     </span>
 </template>
 <style lang="scss" scoped>
 span {
-    --color: v-bind(Colors[props.status]);
+    --color: v-bind(Colors[status]);
     --dot-size: 6px;
     @apply relative;
     color: var(--color);

@@ -2,7 +2,7 @@
 import { FormInstance, FormRules } from 'element-plus'
 import { reactive, ref } from 'vue'
 import Modal from '@/components/Modal/Modal.vue'
-import { UpdateRoleOption, createRole, fetchRoleDetail, updateRole } from '@/service/api/system/role'
+import { RoleOption, createRole, fetchRoleDetail, updateRole } from '@/service/api/system/role'
 import { ruleHelper } from '@/utils/ruleHelper'
 
 const emits = defineEmits<{
@@ -11,7 +11,7 @@ const emits = defineEmits<{
 
 const refForm = ref<FormInstance>()
 
-const formData = reactive<UpdateRoleOption>({
+const formData = reactive<RoleOption>({
     id: undefined,
     name: '',
     code: '',

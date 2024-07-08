@@ -7,7 +7,7 @@ import Logo from './logo.vue'
 import { useAppStore, useUserStore } from '@/store'
 import { useLayout } from '@/composables/useLayout'
 import { dataToTree } from '@/utils'
-import { MenuOpenTypeEnum } from '@/core/enums/menuOpenTypeEnum'
+import { MenuOpenType } from '@/service/api/system/menu'
 
 const route = useRoute()
 const router = useRouter()
@@ -27,19 +27,19 @@ const menus = dataToTree(
     'parentId'
 )
 
-const onSelect = (menuId: number) => {
+const onSelect = (menuId: string) => {
     const menu = userStore.originMenus.find((item) => item.id === Number(menuId))
 
     if (!menu) return
     if (!menu.url) return window.$message.error('菜单没有url地址')
 
     const { openType, url } = menu
-    if (openType === MenuOpenTypeEnum.ROUTE) {
+    if (openType === MenuOpenType.ROUTE) {
         return router.push(url)
     }
 
     // 外链
-    if (openType === MenuOpenTypeEnum.LINK) {
+    if (openType === MenuOpenType.LINK) {
         return window.open(url, '_black')
     }
 }

@@ -68,13 +68,7 @@ const columns: TableColumn<DictType>[] = [
     },
     {
         label: '状态',
-        render: ({ row }) => {
-            return (
-                <StatusView status={row.status === 0 ? 'danger' : 'success'}>
-                    {row.status === 1 ? '启用' : '禁用'}
-                </StatusView>
-            )
-        }
+        render: ({ row }) => <StatusView status={row.status}></StatusView>
     },
     { label: '备注', prop: 'remark', render: ({ row }) => setDefaultValue(row.remark) },
     {

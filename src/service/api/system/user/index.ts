@@ -1,6 +1,7 @@
 import { requestDelete, requestGet, requestPost, requestPut } from '@/service/request'
 import { PagingResponse } from '@/types/pagingResponse'
 import { Buttons, SystemMenu } from '../menu'
+import { Status } from '@/core/enums/status'
 
 /** 用户实体 */
 export interface User {
@@ -48,7 +49,10 @@ export type UpdateUserOption = Optional<
     'id' | 'roleId' | 'roleName'
 >
 
+/** 当前用户返回的信息-用户详情 */
 export type UserDetail = Pick<User, 'id' | 'name' | 'account' | 'phone' | 'email' | 'avatar'> & { uuid: string }
+
+/** 当前用户返回的信息 */
 export type UserCurrent = {
     menu: SystemMenu[]
     user: UserDetail
