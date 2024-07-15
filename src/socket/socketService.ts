@@ -19,13 +19,19 @@ export class SocketService {
             autoConnect: true,
             reconnection: true,
             reconnectionAttempts: 3,
-            reconnectionDelay: 1000 * 60 * 5, // 5分钟重试一次
+            reconnectionDelay: 1000 * 60, // 5分钟重试一次
             query: { userId: userStore.info.id }
         })
+
+        // 重连，后端发出的消息
+        socket.on('reconnectInstruction', () => {
+            this.reconnect()
+        })
+
         this.socket = socket
     }
 
-    /**  获取 socket 服务的实例  */
+    /** 获取 socket 服务的实例 */
     static getInstance(): SocketService {
         if (!SocketService.instance) {
             SocketService.instance = new SocketService()
@@ -69,13 +75,21 @@ export class SocketService {
         this.socket?.off(eventName as string, listener as (data: Events[T]) => void)
     }
 
-    /**  断开连接 */
-    disconnect() {
+    /** 断开连接 */
+    private disconnect() {
         this.socket?.disconnect()
     }
 
     /** 连接 */
-    connect() {
+    private connect() {
         this.socket?.connect()
+    }
+
+    /** 重新连接 */
+    private reconnect() {
+        this.disconnect()
+        setTimeout(() => {
+            this.connect()
+        }, 1000) // 延迟1秒后重连
     }
 }
