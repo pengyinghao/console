@@ -82,6 +82,7 @@ const handleConfirm = async () => {
     if (newFormData.type !== MenuType.MENU) {
         newFormData.fixed = MenuFixed.NOT_FIXED
     }
+    newFormData.parentId = newFormData.parentId === undefined ? null : newFormData.parentId
     newFormData.id ? await updateMenu(newFormData) : await createMenu(newFormData)
     close(true)
 }
@@ -151,6 +152,7 @@ defineExpose({
                     :data="menus"
                     :check-strictly="true"
                     node-key="id"
+                    clearable
                     :props="{ label: 'name' }"
                 >
                 </el-tree-select>

@@ -11,7 +11,7 @@ const columns: TableColumn<JobLog>[] = [
         label: '执行状态',
         render: ({ row }) => {
             return (
-                <StatusView status={row.status === 0 ? 'danger' : 'success'}>
+                <StatusView type={row.status === 0 ? 'danger' : 'success'}>
                     {row.status === 0 ? '失败' : '成功'}
                 </StatusView>
             )

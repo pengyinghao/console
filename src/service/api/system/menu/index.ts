@@ -53,7 +53,7 @@ export interface Menu {
     /** 显示顺序 */
     sort: number
     /** 上级菜单id */
-    parentId?: number
+    parentId?: number | null
     /** 组件地址 */
     component?: string
     /** 页面地址 */
