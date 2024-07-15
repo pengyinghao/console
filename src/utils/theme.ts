@@ -5,85 +5,29 @@ const PRE_LIGHT = `${PRE}-light`
 /** 暗黑 */
 const PRE_DARK = `${PRE}-dark`
 
+// 白色混合色
+const MIX_WIDTH = '#ffffff'
+// 黑色混合色
+const MIX_BLACK = '#000000'
+
 const html = document.documentElement
 
-/**
- * hex颜色转rgb颜色
- * @param str 颜色值字符串
- * @returns 返回处理后的颜色值
- */
-function hexToRgb(str: any) {
-    let hex: any = ''
-    // eslint-disable-next-line no-useless-escape
-    const reg = /^\#?[0-9A-Fa-f]{6}$/
-    if (!reg.test(str)) {
-        return
-    }
-    str = str.replace('#', '')
-    hex = str.match(/../g)
-    for (let i = 0; i < 3; i++) {
-        hex[i] = Number.parseInt(hex[i], 16)
-    }
-    return hex
-}
-
-/**
- * rgb颜色转Hex颜色
- * @param r 代表红色
- * @param g 代表绿色
- * @param b 代表蓝色
- * @returns 返回处理后的颜色值
- */
-function rgbToHex(r: any, g: any, b: any) {
-    const reg = /^\d{1,3}$/
-    if (!reg.test(r) || !reg.test(g) || !reg.test(b)) {
-        return
-    }
-    const hex = [r.toString(16), g.toString(16), b.toString(16)]
-    for (let i = 0; i < 3; i++) {
-        if (hex[i].length === 1) {
-            hex[i] = `0${hex[i]}`
-        }
-    }
-    return `#${hex.join('')}`
-}
-
-/**
- * 变浅颜色值
- * @param color 颜色值字符串
- * @param level 加深的程度，限0-1之间
- * @returns 返回处理后的颜色值
- */
-function getLightColor(color: string, level: number) {
-    // eslint-disable-next-line no-useless-escape
-    const reg = /^\#?[0-9A-Fa-f]{6}$/
-    if (!reg.test(color)) {
-        return
-    }
-    const rgb = hexToRgb(color)
-    for (let i = 0; i < 3; i++) {
-        rgb[i] = Math.floor((255 - rgb[i]) * level + rgb[i])
-    }
-    return rgbToHex(rgb[0], rgb[1], rgb[2])
-}
-
-/**
- * 加深颜色值
- * @param color 颜色值字符串
- * @param level 加深的程度，限0-1之间
- * @returns 返回处理后的颜色值
- */
-function getDarkColor(color: string, level: number) {
-    // eslint-disable-next-line no-useless-escape
-    const reg = /^\#?[0-9A-Fa-f]{6}$/
-    if (!reg.test(color)) {
-        return
-    }
-    const rgb = hexToRgb(color)
-    for (let i = 0; i < 3; i++) {
-        rgb[i] = Math.floor(rgb[i] * (1 - level))
-    }
-    return rgbToHex(rgb[0], rgb[1], rgb[2])
+// https://github.com/cool-team-official/cool-admin-vue/blob/7.x/src/modules/theme/utils/index.ts
+const mix = (color1: string, color2: string, weight: number) => {
+    weight = Math.max(Math.min(Number(weight), 1), 0)
+    const r1 = parseInt(color1.substring(1, 3), 16)
+    const g1 = parseInt(color1.substring(3, 5), 16)
+    const b1 = parseInt(color1.substring(5, 7), 16)
+    const r2 = parseInt(color2.substring(1, 3), 16)
+    const g2 = parseInt(color2.substring(3, 5), 16)
+    const b2 = parseInt(color2.substring(5, 7), 16)
+    let r = Math.round(r1 * (1 - weight) + r2 * weight).toString(16)
+    let g = Math.round(g1 * (1 - weight) + g2 * weight).toString(16)
+    let b = Math.round(b1 * (1 - weight) + b2 * weight).toString(16)
+    r = `0${(r || 0).toString(16)}`.slice(-2)
+    g = `0${(g || 0).toString(16)}`.slice(-2)
+    b = `0${(b || 0).toString(16)}`.slice(-2)
+    return `#${r}${g}${b}`
 }
 
 /**
@@ -92,12 +36,16 @@ function getDarkColor(color: string, level: number) {
  */
 export const changeTheme = (color?: string) => {
     if (!color) return
-    // 设置主要颜色
-    html.style.setProperty(PRE, color)
-    html.style.setProperty(`${PRE_DARK}-2`, `${getDarkColor(color, 0.5)}`)
 
-    // 主色
-    for (let i = 1; i <= 9; i++) {
-        html.style.setProperty(`${PRE_LIGHT}-${i}`, `${getLightColor(color, i / 10)}`)
+    // 设置主色
+    if (color) {
+        html.style.setProperty(PRE, color)
+        html.style.setProperty('--color-primary', color)
+
+        // 设置辅色
+        for (let i = 1; i < 10; i += 1) {
+            html.style.setProperty(`${PRE_LIGHT}-${i}`, mix(color, MIX_WIDTH, i * 0.1))
+            html.style.setProperty(`${PRE_DARK}-${i}`, mix(color, MIX_BLACK, i * 0.1))
+        }
     }
 }
