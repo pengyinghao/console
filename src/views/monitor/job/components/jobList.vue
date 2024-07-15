@@ -56,7 +56,7 @@ const columns: TableColumn<Job>[] = [
         label: '状态',
         render: ({ row }) => {
             return (
-                <StatusView dot status={row.status === 0 ? 'danger' : 'success'}>
+                <StatusView dot type={row.status === 0 ? 'danger' : 'success'}>
                     {row.status === 0 ? '停止' : '运行中'}
                 </StatusView>
             )

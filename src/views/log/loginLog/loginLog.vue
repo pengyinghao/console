@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import { reactive, ref } from 'vue'
 import { Table, TableColumn, PageContainer, SearchOption, StatusView } from '@/components'
-import { LoginInfo, fetchLoginInfoInfos } from '@/service/api/system/loginLog'
+import { LoginInfo, fetchLoginInfoInfos } from '@/service/api/log/loginLog'
 defineOptions({ name: 'LoginInfo' })
 
 const reload = ref(false)
@@ -14,7 +14,11 @@ const columns: TableColumn<LoginInfo>[] = [
     {
         label: '登录状态',
         render: ({ row }) => {
-            return <StatusView status={row.status}>{row.status === 'success' ? '成功' : '失败'}</StatusView>
+            return (
+                <StatusView type={row.status === 0 ? 'success' : 'danger'}>
+                    {row.status === 0 ? '成功' : '失败'}
+                </StatusView>
+            )
         }
     },
     { label: '消息内容', prop: 'message' },
@@ -28,8 +32,8 @@ const options = reactive<SearchOption[]>([
         label: '登录状态',
         field: 'status',
         data: [
-            { label: '成功', value: 'success' },
-            { label: '失败', value: 'fail' }
+            { label: '成功', value: '0' },
+            { label: '失败', value: '1' }
         ]
     },
     {

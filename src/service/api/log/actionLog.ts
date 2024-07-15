@@ -33,5 +33,5 @@ export interface Log {
 
 /** 查询分页日志 */
 export const fetchLogInfos = (params: Record<string, any>) => {
-    return requestGet('/system/log/list', { params })
+    return requestGet('/log/action/list', { params })
 }

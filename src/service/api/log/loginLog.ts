@@ -16,14 +16,14 @@ export interface LoginInfo {
     /** 操作系统 */
     os: string
     /** 登录状态 */
-    status: string
+    status: 0 | 1
     /** 消息 */
     message: string
 }
 
 /** 获取登录日志 分页信息 */
 export const fetchLoginInfoInfos = (params: Record<string, string>) => {
-    return requestGet<PagingResponse<LoginInfo>>('/system/login-log/list', {
+    return requestGet<PagingResponse<LoginInfo>>('/log/login/list', {
         params
     })
 }
