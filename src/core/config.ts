@@ -21,7 +21,6 @@ export const DEFAULT_APP_STORE: AppStore = {
     animationType: 'fade-slide',
     showPreferenceSetting: false,
     showBreadcrumb: true,
-    showTab: true,
     keepAlive: true,
     keepAliveCounter: 10,
     size: 'default'
@@ -30,6 +29,7 @@ export const DEFAULT_APP_STORE: AppStore = {
 export const themeColorList = [
     '#0960bd',
     '#0072ff',
+    '#4165d7',
     '#5856D6',
     '#536dfe',
     '#9c27b0',
@@ -38,15 +38,9 @@ export const themeColorList = [
     '#00C1D4',
     '#34C759',
     '#43a047',
-    '#7cb342',
-    '#c0ca33',
-    '#78DEC7',
     '#e53935',
     '#d81b60',
     '#f4511e',
     '#fb8c00',
-    '#ffb300',
-    '#fdd835',
-    '#6d4c41',
-    '#546e7a'
+    '#ffb300'
 ]

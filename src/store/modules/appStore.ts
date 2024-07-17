@@ -26,8 +26,6 @@ export interface AppStore {
     showPreferenceSetting: boolean
     /** 是否显示面包屑 */
     showBreadcrumb: boolean
-    /** 是否显示标签页 */
-    showTab: boolean
     /** 标签页是否缓存 */
     keepAlive: boolean
     /** 缓存组件个数 */

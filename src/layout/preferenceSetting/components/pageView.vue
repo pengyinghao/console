@@ -16,9 +16,6 @@ const appStore = useAppStore()
 
 <template>
     <el-divider>界面展示</el-divider>
-    <Description label="标签页">
-        <el-switch v-model="appStore.showTab" />
-    </Description>
     <Description label="面包屑">
         <el-switch v-model="appStore.showBreadcrumb" />
     </Description>

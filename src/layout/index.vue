@@ -34,7 +34,7 @@ eventEmitter.on('REFRESH_PAGE', () => {
 <template>
     <div class="app-container">
         <Header class="app-container-header"></Header>
-        <Tab v-show="appStore.showTab" class="app-container-tab"></Tab>
+        <Tab class="app-container-tab"></Tab>
         <Menu class="app-container-aside"></Menu>
         <main class="app-container-body">
             <router-view v-slot="{ Component }">
