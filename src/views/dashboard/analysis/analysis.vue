@@ -24,7 +24,7 @@ onUnmounted(() => {
 })
 </script>
 <template>
-    <div class="p-15px flex">
+    <div class="p-10px flex">
         <div class="flex-1 overflow-hidden">
             <el-row :gutter="20">
                 <card-item icon-name="fa6-solid:user" icon-color="#40c9c6" label="总用户数" value="3201" />

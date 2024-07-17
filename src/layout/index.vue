@@ -60,7 +60,8 @@ eventEmitter.on('REFRESH_PAGE', () => {
 
     &-tab {
         top: var(--header-height);
-        @apply mt-10px fixed w-full z-1000 flex items-center plr-15px;
+        background-color: #f7f7f7;
+        @apply ptb-10px fixed w-full z-1000 flex items-center plr-10px;
         @apply whitespace-nowrap;
     }
 
