@@ -135,8 +135,8 @@ defineExpose({
     <div class="c-table">
         <div class="c-table-header flex items-start justify-between">
             <div class="c-table-header--left flex-y-center">
-                <el-button @click="getTableData">
-                    <Icon name="ep:refresh" />
+                <el-button class="!w-32px" @click="getTableData">
+                    <Icon name="ic:round-refresh" />
                 </el-button>
                 <slot name="header-left"></slot>
             </div>
@@ -148,8 +148,7 @@ defineExpose({
             <template v-for="column in columns" :key="column[rowKey]">
                 <el-table-column
                     v-if="column.type && columnTypes.includes(column.type)"
-                    v-bind="column"
-                    :align="column.align ?? 'center'"
+                    v-bind="column as any"
                     :reserve-selection="column.type == 'selection'"
                 >
                     <template #default="scope">
