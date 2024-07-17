@@ -3,117 +3,123 @@ import { CSSProperties, computed, ref, toRefs } from 'vue'
 import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router'
 import { Icon } from '@/components'
 import { useAppStore, useTabStore, useUserStore } from '@/store'
-type Operation = 'refresh' | 'closeCurr' | 'closeLeft' | 'closeRight' | 'closeOther'
-/** 右键菜单选项 */
+
+/** 操作类型 */
+type Operation = 'closeCurr' | 'closeLeft' | 'closeRight' | 'closeOther'
+
 interface ContentMenuOptions {
-    /** 图标 */
     icon: string
-    /** 文本 */
     label: string
-    /** 是否隐藏 */
     hide?: boolean
-    /** 操作 */
     operation: Operation
-    /** 是否禁用 */
     disabled?: boolean
 }
 
+/** 定义菜单偏移量 */
+const MENU_OFFSET_LEFT = 15
+const MENU_OFFSET_TOP = 5
+const MENU_WIDTH = 105
+
+const emit = defineEmits<{
+    click: [type: Operation]
+}>()
+
 const appStore = useAppStore()
 const tabStore = useTabStore()
+const userStore = useUserStore()
 const router = useRouter()
 const route = useRoute()
 const { tabs } = toRefs(tabStore)
-/** 选中tab */
+
+/** 定义选中的tab */
 const selectTab = ref<RouteLocationNormalizedLoaded>()
-/** 右键菜单是否显示 */
+/** 定义菜单是否可见 */
 const contextMenuVisible = ref(false)
-/** 菜单宽度 */
+
+/** 定义菜单宽度 */
 const menuWidth = computed(() => (appStore.menuIsCollapse ? appStore.menuCollapseWidth : appStore.menuWidth))
 
-/** 右键菜单样式 */
-const contextMenuStyle = computed<CSSProperties>(() => {
-    return {
-        left: '10px',
-        top: '10px'
-    }
-})
+/** 定义菜单样式 */
+const contextMenuStyle = ref<CSSProperties>({ left: '10px', top: '10px' })
 
-/** 打开tab右键菜单  */
+/** 更新菜单样式 */
+const updateContextMenuStyle = (event: MouseEvent, offsetLeft: number, offsetWidth: number) => {
+    const maxLeft = offsetWidth - MENU_WIDTH
+    const left = menuWidth.value + event.clientX - offsetLeft + MENU_OFFSET_LEFT
+    contextMenuStyle.value.left = `${Math.min(left, maxLeft)}px`
+    contextMenuStyle.value.top = `${event.clientY + MENU_OFFSET_TOP}px`
+}
+
+/** 打开菜单 */
 const openContextMenu = (
     tab: RouteLocationNormalizedLoaded,
     tabViewContainer: HTMLElement | undefined,
-    event: PointerEvent
+    event: MouseEvent
 ) => {
-    const offsetLeft = tabViewContainer?.getBoundingClientRect().left || 0 // 相对于视口的位置距离左侧像素
-    const offsetWidth = tabViewContainer?.offsetWidth ?? 0 // tab container的宽度
-    const maxLeft = offsetWidth - 105 // 最大偏移量
+    const offsetLeft = tabViewContainer?.getBoundingClientRect().left || 0
+    const offsetWidth = tabViewContainer?.offsetWidth ?? 0
 
-    const left = menuWidth.value + event.clientX - offsetLeft + 15 // 菜单左移距离
-    if (left > maxLeft) contextMenuStyle.value.left = `${maxLeft}px`
-    else contextMenuStyle.value.left = `${left}px`
-
-    contextMenuStyle.value.top = `${event.clientY + 5}px`
+    updateContextMenuStyle(event, offsetLeft, offsetWidth)
     contextMenuVisible.value = true
     selectTab.value = tab
 }
 
-/** 右键菜单选项 */
+/** 定义菜单选项 */
 const contentMenuOptions = computed<ContentMenuOptions[]>(() => {
-    const currPath = selectTab.value?.path as string
+    const currPath = selectTab.value?.path || ''
     const hide = tabStore.fixedTabs.includes(currPath)
-    const tabs = tabStore.tabs
-    if (tabs.length === 0) return []
+
     return [
-        { icon: 'ep:refresh', label: '刷新当前', operation: 'refresh' },
         {
             icon: 'icon-park-outline:close-small',
             label: '关闭当前',
             hide,
             operation: 'closeCurr',
-            disabled: tabs.length === 1
+            disabled: tabs.value.length === 1
         },
         {
             icon: 'icon-park-outline:go-start',
             label: '关闭左侧',
             hide,
             operation: 'closeLeft',
-            disabled: tabs[0].path === currPath
+            disabled: tabs.value[0].path === currPath
         },
         {
             icon: 'icon-park-outline:go-end',
             label: '关闭右侧',
+            hide,
             operation: 'closeRight',
-            disabled: tabs[tabs.length - 1].path === currPath
+            disabled: tabs.value[tabs.value.length - 1].path === currPath
         },
         {
             icon: 'icon-park-outline:fullwidth',
             label: '关闭其他',
             operation: 'closeOther',
-            disabled: tabs.length === 1
+            disabled: tabs.value.length === 1
         }
     ]
 })
 
-/** 隐藏右键菜单 */
+/** 隐藏菜单 */
 const hideContextMenu = () => {
     contextMenuVisible.value = false
 }
 
+/** 定义当前tab索引 */
 const tabCurrentIndex = computed(() => {
-    if (!selectTab.value) return 0
     return tabs.value.findIndex((item) => item.path === selectTab.value?.path) || 0
 })
 
-/** 关闭左侧标签 */
+/** 关闭左侧tab */
 const closeLeftTab = () => {
     if (tabCurrentIndex.value > tabStore.fixedTabs.length) {
         tabStore.removeLeftTabs(tabCurrentIndex.value)
     } else {
-        window.$message.warning(`左侧没有标签`)
+        window.$message.warning('左侧没有标签')
     }
 }
 
-/** 关闭右侧标签 */
+/** 关闭右侧tab */
 const closeRightTab = () => {
     if (tabCurrentIndex.value < tabs.value.length - 1) {
         tabStore.removeRightTabs(tabCurrentIndex.value)
@@ -122,42 +128,35 @@ const closeRightTab = () => {
     }
 }
 
-const userStore = useUserStore()
-/** 关闭所有标签 */
+/** 关闭其他tab */
 const closeOther = () => {
     tabStore.removeOtherTabs(route.path)
 }
 
-/** 关闭当前标签 */
+/** 关闭当前tab */
 const closeTabCurr = () => {
     tabStore.remove(selectTab.value as RouteLocationNormalizedLoaded)
     if (tabs.value.length === 0) {
-        return router.push(userStore.defaultRouterPath)
+        router.push(userStore.defaultRouterPath)
+    } else {
+        router.push(tabs.value[tabs.value.length - 1].path)
     }
-    return router.push(tabs.value[tabs.value.length - 1].path)
 }
 
-/** 刷新tab */
-const refreshTab = () => {
-    router.replace({
-        path: `/redirect${selectTab.value?.path}`
-    })
-}
-
+/** 定义菜单操作 */
 const contextOperation: Record<Operation, () => void> = {
     closeLeft: closeLeftTab,
     closeRight: closeRightTab,
     closeOther,
-    closeCurr: closeTabCurr,
-    refresh: refreshTab
+    closeCurr: closeTabCurr
 }
 
-/** 右键菜单单击事件 */
+/** 菜单点击事件 */
 const onContextClick = (operation: Operation) => {
     contextOperation[operation]()
-    if (operation !== 'refresh' && route.fullPath !== selectTab.value?.path) {
-        const { path } = tabs.value[tabs.value.length - 1]
-        router.push(path)
+    emit('click', operation)
+    if (tabs.value.length > 0) {
+        router.push(tabs.value[tabs.value.length - 1].path)
     }
     hideContextMenu()
 }
@@ -172,10 +171,7 @@ defineExpose({
     <teleport to="body">
         <ul
             v-show="contextMenuVisible"
-            :style="{
-                ...contextMenuStyle,
-                backgroundColor: 'var(--el-color-white)'
-            }"
+            :style="{ ...contextMenuStyle, backgroundColor: 'var(--el-color-white)' }"
             class="context-menu"
         >
             <template v-for="item in contentMenuOptions" :key="item.icon">

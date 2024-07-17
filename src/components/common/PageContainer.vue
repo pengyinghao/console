@@ -44,11 +44,11 @@ onMounted(() => {
 </template>
 <style lang="scss" scoped>
 .app-container-inner {
-    @apply h-full p-12px;
+    @apply h-full p-10px;
 }
 .header {
     @apply flex-y-center;
-    box-shadow: 0 1px 13px 1px rgba(62, 72, 160, 10%);
+    // box-shadow: 0 1px 13px 1px rgba(62, 72, 160, 10%);
     transition: all 0.3s;
 
     @apply rounded-el-border light:bg-white dark:bg-dark1 mb-10px;
@@ -59,7 +59,7 @@ onMounted(() => {
 }
 
 .padding {
-    box-shadow: 0 1px 13px 1px rgba(62, 72, 160, 10%);
+    // box-shadow: 0 1px 13px 1px rgba(62, 72, 160, 10%);
     @apply plr-15px;
 }
 

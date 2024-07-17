@@ -22,11 +22,11 @@ const handleClick = (e: MouseEvent) => {
 <template>
     <div class="c-icon flex-y-center">
         <iconify
-            v-bind="$attrs"
             :icon="name"
             :width="size"
             :height="size"
             :color="color"
+            v-bind="$attrs"
             @click="handleClick"
         ></iconify>
         <div v-if="$slots.default" class="ml-5px">
