@@ -6,10 +6,9 @@ import { formatSize } from '@/utils'
 defineOptions({ name: 'Upload' })
 
 const columns: TableColumn<Upload>[] = [
-    { label: '原文件名', prop: 'originalname' },
-    { label: '文件名', prop: 'fileName' },
-
-    { label: '文件地址', prop: 'url' },
+    { label: '原文件名', prop: 'originalname', minWidth: 150, showOverflowTooltip: true },
+    { label: '文件名', prop: 'fileName', minWidth: 100, showOverflowTooltip: true },
+    { label: '文件地址', prop: 'url', minWidth: 200, showOverflowTooltip: true },
     {
         label: '大小',
         prop: 'size',

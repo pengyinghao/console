@@ -66,6 +66,7 @@ const columns: TableColumn<Dict>[] = [
         label: '操作',
         prop: 'operation',
         width: 200,
+        fixed: 'right',
         render: ({ row }) => {
             return (
                 <div>

@@ -62,14 +62,15 @@ const columns: TableColumn<Job>[] = [
             )
         }
     },
-    { label: '定时表达式', prop: 'cron' },
+    { label: '定时表达式', prop: 'cron', minWidth: 100 },
     { label: '执行参数', prop: 'params', showOverflowTooltip: true },
     { label: '描述', prop: 'remark' },
-    { label: '最后执行时间', prop: 'lastExecTime', dateFormat: true },
+    { label: '最后执行时间', prop: 'lastExecTime', dateFormat: true, width: 160 },
     {
         label: '操作',
         prop: 'operation',
         width: 200,
+        fixed: 'right',
         render: ({ row }) => {
             return (
                 <>

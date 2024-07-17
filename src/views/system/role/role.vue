@@ -45,10 +45,11 @@ const handleRoleUser = (row: Role) => {
 }
 
 const columns: TableColumn<Role>[] = [
-    { label: '角色标识', prop: 'code' },
+    { label: '角色标识', prop: 'code', minWidth: 140 },
     {
         label: '角色名称',
         prop: 'name',
+        minWidth: 100,
         render: ({ row }) => {
             return <a onclick={() => handleRoleUser(row)}>{row.name}</a>
         }
@@ -56,15 +57,17 @@ const columns: TableColumn<Role>[] = [
     {
         label: '角色描述',
         prop: 'remark',
+        minWidth: 100,
         showOverflowTooltip: true,
         render: ({ row }) => setDefaultValue(row.remark)
     },
-    { label: '创建时间', prop: 'createTime', dateFormat: true },
-    { label: '更新时间', prop: 'updateTime', dateFormat: true },
+    { label: '创建时间', prop: 'createTime', width: 160, dateFormat: true },
+    { label: '更新时间', prop: 'updateTime', width: 160, dateFormat: true },
     {
         label: '操作',
         prop: 'operation',
         width: 200,
+        fixed: 'right',
         render: ({ row }) => {
             return (
                 <div>

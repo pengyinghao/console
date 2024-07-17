@@ -47,7 +47,8 @@ const columns: TableColumn<Param>[] = [
     {
         label: '操作',
         prop: 'operation',
-        width: 200,
+        width: 100,
+        fixed: 'right',
         render: ({ row }) => {
             return (
                 <div>
