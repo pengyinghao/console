@@ -148,7 +148,7 @@ defineExpose({
             <template v-for="column in columns" :key="column[rowKey]">
                 <el-table-column
                     v-if="column.type && columnTypes.includes(column.type)"
-                    v-bind="column as any"
+                    v-bind="(column as any)"
                     :reserve-selection="column.type == 'selection'"
                 >
                     <template #default="scope">
