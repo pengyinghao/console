@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 import { FormInstance, FormRules } from 'element-plus'
-import { reactive, ref } from 'vue'
 import { fetchUserDetail, updateUser, UpdateUserOption } from '@/service/api/system/user'
 import { ruleHelper } from '@/utils/ruleHelper'
 import { Role, fetchRoleInfos } from '@/service/api/system/role'
-import { Select } from '@/components'
 
 const emits = defineEmits<{
     (e: 'close', refreshData: boolean): void

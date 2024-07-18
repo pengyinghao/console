@@ -1,5 +1,4 @@
 <script lang="tsx" setup>
-import { onMounted, ref } from 'vue'
 import { Select } from '../Select'
 import { SearchProps } from './searchType'
 import { SearchOption } from './searchControl'

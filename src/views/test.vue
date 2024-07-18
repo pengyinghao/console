@@ -1,7 +1,6 @@
 <!-- eslint-disable no-console -->
 <script lang="tsx" setup>
-import { reactive, ref } from 'vue'
-import { Search, SearchOption } from '@/components'
+import { SearchOption } from '@/components'
 const options = reactive<SearchOption[]>([
     {
         mode: 'date',

@@ -1,13 +1,11 @@
 <script lang="ts" setup>
 import { FormInstance, FormRules } from 'element-plus'
-import { reactive, ref } from 'vue'
 import {
     createDictType,
     fetchDictTypeDetail,
     updateDictType,
     UpdateDictTypeOption
 } from '@/service/api/system/dictionary'
-import Modal from '@/components/Modal/Modal.vue'
 import { ruleHelper } from '@/utils/ruleHelper'
 import { Status } from '@/core/enums/status'
 import { STATUS_FORM_ITEM } from '@/core/constant'

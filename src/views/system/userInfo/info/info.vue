@@ -1,3 +1,24 @@
+<script lang="ts" setup>
+import Item from './item.vue'
+import UpdateAvatar from './components/updateAvatar.vue'
+import UpdatePassword from './components/updatePassword.vue'
+import { useCompRef } from '@/composables/useCompRef'
+
+const userStore = useUserStore()
+const { info } = toRefs(userStore)
+
+const refUpdateAvatar = useCompRef(UpdateAvatar)
+const handleUpdateAvatar = () => {
+    refUpdateAvatar.value?.showModal()
+}
+
+/** 修改密码 */
+const refUpdatePassword = useCompRef(UpdatePassword)
+const handleUpdatePassword = () => {
+    refUpdatePassword.value?.showModal()
+}
+</script>
+
 <template>
     <PageContainer>
         <div class="flex-y-center">
@@ -38,27 +59,3 @@
         <update-password ref="refUpdatePassword"></update-password>
     </PageContainer>
 </template>
-<script lang="ts" setup>
-import { toRefs } from 'vue'
-import Icon from '@/components/Icon/Icon.vue'
-import PageContainer from '@/components/common/PageContainer.vue'
-import Item from './item.vue'
-import UpdateAvatar from './components/updateAvatar.vue'
-import UpdatePassword from './components/updatePassword.vue'
-import { useCompRef } from '@/composables/useCompRef'
-import { useUserStore } from '@/store'
-
-const userStore = useUserStore()
-const { info } = toRefs(userStore)
-
-const refUpdateAvatar = useCompRef(UpdateAvatar)
-const handleUpdateAvatar = () => {
-    refUpdateAvatar.value?.showModal()
-}
-
-/** 修改密码 */
-const refUpdatePassword = useCompRef(UpdatePassword)
-const handleUpdatePassword = () => {
-    refUpdatePassword.value?.showModal()
-}
-</script>

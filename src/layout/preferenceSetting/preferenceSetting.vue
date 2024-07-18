@@ -19,7 +19,6 @@ import ThemeMode from './components/themeMode.vue'
 import Theme from './components/theme.vue'
 import PageView from './components/pageView.vue'
 import PageFunction from './components/pageFunction.vue'
-import { useAppStore } from '@/store'
 defineOptions({
     name: 'PreferenceSetting'
 })

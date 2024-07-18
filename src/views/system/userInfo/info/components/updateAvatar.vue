@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
 import { VueCropper } from 'vue-cropper'
 import { UploadRequestOptions } from 'element-plus'
-import { Modal, Icon } from '@/components'
 import { useCompRef } from '@/composables/useCompRef'
 import { upload } from '@/service/api/system/upload'
 import { uploadUserAvatar } from '@/service/api/system/user'
-import { useUserStore } from '@/store'
 
 const userStore = useUserStore()
 const visible = ref(false)
@@ -48,6 +45,7 @@ const customRequest = (option: UploadRequestOptions) => {
             options.img = reader.result as any
         }
     }
+    return Promise.resolve()
 }
 
 /** 文件上传 */

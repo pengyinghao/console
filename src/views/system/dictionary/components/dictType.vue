@@ -1,11 +1,9 @@
 <script setup lang="tsx">
-import { reactive, ref } from 'vue'
-import { SearchOption, StatusView, Table, TableColumn } from '@/components'
+import { SearchOption, StatusView, TableColumn } from '@/components'
 import { deleteDictType, fetchDictTypeInfos, updateDictTypeState, DictType } from '@/service/api/system/dictionary'
 import DictTypeEdit from './dictTypeEdit.vue'
 import { useCompRef } from '@/composables/useCompRef'
 import { setDefaultValue } from '@/utils'
-import { useBusinessStore } from '@/store'
 
 const reload = ref(false)
 

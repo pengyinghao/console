@@ -1,8 +1,4 @@
 <script lang="ts" setup>
-import { useRouter } from 'vue-router'
-import { toRefs } from 'vue'
-import { useAppStore, useUserStore } from '@/store'
-import { Icon } from '@/components'
 defineOptions({
     name: 'Avatar'
 })

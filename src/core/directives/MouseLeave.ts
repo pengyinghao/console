@@ -1,9 +1,3 @@
-/*
- * @Author: PengYH
- * @Date: 2023-01-31
- * @Description:鼠标移除指令
- */
-
 import { DirectiveBinding, ObjectDirective } from 'vue'
 
 const MouseLeave: ObjectDirective = {

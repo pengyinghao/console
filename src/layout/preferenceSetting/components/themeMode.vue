@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import Description from '@/layout/common/description.vue'
-import { useAppStore } from '@/store'
+
 const appStore = useAppStore()
 </script>
 <template>

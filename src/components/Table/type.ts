@@ -1,5 +1,4 @@
 import { TableColumnCtx } from 'element-plus'
-import { VNode } from 'vue'
 import { SearchProps } from '../Search'
 
 export type TableColumnType = 'default' | 'selection' | 'index' | 'expand'

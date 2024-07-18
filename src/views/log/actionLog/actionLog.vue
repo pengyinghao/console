@@ -1,6 +1,5 @@
 <script setup lang="tsx">
-import { reactive } from 'vue'
-import { Table, TableColumn, PageContainer, SearchOption } from '@/components'
+import { TableColumn, SearchOption } from '@/components'
 import { Log, fetchLogInfos, ActionType } from '@/service/api/log/actionLog'
 import { setDefaultValue } from '@/utils'
 defineOptions({ name: 'ActionLog' })

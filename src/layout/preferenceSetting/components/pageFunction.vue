@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import Description from '@/layout/common/description.vue'
-import { useAppStore } from '@/store'
 defineOptions({ name: 'PageFunction' })
 const appStore = useAppStore()
 </script>

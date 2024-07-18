@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import CountUp from 'vue-countup-v3'
-import { Icon } from '@/components'
 import { useLayout } from '@/composables/useLayout'
 interface Props {
     /** 图标名称 */

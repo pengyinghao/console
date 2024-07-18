@@ -1,6 +1,5 @@
 <script lang="tsx" setup>
-import { reactive, ref } from 'vue'
-import { PageContainer, StatusView, Table, TableColumn, SearchOption } from '@/components'
+import { TableColumn, SearchOption, StatusView } from '@/components'
 import { deleteUser, fetchUserInfos, updateUserState, updateUserFreeze, User } from '@/service/api/system/user'
 import AddUser from './components/addUser.vue'
 import EditUser from './components/editUser.vue'

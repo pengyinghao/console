@@ -1,13 +1,11 @@
 <script lang="ts" setup>
 import { useRoute, useRouter } from 'vue-router'
 import { watchEffect } from 'vue'
-import { Icon } from '@/components'
 import subMenu from './sub-menu.vue'
 import Logo from './logo.vue'
-import { useAppStore, useUserStore } from '@/store'
 import { useLayout } from '@/composables/useLayout'
 import { dataToTree } from '@/utils'
-import { MenuOpenType } from '@/service/api/system/menu'
+import { MenuDisplay, MenuOpenType } from '@/service/api/system/menu'
 
 const route = useRoute()
 const router = useRouter()
@@ -21,11 +19,9 @@ watchEffect(() => {
     }
 })
 
+const tempMenu = userStore.originMenus.filter((item) => item.display === MenuDisplay.SHOW)
 /** 菜单信息 */
-const menus = dataToTree(
-    userStore.originMenus.filter((item) => item.display === 0),
-    'parentId'
-)
+const menus = dataToTree(tempMenu, 'parentId')
 
 const onSelect = (menuId: string) => {
     const menu = userStore.originMenus.find((item) => item.id === Number(menuId))

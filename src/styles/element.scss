@@ -1,15 +1,14 @@
-:root {
-    // --el-border-radius-base: 2px;
-}
-
+// 弹窗
 .el-dialog {
     --el-dialog-content-font-size: var(--el-font-size-base);
 }
 
+// 分页
 .el-pagination {
     --el-pagination-font-size: var(--el-font-size-base);
 }
 
+// 表单项
 .el-form-item--default {
     --el-form-label-font-size: var(--el-font-size-base) !important;
     --font-size: var(--el-font-size-base) !important;
@@ -19,50 +18,31 @@
     content: '：';
 }
 
+// 多选框
 .el-checkbox {
     --el-checkbox-font-size: var(--el-font-size-base) !important;
 }
 
+// 统一字体大小
 .el-breadcrumb,
 .el-table {
     font-size: var(--el-font-size-base);
 }
 
-.search-form .el-input {
-    width: 200px;
-}
-
-.search-form .el-input .el-input__wrapper {
-    width: 100%;
-}
-
-.dark .el-table:not(.el-table--border) {
-    .el-table__header th {
-        background-color: #1d1e1f !important;
-    }
-}
-
+// 按钮
 .el-button:focus-visible {
     outline: none;
 }
-.el-tabs__nav-wrap:after {
-    height: 1px;
-}
 
+// 抽屉
 .el-drawer__header {
     @apply mb-10px;
 }
 .el-drawer__body {
     @apply pt-10px;
 }
-a {
-    @apply cursor-pointer c-primary;
-    &[disabled='true'] {
-        @apply cursor-not-allowed;
-        color: var(--el-color-info-light-5);
-    }
-}
 
+// tabs
 /** tabs 兼容table 自适应高度 */
 .el-tabs.el-tabs--top {
     height: 100%;
@@ -71,5 +51,20 @@ a {
         .el-tab-pane {
             height: 100%;
         }
+    }
+}
+.el-tabs__nav-wrap:after {
+    height: 0.5px !important;
+}
+.el-table--default {
+    font-size: 12px !important;
+}
+
+// a标签默认为主色
+a {
+    @apply cursor-pointer c-primary;
+    &[disabled='true'] {
+        @apply cursor-not-allowed;
+        color: var(--el-color-info-light-5);
     }
 }

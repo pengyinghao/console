@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, getCurrentInstance } from 'vue'
+import { getCurrentInstance } from 'vue'
 import { setDefaultValue } from '@/utils'
 defineOptions({
     name: 'DescriptionItem'

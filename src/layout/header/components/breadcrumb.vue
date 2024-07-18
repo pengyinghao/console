@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { RouteLocationNormalizedLoaded, RouteRecordRaw, useRoute } from 'vue-router'
-import { onMounted, ref, watch } from 'vue'
-import { Icon } from '@/components'
+import { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router'
 
 defineOptions({ name: 'Breadcrumb' })
 const route = useRoute()

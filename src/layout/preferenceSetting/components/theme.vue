@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { useAppStore } from '@/store'
 import { changeTheme } from '@/utils/theme'
-import { Icon } from '@/components'
 import { themeColorList } from '@/core/config'
 
 const appStore = useAppStore()

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { onBeforeMount, ref, useSlots, watchEffect } from 'vue'
 import { SelectProps } from './selectType'
 import { fetchDictTypeNo } from '@/service/api/system/dictionary'
 

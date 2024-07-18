@@ -1,4 +1,3 @@
-import { ComputedRef, computed } from 'vue'
 import { useAppStore } from '@/store/modules/appStore'
 import { isDark } from '@/utils'
 export interface EchartsColor {

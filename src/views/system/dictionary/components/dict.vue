@@ -1,6 +1,5 @@
 <script setup lang="tsx">
-import { reactive, ref } from 'vue'
-import { SearchOption, StatusView, Table, TableColumn } from '@/components'
+import { SearchOption, StatusView, TableColumn } from '@/components'
 import {
     Dict,
     deleteDict,
@@ -11,7 +10,6 @@ import {
 import DictEdit from './dictEdit.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
-import { useBusinessStore } from '@/store'
 const reload = ref(false)
 
 const handleQuery = () => {

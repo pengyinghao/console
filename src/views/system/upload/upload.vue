@@ -1,6 +1,6 @@
 <script setup lang="tsx">
-import { reactive } from 'vue'
-import { PageContainer, SearchOption, Table, TableColumn } from '@/components'
+import { SearchOption } from '@/components/Search'
+import { TableColumn } from '@/components/Table/type'
 import { Upload, fetchUploadInfos } from '@/service/api/system/upload'
 import { formatSize } from '@/utils'
 defineOptions({ name: 'Upload' })

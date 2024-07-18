@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { FormInstance, FormRules } from 'element-plus'
-import { reactive, ref } from 'vue'
 import { ruleHelper } from '@/utils/ruleHelper'
-import { Modal } from '@/components'
 import { UpdateJobOption, JobImmediate, createJob, fetchJobDetail, updateJob } from '@/service/api/monitor/job'
 import { isJSON, textJsonStringify } from '@/utils'
 

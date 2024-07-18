@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Icon } from '@/components'
 export interface MoreButtonProp {
     label: string | (() => void)
     /** 自定义图标 */

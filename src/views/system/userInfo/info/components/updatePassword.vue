@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
 import { FormInstance } from 'element-plus'
-import { Modal } from '@/components'
 import { ruleHelper } from '@/utils/ruleHelper'
 import { updatePassword } from '@/service/api/system/user'
 import { encrypt } from '@/utils/crypto'
-import { useUserStore } from '@/store'
 
 const visible = ref(false)
 const loading = ref(false)
@@ -38,7 +35,7 @@ const validateNewPassword = (rule: any, value: string, callback: any) => {
 }
 
 const { mul_special } = ruleHelper
-const rules = reactive({
+const rules = reactive<any>({
     oldPassword: [
         { required: true, message: '请输入旧密码', trigger: 'blur' },
         {

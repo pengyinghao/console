@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { Icon } from '@/components'
 import { useLayout } from '@/composables/useLayout'
-import { useAppStore } from '@/store'
 import Breadcrumb from './components/breadcrumb.vue'
 const { isMobile } = useLayout()
 defineOptions({ name: 'HeaderLeftContent' })

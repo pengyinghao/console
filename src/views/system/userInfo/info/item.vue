@@ -1,24 +1,4 @@
-<template>
-    <div class="item">
-        <div class="item-content">
-            <div>
-                <icon :name="icon" size="22" class="pl-6px" style="vertical-align: baseline">
-                    <span class="item-title">{{ title }}</span>
-                </icon>
-            </div>
-            <div class="item-desc">
-                <slot></slot>
-            </div>
-        </div>
-        <el-button type="primary" link class="!pr-20px" @click="onBtnClick">
-            <icon :name="btnIcon">
-                {{ btnText }}
-            </icon>
-        </el-button>
-    </div>
-</template>
 <script lang="ts" setup>
-import { Icon } from '@/components'
 interface Props {
     /** 图标 */
     icon: string
@@ -40,6 +20,25 @@ const onBtnClick = () => {
     emits('click')
 }
 </script>
+<template>
+    <div class="item">
+        <div class="item-content">
+            <div>
+                <Icon :name="icon" size="22" class="pl-6px" style="vertical-align: baseline">
+                    <span class="item-title">{{ title }}</span>
+                </Icon>
+            </div>
+            <div class="item-desc">
+                <slot></slot>
+            </div>
+        </div>
+        <el-button type="primary" link class="!pr-20px" @click="onBtnClick">
+            <icon :name="btnIcon">
+                {{ btnText }}
+            </icon>
+        </el-button>
+    </div>
+</template>
 <style lang="scss" scoped>
 .item {
     @apply flex justify-between pb-10px mt-50px;
@@ -58,8 +57,4 @@ const onBtnClick = () => {
         @apply flex ml-20px c-gray;
     }
 }
-
-// .dark .item {
-//     border-color: var(--color-dark2);
-// }
 </style>

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { Icon } from '@/components'
 defineOptions({ name: 'Message' })
 const messageCounter = ref(10)
 const messagesData = ref<any>([])

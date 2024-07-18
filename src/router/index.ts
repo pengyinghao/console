@@ -1,10 +1,9 @@
 import type { App } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
+import { createRouter, createWebHistory } from 'vue-router'
 import { createRouterGuard } from './guard'
 import { routes } from './routes'
 import { eventEmitter } from '@/utils/eventEmitter'
-import { useUserStore } from '@/store'
 
 const router = createRouter({
     routes,

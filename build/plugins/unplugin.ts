@@ -1,5 +1,4 @@
 import Components from 'unplugin-vue-components/vite'
-
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import AutoImport from 'unplugin-auto-import/vite'
 
@@ -8,7 +7,7 @@ export function autoComponent() {
     return Components({
         resolvers: [ElementPlusResolver()],
         extensions: ['vue'],
-        dirs: [],
+        dirs: ['src/components/*'],
         dts: 'typings/auto-components.d.ts'
     })
 }
@@ -18,6 +17,14 @@ export function autoImport() {
     return AutoImport({
         dts: 'typings/auto-imports.d.ts',
         dirs: [],
-        imports: ['vue', 'vue-router']
+        imports: [
+            'vue',
+            'vue-router',
+            'pinia',
+            'vue-i18n',
+            {
+                '@/store': ['useUserStore', 'useAppStore', 'useTabStore', 'useBusinessStore']
+            }
+        ]
     })
 }

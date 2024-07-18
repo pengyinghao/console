@@ -1,5 +1,4 @@
 import { PersistedStateOptions } from 'pinia-plugin-persistedstate'
-
 import { defineStore } from 'pinia'
 import { DEFAULT_APP_STORE } from '@/core/config'
 /** 动画类型 */

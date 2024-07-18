@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { withDefaults, defineProps, ref, reactive, computed, watch, watchEffect, toRefs, onBeforeMount } from 'vue'
 import { TableProps, TableColumnType, TableReactive, PaginationReactive } from './type'
-import { Icon, Search } from '@/components'
 import TableColumn from './components/TableColumn.vue'
 import initMethods from './methods'
 

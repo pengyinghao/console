@@ -1,6 +1,5 @@
 <script lang="tsx" setup>
-import { reactive, ref } from 'vue'
-import { PageContainer, SearchOption, StatusView, Table, TableColumn } from '@/components'
+import { SearchOption, StatusView, TableColumn } from '@/components'
 import { Menu, deleteMenu, fetchMenuInfos } from '@/service/api/system/menu'
 import MenuEdit from './components/menuEdit.vue'
 import { useCompRef } from '@/composables/useCompRef'

@@ -1,5 +1,3 @@
-import { watch } from 'vue'
-import { useAppStore } from '@/store'
 import { isDark } from '@/utils'
 import { changeTheme } from '@/utils/theme'
 

@@ -1,6 +1,4 @@
 <script lang="tsx" setup>
-import { ref } from 'vue'
-import { PageContainer } from '@/components'
 import DictType from './components/dictType.vue'
 import Dict from './components/dict.vue'
 defineOptions({ name: 'Dictionary' })

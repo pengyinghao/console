@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import { CSSProperties, computed, ref, toRefs } from 'vue'
+import { CSSProperties } from 'vue'
 import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router'
-import { Icon } from '@/components'
-import { useAppStore, useTabStore, useUserStore } from '@/store'
 
 /** 操作类型 */
 type Operation = 'closeCurr' | 'closeLeft' | 'closeRight' | 'closeOther'
@@ -68,7 +66,6 @@ const openContextMenu = (
 const contentMenuOptions = computed<ContentMenuOptions[]>(() => {
     const currPath = selectTab.value?.path || ''
     const hide = tabStore.fixedTabs.includes(currPath)
-
     return [
         {
             icon: 'icon-park-outline:close-small',
@@ -82,14 +79,14 @@ const contentMenuOptions = computed<ContentMenuOptions[]>(() => {
             label: '关闭左侧',
             hide,
             operation: 'closeLeft',
-            disabled: tabs.value[0].path === currPath
+            disabled: tabs.value.length > 0 && tabs.value[0].path === currPath
         },
         {
             icon: 'icon-park-outline:go-end',
             label: '关闭右侧',
             hide,
             operation: 'closeRight',
-            disabled: tabs.value[tabs.value.length - 1].path === currPath
+            disabled: tabs.value.length > 0 && tabs.value[tabs.value.length - 1].path === currPath
         },
         {
             icon: 'icon-park-outline:fullwidth',

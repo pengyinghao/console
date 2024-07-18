@@ -1,7 +1,6 @@
 <script setup lang="tsx">
-import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Table, TableColumn, PageContainer, SearchOption } from '@/components'
+import { TableColumn, SearchOption } from '@/components'
 import RoleEdit from './components/roleEdit.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'

@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
-import { Modal, Icon } from '@/components'
 import {
     UpdateSystemMenuOption,
     createMenu,

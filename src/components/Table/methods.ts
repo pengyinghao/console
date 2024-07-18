@@ -1,4 +1,3 @@
-import { Ref } from 'vue'
 export const methods = [
     'clearSelection',
     'getSelectionRows',

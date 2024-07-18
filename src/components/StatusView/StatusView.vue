@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { Status } from '@/core/enums/status'
 
 type StatusType = 'primary' | 'enable' | 'success' | 'warning' | 'danger' | 'fail' | 'disabled' | 'gray'

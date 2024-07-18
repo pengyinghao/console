@@ -1,6 +1,5 @@
 import { io, Socket } from 'socket.io-client'
 import { Emit, Events } from './event'
-import { useUserStore } from '@/store'
 
 export class SocketService {
     private socket: Socket | undefined

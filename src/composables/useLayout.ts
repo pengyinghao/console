@@ -1,5 +1,4 @@
 import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
-import { Ref } from 'vue'
 
 interface UseLayout {
     /** 是否移动端 */

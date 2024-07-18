@@ -17,8 +17,6 @@
 </template>
 <script lang="ts" setup>
 import CountUp from 'vue-countup-v3'
-import { computed } from 'vue'
-import { Icon } from '@/components'
 
 interface Props {
     /** 图标 */

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-import { useAppStore, useTabStore } from '@/store'
 import Header from './header/header.vue'
 import Menu from './menu/menu.vue'
 import Tab from './tab/tab.vue'

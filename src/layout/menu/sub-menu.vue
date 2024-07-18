@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { Icon } from '@/components'
 import { SystemMenu } from '@/service/api/system/menu'
 
 defineOptions({

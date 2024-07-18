@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { FormInstance, FormRules } from 'element-plus'
-import { reactive, ref } from 'vue'
 import Modal from '@/components/Modal/Modal.vue'
 import { RoleOption, createRole, fetchRoleDetail, updateRole } from '@/service/api/system/role'
 import { ruleHelper } from '@/utils/ruleHelper'

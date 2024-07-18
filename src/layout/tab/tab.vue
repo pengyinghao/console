@@ -1,10 +1,7 @@
 <script lang="ts" setup>
 import { onClickOutside } from '@vueuse/core'
-import { nextTick, ref, toRefs, watch } from 'vue'
 import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router'
 import { useCompRef } from '@/composables/useCompRef'
-import { useTabStore, useUserStore } from '@/store'
-import { Icon } from '@/components'
 import contextMenu from './contextMenu.vue'
 import { eventEmitter } from '@/utils/eventEmitter'
 

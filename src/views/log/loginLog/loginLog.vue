@@ -1,6 +1,5 @@
 <script setup lang="tsx">
-import { reactive, ref } from 'vue'
-import { Table, TableColumn, PageContainer, SearchOption, StatusView } from '@/components'
+import { TableColumn, SearchOption, StatusView } from '@/components'
 import { LoginInfo, fetchLoginInfoInfos } from '@/service/api/log/loginLog'
 defineOptions({ name: 'LoginInfo' })
 

@@ -1,10 +1,8 @@
 <script setup lang="tsx">
-import { reactive, ref } from 'vue'
-import { Table, TableColumn, SearchOption, StatusView } from '@/components'
+import { TableColumn, SearchOption, StatusView } from '@/components'
 import JobEdit from './jobEdit.vue'
 import { useCompRef } from '@/composables/useCompRef'
 import { Job, fetchJobInfos, deleteJob, updateJobState, onceJob } from '@/service/api/monitor/job'
-import { useBusinessStore } from '@/store'
 
 defineOptions({ name: 'Job' })
 

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { Icon } from '@/components'
-import { useAppStore } from '@/store'
 defineOptions({
     name: 'Logo'
 })

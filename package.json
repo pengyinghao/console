@@ -75,7 +75,6 @@
         "lint-staged": "^13.1.0",
         "postcss-html": "^1.5.0",
         "prettier": "^2.8.2",
-        "rollup-plugin-external-globals": "^0.10.0",
         "rollup-plugin-visualizer": "^5.12.0",
         "sass": "^1.57.1",
         "stylelint": "^14.16.1",
@@ -86,12 +85,11 @@
         "stylelint-scss": "^4.3.0",
         "typescript": "^4.9.4",
         "unocss": "^0.60.2",
-        "unplugin-auto-import": "^0.12.2",
-        "unplugin-vue-components": "^0.22.12",
+        "unplugin-auto-import": "^0.18.0",
+        "unplugin-vue-components": "^0.27.3",
         "vite": "^5.2.11",
         "vite-plugin-compression": "^0.5.1",
         "vite-plugin-eslint": "^1.8.1",
-        "vite-plugin-html": "^3.2.2",
         "vue-tsc": "^2.0.19"
     },
     "lint-staged": {

@@ -1,6 +1,5 @@
 <script setup lang="tsx">
-import { reactive } from 'vue'
-import { Table, TableColumn, PageContainer, SearchOption } from '@/components'
+import { TableColumn, SearchOption } from '@/components'
 import { fetchOnlineUserInfos, OnlineUser } from '@/service/api/monitor/online'
 defineOptions({ name: 'Online' })
 

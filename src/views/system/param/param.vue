@@ -1,6 +1,5 @@
 <script setup lang="tsx">
-import { reactive, ref } from 'vue'
-import { PageContainer, SearchOption, Table, TableColumn } from '@/components'
+import { SearchOption, TableColumn } from '@/components'
 import ParamsEdit from './components/paramsEdit.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'

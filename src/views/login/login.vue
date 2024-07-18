@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { fetchCaptcha } from '@/service/api/common'
 import { login } from '@/service/api/auth'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/core/constant'
-import { Icon } from '@/components'
 import { encrypt } from '@/utils/crypto'
 interface FormData {
     /** 账号 */

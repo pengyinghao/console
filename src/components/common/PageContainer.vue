@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useSlots, ref, onMounted } from 'vue'
 interface PageContainerProps {
     /** 是否显示header */
     header?: boolean

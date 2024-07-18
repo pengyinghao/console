@@ -1,6 +1,4 @@
 <script lang="tsx" setup>
-import { ref } from 'vue'
-import { PageContainer } from '@/components'
 import JobList from './components/jobList.vue'
 import JobLog from './components/jobLog.vue'
 defineOptions({ name: 'Job' })

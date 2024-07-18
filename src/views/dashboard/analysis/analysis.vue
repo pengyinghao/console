@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 import { useDebounceFn } from '@vueuse/core'
-import { ref, watch, onUnmounted } from 'vue'
-import { useAppStore } from '@/store'
 import { CardItem, JobStatistics, ObjectStorage, UserUseTrend } from './components'
 defineOptions({ name: 'Analysis' })
 

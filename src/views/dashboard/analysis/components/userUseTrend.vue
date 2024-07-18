@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs'
-import { computed, nextTick, ref, watch } from 'vue'
 import echarts from '@/plugins/echarts'
 import { useEChartsColors } from '@/composables/useEChartsColors'
-import { useAppStore } from '@/store'
 
 const { lineColor, titleColor, tipBgColor, tipBorderColor, axisPointerLineColor } = useEChartsColors()
 

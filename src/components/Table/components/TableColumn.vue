@@ -1,5 +1,4 @@
 <script setup lang="tsx">
-import { defineProps } from 'vue'
 import { TableColumn, TableColumnScope, TableHeaderScope } from '../type'
 import { dateFormat, setDefaultValue } from '@/utils'
 defineProps<{ column: TableColumn }>()

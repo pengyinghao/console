@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
 import { TreeInstance } from 'element-plus'
 import { Role, authorize, fetchAuthorizeMenuIds } from '@/service/api/system/role'
 import { DefaultNavigate, Menu, fetchMenuInfos } from '@/service/api/system/menu'
@@ -81,7 +80,7 @@ defineExpose({
                             v-for="item in defaultNavigateInfos"
                             :key="item.name"
                             :label="item.name"
-                            :value="item.url"
+                            :value="item.url as string"
                         />
                     </el-select>
                 </el-form-item>

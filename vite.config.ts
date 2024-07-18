@@ -1,8 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
 import { resolve } from 'path'
-import externalGlobals from 'rollup-plugin-external-globals'
 import { pluginsConfig } from './build/pluginConfig'
-import { externalGlobalsObj, externalKeys } from './build/plugins/cdn'
 export default defineConfig(({ command, mode }) => {
     const envs = loadEnv(mode, process.cwd(), ['VITE_BASE_URL'])
     return {
@@ -30,22 +28,15 @@ export default defineConfig(({ command, mode }) => {
             outDir: 'dist',
             rollupOptions: {
                 output: {
+                    chunkFileNames: 'static/js/[name]-[hash].js',
+                    entryFileNames: 'static/js/[name]-[hash].js',
+                    assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
                     manualChunks(id) {
                         if (id.includes('node_modules')) {
-                            return 'vendor'
+                            return id.toString().split('node_modules/')[1].replace('.pnpm/', '').split('/')[0]
                         }
-                    },
-                    // 拆分js到模块文件夹
-                    chunkFileNames: ({ facadeModuleId }) => {
-                        const moduleId = facadeModuleId ? facadeModuleId.split('/') : []
-                        const fileName = moduleId[moduleId.length - 2] || '[name]'
-                        return `js/${fileName}/[name].[hash].js`
-                    },
-                    entryFileNames: 'js/[name]-[hash].js',
-                    assetFileNames: '[ext]/[name].[hash:4].[ext]'
-                },
-                external: externalKeys,
-                plugins: [externalGlobals(externalGlobalsObj)]
+                    }
+                }
             },
             // sourcemap: true,
             brotliSize: false

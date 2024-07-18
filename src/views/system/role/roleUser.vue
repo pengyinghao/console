@@ -1,7 +1,6 @@
 <script setup lang="tsx">
-import { reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { PageContainer, Table, TableColumn, StatusView } from '@/components'
+import { TableColumn, StatusView } from '@/components'
 import { fetchRoleUser, User } from '@/service/api/system/user'
 import { setDefaultValue } from '@/utils'
 defineOptions({ name: 'RoleUser' })
