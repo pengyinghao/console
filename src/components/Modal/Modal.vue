@@ -10,3 +10,8 @@
         </template>
     </el-dialog>
 </template>
+<style>
+.el-dialog {
+    background-color: #252a2f;
+}
+</style>

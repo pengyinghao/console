@@ -5,7 +5,7 @@
 
 // 分页
 .el-pagination {
-    --el-pagination-font-size: var(--el-font-size-base);
+    --el-pagination-font-size: var(--el-font-size-base) !important;
 }
 
 // 表单项

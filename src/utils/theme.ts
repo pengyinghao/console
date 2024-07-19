@@ -6,9 +6,11 @@ const PRE_LIGHT = `${PRE}-light`
 const PRE_DARK = `${PRE}-dark`
 
 // 白色混合色
-const MIX_WIDTH = '#ffffff'
+const MIX_WHITE = '#ffffff'
 // 黑色混合色
 const MIX_BLACK = '#000000'
+// 暗黑模式
+const MIX_DARK = '#21252a'
 
 const html = document.documentElement
 
@@ -42,9 +44,11 @@ export const changeTheme = (color?: string) => {
         html.style.setProperty(PRE, color)
         html.style.setProperty('--color-primary', color)
 
+        const isDark = Array.from(document.documentElement.classList).includes('dark')
+
         // 设置辅色
         for (let i = 1; i < 10; i += 1) {
-            html.style.setProperty(`${PRE_LIGHT}-${i}`, mix(color, MIX_WIDTH, i * 0.1))
+            html.style.setProperty(`${PRE_LIGHT}-${i}`, mix(color, isDark ? MIX_DARK : MIX_WHITE, i * 0.1))
             html.style.setProperty(`${PRE_DARK}-${i}`, mix(color, MIX_BLACK, i * 0.1))
         }
     }

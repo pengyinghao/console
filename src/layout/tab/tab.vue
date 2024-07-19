@@ -114,22 +114,16 @@ onClickOutside(pointerElement, () => {
 </template>
 <style lang="scss" scoped>
 .action {
-    @apply p-0 m-0 flex-y-center bg-white h-30px rounded-4px mr-10px;
+    @apply p-0 m-0 flex-y-center light:bg-white dark:bg-[var(--tab-action-bg)] h-30px rounded-4px mr-10px;
     list-style: none;
 
     &-item {
-        @apply relative plr-10px leading-30px cursor-pointer font-bold;
+        @apply relative plr-10px leading-30px cursor-pointer font-bold light:c-[var(--el-text-color-primary)] dark:c-[var(--tab-item-c-color)];
         transition: all 0.3s;
-        color: var(--el-text-color-primary);
         &:not(:last-child)::after {
-            display: block;
+            @apply absolute right-0 h-10px w-1px bg-[#eee];
             content: '';
-            position: absolute;
-            right: 0;
             top: calc(50% - 5px);
-            height: 10px;
-            width: 1px;
-            background-color: #eee;
         }
 
         &:hover {
@@ -137,12 +131,13 @@ onClickOutside(pointerElement, () => {
         }
     }
 }
+
 .scroll {
     @apply flex-y-center overflow-hidden;
 
     &-item {
         color: var(--el-text-color-secondary);
-        @apply flex-y-center bg-white rounded-4px plr-10px mr-10px h-30px cursor-pointer;
+        @apply flex-y-center light:bg-white dark:(bg-[var(--tab-item-bg-color)] c-[var(--tab-item-c-color)]) rounded-4px plr-10px mr-10px h-30px cursor-pointer;
         &.scroll-item-active {
             @apply bg-primary c-white;
             .scroll-item-icon {

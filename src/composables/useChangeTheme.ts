@@ -14,9 +14,9 @@ export function useChangeTheme() {
             theme = appStore.themeMode
         }
         document.documentElement.className = theme
+        changeTheme(appStore.theme)
     }
 
-    changeTheme(appStore.theme)
     watch(
         () => [appStore.themeMode, appStore.followSystemTheme],
         () => {

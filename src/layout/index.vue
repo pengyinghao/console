@@ -58,8 +58,7 @@ eventEmitter.on('REFRESH_PAGE', () => {
 
     &-tab {
         top: var(--header-height);
-        background-color: #f7f7f7;
-        @apply ptb-10px fixed w-full z-1000 flex items-center plr-10px;
+        @apply ptb-10px fixed w-full z-1000 flex items-center plr-10px light:bg-[#f7f7f7] dark:bg-[#1a1a1c];
         @apply whitespace-nowrap;
     }
 
@@ -85,13 +84,10 @@ eventEmitter.on('REFRESH_PAGE', () => {
         transition: all var(--el-transition-duration) ease-in-out;
     }
 }
+
 .dark {
     .app-container-header {
         box-shadow: 0 1px 2px #fcfdfd14;
-    }
-
-    .app-container-tab {
-        box-shadow: 0 1px 2px #e0e3e60d;
     }
 
     .app-container-aside {

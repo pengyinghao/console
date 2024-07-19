@@ -14,6 +14,6 @@ import headerRightContent from './header-right-content.vue'
 }
 
 :deep(.header-item:hover) {
-    @apply bg-#eee dark:bg-dark-1;
+    @apply light:bg-#eee dark:bg-[var(--color-active)];
 }
 </style>

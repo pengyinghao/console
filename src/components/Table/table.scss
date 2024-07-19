@@ -7,6 +7,6 @@
 
 :deep(.el-table):not(.el-table--border) {
     .el-table__header th {
-        background-color: #f0f2f3;
+        @apply light:bg-[#f0f2f3] dark:bg-[var(--table-header-bg-color)];
     }
 }

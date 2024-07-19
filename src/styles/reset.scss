@@ -13,7 +13,15 @@ html {
 }
 
 html.dark {
-    background-color: var(--el-bg-color-page);
+    background-color: #1a1a1c;
+    --el-bg-color-overlay: #21252a;
+    --color-active: #343a41;
+    --el-bg-color: var(--el-bg-color-overlay);
+    --tab-action-bg: var(--color-active);
+    --tab-item-bg-color: var(--color-active);
+    --tab-item-c-color: #e5eaf3;
+    --table-header-bg-color: #292e34;
+    --el-fill-color-light: var(--el-color-primary-light-9);
 }
 
 #nprogress .bar {
