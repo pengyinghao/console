@@ -86,12 +86,8 @@ eventEmitter.on('REFRESH_PAGE', () => {
 }
 
 .dark {
-    .app-container-header {
-        box-shadow: 0 1px 2px #fcfdfd14;
-    }
-
     .app-container-aside {
-        box-shadow: 2px 0 8px #e0e3e60d;
+        box-shadow: 2px 0 8px rgba(29, 35, 41, 0.5);
     }
 }
 </style>
