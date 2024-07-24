@@ -1,0 +1,13 @@
+*.md
+!README.md
+node_modules/
+.git/
+.DS_Store
+.vscode/
+.dockerignore
+.eslintignore
+.eslintrc
+.prettierrc
+.prettierignore
+commitlint.config.cjs
+cz-config.cjs
