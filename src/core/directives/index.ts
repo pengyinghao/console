@@ -1,6 +1,6 @@
 import { App } from 'vue'
-import MouseLeave from './MouseLeave'
+import { permissionDirective } from './permission'
 
 export function setupDirective(app: App) {
-    app.directive('OnMouseLeave', MouseLeave)
+    app.directive('permission', permissionDirective)
 }
