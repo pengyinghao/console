@@ -5,11 +5,11 @@ defineProps<{ column: TableColumn }>()
 
 const renderColumn = (item: TableColumn) => {
     if (item.hide) return <></>
-
     return (
         <el-table-column {...item}>
             {{
                 default: (scope: TableColumnScope<any>) => {
+                    if (Object.keys(scope.row).length === 0) return
                     // 多级表头
                     if (item.children) return item.children.map((child) => renderColumn(child))
                     // 自定义渲染
