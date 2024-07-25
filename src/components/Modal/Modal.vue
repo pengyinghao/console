@@ -12,6 +12,6 @@
 </template>
 <style>
 .el-dialog {
-    background-color: #252a2f;
+    @apply dark:bg-#252a2f;
 }
 </style>
