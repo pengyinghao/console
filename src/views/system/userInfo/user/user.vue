@@ -5,6 +5,7 @@ import AddUser from './components/addUser.vue'
 import EditUser from './components/editUser.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
+import { userPermission } from '@/types/permissions'
 defineOptions({ name: 'User' })
 
 const reload = ref(false)
@@ -96,13 +97,22 @@ const columns: TableColumn<User>[] = [
         render: ({ row }) => {
             return (
                 <div class="flex-y-center">
-                    <a onclick={() => handleEditUser(row.id)}>修改</a>
-                    <el-divider direction="vertical" />
-                    <a onclick={() => handleUpdateUserState(row)}>{row.status === 0 ? '启用' : '禁用'}</a>
-                    <el-divider direction="vertical" />
-                    <a onclick={() => handleUpdateUserFreezeState(row)}>{row.freeze ? '解冻' : '冻结'}</a>
-                    <el-divider direction="vertical" />
-                    <a disabled={row.sysUser === 0} onclick={() => handleDeleteBtnClick(row)}>
+                    <div v-permission={userPermission.system_user_edit}>
+                        <a onclick={() => handleEditUser(row.id)}>修改</a>
+                        <el-divider direction="vertical" />
+                    </div>
+                    <div v-permission={userPermission.system_user_status}>
+                        <a onclick={() => handleUpdateUserState(row)}>{row.status === 0 ? '启用' : '禁用'}</a>
+                        <el-divider direction="vertical" />
+                    </div>
+                    <div v-permission={userPermission.system_user_freeze}>
+                        <a onclick={() => handleUpdateUserFreezeState(row)}>{row.freeze ? '解冻' : '冻结'}</a>
+                        <el-divider direction="vertical" />
+                    </div>
+                    <a
+                        v-permission={userPermission.system_user_delete}
+                        disabled={row.sysUser === 0}
+                        onclick={() => handleDeleteBtnClick(row)}>
                         删除
                     </a>
                 </div>
@@ -121,7 +131,9 @@ const options = reactive<SearchOption[]>([
     <PageContainer>
         <Table v-model:reload="reload" :columns="columns" :request-api="fetchUserInfos" :search="{ options: options }">
             <template #header-left>
-                <el-button type="primary" @click="handleAddUser()"> 新增 </el-button>
+                <el-button v-permission="userPermission.system_user_add" type="primary" @click="handleAddUser()">
+                    新增
+                </el-button>
             </template>
         </Table>
         <AddUser ref="refAddUser" @close="handleClose"></AddUser>

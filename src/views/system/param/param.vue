@@ -4,6 +4,7 @@ import ParamsEdit from './components/paramsEdit.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
 import { fetchParamInfos, Param, deleteParam } from '@/service/api/system/param'
+import { paramPermission } from '@/types/permissions'
 defineOptions({ name: 'Params' })
 
 const reload = ref(false)
@@ -50,10 +51,15 @@ const columns: TableColumn<Param>[] = [
         fixed: 'right',
         render: ({ row }) => {
             return (
-                <div>
-                    <a onclick={() => handleEditParam(row.id)}>修改</a>
-                    <el-divider direction="vertical" />
-                    <a disabled={row.sys === 0} onclick={() => handleDeleteParam(row)}>
+                <div class="flex-y-center">
+                    <div v-permission={paramPermission.system_param_edit}>
+                        <a onclick={() => handleEditParam(row.id)}>修改</a>
+                        <el-divider direction="vertical" />
+                    </div>
+                    <a
+                        v-permission={paramPermission.system_param_delete}
+                        disabled={row.sys === 0}
+                        onclick={() => handleDeleteParam(row)}>
                         删除
                     </a>
                 </div>
@@ -73,7 +79,9 @@ const options = reactive<SearchOption[]>([{ mode: 'input', label: '参数名', f
             :search="{ options: options, labelWidth: 100 }"
         >
             <template #header-left>
-                <el-button type="primary" @click="handleEditParam()"> 新增 </el-button>
+                <el-button v-permission="paramPermission.system_param_add" type="primary" @click="handleEditParam()">
+                    新增
+                </el-button>
             </template>
         </Table>
         <params-edit ref="refParamsEdit" @close="handleModalClose"></params-edit>

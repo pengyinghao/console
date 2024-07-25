@@ -5,6 +5,7 @@ import MenuEdit from './components/menuEdit.vue'
 import { useCompRef } from '@/composables/useCompRef'
 import { copyText, setDefaultValue } from '@/utils'
 import Icon from '@/components/Icon/Icon.vue'
+import { menuPermission } from '@/types/permissions'
 
 // eslint-disable-next-line vue/no-reserved-component-names
 defineOptions({ name: 'Menu' })
@@ -78,9 +79,13 @@ const columns: TableColumn<Menu>[] = [
         render: ({ row }) => {
             return (
                 <div class="flex-y-center">
-                    <a onclick={() => handleMenuEdit(row.id)}>修改</a>
-                    <el-divider direction="vertical" />
-                    <a onclick={() => handleDeleteSystemMenu(row)}>删除</a>
+                    <div v-permission={menuPermission.system_menu_edit}>
+                        <a onclick={() => handleMenuEdit(row.id)}>修改</a>
+                        <el-divider direction="vertical" />
+                    </div>
+                    <a v-permission={menuPermission.system_menu_delete} onclick={() => handleDeleteSystemMenu(row)}>
+                        删除
+                    </a>
                 </div>
             )
         }
@@ -99,7 +104,9 @@ const options = reactive<SearchOption[]>([{ mode: 'input', label: '菜单名称'
             :search="{ options: options, labelWidth: 110 }"
         >
             <template #header-left>
-                <el-button type="primary" @click="handleMenuEdit()"> 新增 </el-button>
+                <el-button v-permission="menuPermission.system_menu_add" type="primary" @click="handleMenuEdit()">
+                    新增
+                </el-button>
             </template>
         </Table>
         <menu-edit ref="refMenuEdit" @close="handleClose"></menu-edit>

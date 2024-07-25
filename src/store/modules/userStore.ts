@@ -60,6 +60,7 @@ export const useUserStore = defineStore(
 
             originMenus.value = res.menu
             buttons.value = res.btn
+
             defaultRouterPath.value = res.redirect
             return res
         }

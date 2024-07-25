@@ -3,6 +3,7 @@ import { TableColumn, SearchOption, StatusView } from '@/components'
 import JobEdit from './jobEdit.vue'
 import { useCompRef } from '@/composables/useCompRef'
 import { Job, fetchJobInfos, deleteJob, updateJobState, onceJob } from '@/service/api/monitor/job'
+import { jobPermission } from '@/types/permissions'
 
 defineOptions({ name: 'Job' })
 
@@ -71,15 +72,23 @@ const columns: TableColumn<Job>[] = [
         fixed: 'right',
         render: ({ row }) => {
             return (
-                <>
-                    <a onclick={() => handleEdit(row.id)}>修改</a>
-                    <el-divider direction="vertical" />
-                    <a onclick={() => handleDelete(row)}>删除</a>
-                    <el-divider direction="vertical" />
-                    <a onclick={() => handleUpdateStatus(row)}>{row.status === 0 ? '运行' : '停止'}</a>
-                    <el-divider direction="vertical" />
-                    <a onclick={() => handleOnce(row)}>立即执行</a>
-                </>
+                <div class="flex-y-center">
+                    <div v-permission={jobPermission.monitor_job_edit}>
+                        <a onclick={() => handleEdit(row.id)}>修改</a>
+                        <el-divider direction="vertical" />
+                    </div>
+                    <div v-permission={jobPermission.monitor_job_delete}>
+                        <a onclick={() => handleDelete(row)}>删除</a>
+                        <el-divider direction="vertical" />
+                    </div>
+                    <div v-permission={jobPermission.monitor_job_status}>
+                        <a onclick={() => handleUpdateStatus(row)}>{row.status === 0 ? '启动' : '停止'}</a>
+                        <el-divider direction="vertical" />
+                    </div>
+                    <a v-permission={jobPermission.monitor_job_execute} onclick={() => handleOnce(row)}>
+                        立即执行
+                    </a>
+                </div>
             )
         }
     }
@@ -106,7 +115,9 @@ const options = reactive<SearchOption[]>([
         :search="{ options: options, labelWidth: 110 }"
     >
         <template #header-left>
-            <el-button type="primary" @click="handleEdit()">创建</el-button>
+            <el-button v-permission="jobPermission.monitor_job_add" type="primary" @click="handleEdit()">
+                创建
+            </el-button>
         </template>
     </Table>
     <!-- 新增、编辑 -->

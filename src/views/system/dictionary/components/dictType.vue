@@ -4,6 +4,7 @@ import { deleteDictType, fetchDictTypeInfos, updateDictTypeState, DictType } fro
 import DictTypeEdit from './dictTypeEdit.vue'
 import { useCompRef } from '@/composables/useCompRef'
 import { setDefaultValue } from '@/utils'
+import { dictionaryPermission } from '@/types/permissions'
 
 const reload = ref(false)
 
@@ -76,12 +77,20 @@ const columns: TableColumn<DictType>[] = [
         fixed: 'right',
         render: ({ row }) => {
             return (
-                <div>
-                    <a onclick={() => handleEditDictType(row.id)}>修改</a>
-                    <el-divider direction="vertical" />
-                    <a onclick={() => handleDeleteBtnClick(row)}>删除</a>
-                    <el-divider direction="vertical" />
-                    {<a onclick={() => handleUpdateUserState(row)}>{row.status === 0 ? '启用' : '禁用'}</a>}
+                <div class="flex-y-center">
+                    <div v-permission={dictionaryPermission.system_dict_type_edit}>
+                        <a onclick={() => handleEditDictType(row.id)}>修改</a>
+                        <el-divider direction="vertical" />
+                    </div>
+                    <div v-permission={dictionaryPermission.system_dict_type_delete}>
+                        <a onclick={() => handleDeleteBtnClick(row)}>删除</a>
+                        <el-divider direction="vertical" />
+                    </div>
+                    <a
+                        v-permission={dictionaryPermission.system_dict_type_status}
+                        onclick={() => handleUpdateUserState(row)}>
+                        {row.status === 0 ? '启用' : '禁用'}
+                    </a>
                 </div>
             )
         }
@@ -96,7 +105,13 @@ const options = reactive<SearchOption[]>([
 <template>
     <Table v-model:reload="reload" :columns="columns" :request-api="fetchDictTypeInfos" :search="{ options }">
         <template #header-left>
-            <el-button type="primary" @click="handleEditDictType()"> 新增 </el-button>
+            <el-button
+                v-permission="dictionaryPermission.system_dict_type_add"
+                type="primary"
+                @click="handleEditDictType()"
+            >
+                新增
+            </el-button>
         </template>
     </Table>
     <dict-type-edit ref="refEditDictType" @close="handleClose"></dict-type-edit>

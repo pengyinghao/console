@@ -10,6 +10,7 @@ import {
 import DictEdit from './dictEdit.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
+import { dictionaryPermission } from '@/types/permissions'
 const reload = ref(false)
 
 const handleQuery = () => {
@@ -67,12 +68,20 @@ const columns: TableColumn<Dict>[] = [
         fixed: 'right',
         render: ({ row }) => {
             return (
-                <div>
-                    <a onclick={() => handleEditDict(row.id)}>修改</a>
-                    <el-divider direction="vertical" />
-                    <a onclick={() => handleDeleteDict(row)}>删除</a>
-                    <el-divider direction="vertical" />
-                    {<a onclick={() => handleUpdateDictState(row)}>{row.status === 0 ? '启用' : '禁用'}</a>}
+                <div class="flex-y-center">
+                    <div v-permission={dictionaryPermission.system_dict_edit}>
+                        <a onclick={() => handleEditDict(row.id)}>修改</a>
+                        <el-divider direction="vertical" />
+                    </div>
+                    <div v-permission={dictionaryPermission.system_dict_delete}>
+                        <a onclick={() => handleDeleteDict(row)}>删除</a>
+                        <el-divider direction="vertical" />
+                    </div>
+                    <a
+                        v-permission={dictionaryPermission.system_dict_status}
+                        onclick={() => handleUpdateDictState(row)}>
+                        {row.status === 0 ? '启用' : '禁用'}
+                    </a>
                 </div>
             )
         }
@@ -105,7 +114,9 @@ businessStore.dictTypeName = undefined
         :search="{ options, labelWidth: 110 }"
     >
         <template #header-left>
-            <el-button type="primary" @click="handleEditDict()"> 新增 </el-button>
+            <el-button v-permission="dictionaryPermission.system_dict_add" type="primary" @click="handleEditDict()">
+                新增
+            </el-button>
         </template>
     </Table>
     <dict-edit ref="refDictEdit" @close="handleModalClose"></dict-edit>

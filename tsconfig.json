@@ -18,7 +18,7 @@
         "paths": {
             "@/*": ["src/*"]
         },
-        "types": ["element-plus/global"],
+        "types": ["element-plus/global"]
     },
     "include": ["src", "typings/*.d.ts", "typings/**/*.d.ts"],
     "references": [{ "path": "./tsconfig.node.json" }]

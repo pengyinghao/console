@@ -161,7 +161,7 @@ defineExpose({
                 </el-radio-group>
             </el-form-item>
             <el-form-item v-if="formData.type === MenuType.BUTTON" label="功能代码" prop="code">
-                <el-input v-model="formData.code" maxlength="20"></el-input>
+                <el-input v-model="formData.code" maxlength="30"></el-input>
             </el-form-item>
             <el-form-item label="菜单名称" prop="name">
                 <el-input v-model="formData.name" maxlength="20"></el-input>
