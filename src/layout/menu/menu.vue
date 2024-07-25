@@ -6,6 +6,7 @@ import Logo from './logo.vue'
 import { useLayout } from '@/composables/useLayout'
 import { dataToTree } from '@/utils'
 import { MenuDisplay, MenuOpenType } from '@/service/api/system/menu'
+import { useAppStore, useUserStore } from '@/store'
 
 const route = useRoute()
 const router = useRouter()

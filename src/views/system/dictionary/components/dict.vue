@@ -11,6 +11,7 @@ import DictEdit from './dictEdit.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
 import { dictionaryPermission } from '@/types/permissions'
+import { useBusinessStore } from '@/store'
 const reload = ref(false)
 
 const handleQuery = () => {

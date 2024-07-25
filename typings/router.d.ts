@@ -7,7 +7,7 @@ declare module 'vue-router' {
         /** 标题 */
         title?: string
         /** 上级id */
-        parentId?: number
+        parentId?: number | null
         /** 图标 */
         icon?: string
         /** 打开方式,0:普通页面，1：内嵌网页，2：外部网页 */

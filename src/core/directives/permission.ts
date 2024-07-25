@@ -1,4 +1,5 @@
 import { DirectiveBinding, ObjectDirective } from 'vue'
+import { useUserStore } from '@/store'
 
 const cachedPermissions = ref<string[]>([])
 

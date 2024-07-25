@@ -4,6 +4,7 @@ import JobEdit from './jobEdit.vue'
 import { useCompRef } from '@/composables/useCompRef'
 import { Job, fetchJobInfos, deleteJob, updateJobState, onceJob } from '@/service/api/monitor/job'
 import { jobPermission } from '@/types/permissions'
+import { useBusinessStore } from '@/store'
 
 defineOptions({ name: 'Job' })
 

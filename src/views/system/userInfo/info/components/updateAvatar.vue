@@ -4,6 +4,7 @@ import { UploadRequestOptions } from 'element-plus'
 import { useCompRef } from '@/composables/useCompRef'
 import { upload } from '@/service/api/system/upload'
 import { uploadUserAvatar } from '@/service/api/system/user'
+import { useUserStore } from '@/store'
 
 const userStore = useUserStore()
 const visible = ref(false)

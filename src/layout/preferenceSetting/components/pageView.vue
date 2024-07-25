@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import Description from '@/layout/common/description.vue'
+import { useAppStore } from '@/store'
 
 /** 页面切换动画类型 下拉数据源 */
 const animationTypeOptions = [

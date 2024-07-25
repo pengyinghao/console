@@ -4,6 +4,7 @@ import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router'
 import { useCompRef } from '@/composables/useCompRef'
 import ContextMenu from './contextMenu.vue'
 import { eventEmitter } from '@/utils/eventEmitter'
+import { useTabStore, useUserStore } from '@/store'
 
 const refScroll = ref<HTMLDivElement>()
 const tabViewContainer = ref<HTMLElement>()

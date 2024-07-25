@@ -3,6 +3,7 @@ import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import locale from 'element-plus/es/locale/lang/zh-cn'
 import PreferenceSetting from '@/layout/preferenceSetting/preferenceSetting.vue'
 import { useChangeTheme } from './composables/useChangeTheme'
+import { useAppStore } from './store'
 
 const appStore = useAppStore()
 

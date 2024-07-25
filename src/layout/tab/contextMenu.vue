@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { CSSProperties } from 'vue'
 import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router'
+import { useAppStore, useTabStore, useUserStore } from '@/store'
 
 /** 操作类型 */
 type Operation = 'closeCurr' | 'closeLeft' | 'closeRight' | 'closeOther'

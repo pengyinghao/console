@@ -1,6 +1,7 @@
 <script setup lang="tsx">
 import { TableColumn, SearchOption, StatusView } from '@/components'
 import { JobLog, fetchJobLogInfos } from '@/service/api/monitor/job'
+import { useBusinessStore } from '@/store'
 defineOptions({ name: 'JobLog' })
 
 const columns: TableColumn<JobLog>[] = [

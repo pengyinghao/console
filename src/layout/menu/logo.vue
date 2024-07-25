@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useAppStore } from '@/store'
 defineOptions({
     name: 'Logo'
 })

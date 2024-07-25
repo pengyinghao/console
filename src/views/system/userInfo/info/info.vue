@@ -3,6 +3,7 @@ import Item from './item.vue'
 import UpdateAvatar from './components/updateAvatar.vue'
 import UpdatePassword from './components/updatePassword.vue'
 import { useCompRef } from '@/composables/useCompRef'
+import { useUserStore } from '@/store'
 
 const userStore = useUserStore()
 const { info } = toRefs(userStore)

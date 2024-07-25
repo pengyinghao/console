@@ -5,6 +5,7 @@ import DictTypeEdit from './dictTypeEdit.vue'
 import { useCompRef } from '@/composables/useCompRef'
 import { setDefaultValue } from '@/utils'
 import { dictionaryPermission } from '@/types/permissions'
+import { useBusinessStore } from '@/store'
 
 const reload = ref(false)
 

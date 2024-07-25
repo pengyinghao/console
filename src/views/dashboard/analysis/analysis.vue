@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useDebounceFn } from '@vueuse/core'
 import { CardItem, JobStatistics, ObjectStorage, UserUseTrend } from './components'
+import { useAppStore } from '@/store'
 defineOptions({ name: 'Analysis' })
 
 const refJobStatistics = ref<InstanceType<typeof JobStatistics>>()

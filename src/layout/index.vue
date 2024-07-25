@@ -3,6 +3,7 @@ import Header from './header/header.vue'
 import Menu from './menu/menu.vue'
 import Tab from './tab/tab.vue'
 import { eventEmitter } from '@/utils/eventEmitter'
+import { useAppStore, useTabStore } from '@/store'
 defineOptions({
     name: 'Layout'
 })

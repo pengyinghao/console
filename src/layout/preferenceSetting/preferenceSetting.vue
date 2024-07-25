@@ -1,3 +1,15 @@
+<script lang="ts" setup>
+import ThemeMode from './components/themeMode.vue'
+import Theme from './components/theme.vue'
+import PageView from './components/pageView.vue'
+import PageFunction from './components/pageFunction.vue'
+import { useAppStore } from '@/store'
+defineOptions({
+    name: 'PreferenceSetting'
+})
+const appStore = useAppStore()
+</script>
+
 <template>
     <el-drawer v-bind="$attrs" title="偏好设置" :size="350">
         <div class="pb-20px">
@@ -13,14 +25,3 @@
         </div>
     </el-drawer>
 </template>
-
-<script lang="ts" setup>
-import ThemeMode from './components/themeMode.vue'
-import Theme from './components/theme.vue'
-import PageView from './components/pageView.vue'
-import PageFunction from './components/pageFunction.vue'
-defineOptions({
-    name: 'PreferenceSetting'
-})
-const appStore = useAppStore()
-</script>

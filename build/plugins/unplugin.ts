@@ -17,14 +17,6 @@ export function autoImport() {
     return AutoImport({
         dts: 'typings/auto-imports.d.ts',
         dirs: [],
-        imports: [
-            'vue',
-            'vue-router',
-            'pinia',
-            'vue-i18n',
-            {
-                '@/store': ['useUserStore', 'useAppStore', 'useTabStore', 'useBusinessStore']
-            }
-        ]
+        imports: ['vue', 'vue-router', 'vue-i18n']
     })
 }

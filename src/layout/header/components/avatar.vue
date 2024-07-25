@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useAppStore, useUserStore } from '@/store'
 defineOptions({
     name: 'Avatar'
 })
