@@ -71,8 +71,7 @@ const contentMenuOptions = computed<ContentMenuOptions[]>(() => {
             icon: 'icon-park-outline:close-small',
             label: '关闭当前',
             hide,
-            operation: 'closeCurr',
-            disabled: tabs.value.length === 1
+            operation: 'closeCurr'
         },
         {
             icon: 'icon-park-outline:go-start',
@@ -109,7 +108,7 @@ const tabCurrentIndex = computed(() => {
 
 /** 关闭左侧tab */
 const closeLeftTab = () => {
-    if (tabCurrentIndex.value > tabStore.fixedTabs.length) {
+    if (tabCurrentIndex.value > tabStore.fixedTabs.length - 1) {
         tabStore.removeLeftTabs(tabCurrentIndex.value)
     } else {
         window.$message.warning('左侧没有标签')

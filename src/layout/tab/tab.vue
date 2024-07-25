@@ -2,16 +2,16 @@
 import { onClickOutside } from '@vueuse/core'
 import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router'
 import { useCompRef } from '@/composables/useCompRef'
-import contextMenu from './contextMenu.vue'
+import ContextMenu from './contextMenu.vue'
 import { eventEmitter } from '@/utils/eventEmitter'
 
 const refScroll = ref<HTMLDivElement>()
 const tabViewContainer = ref<HTMLElement>()
 const pointerElement = ref<HTMLElement>()
-const refContextMenu = useCompRef(contextMenu)
+const refContextMenu = useCompRef(ContextMenu)
 
 const tabStore = useTabStore()
-const { tabs, fixedTabs } = toRefs(tabStore)
+const { tabs, fixedTabs, fixedMenu } = toRefs(tabStore)
 
 const route = useRoute()
 const router = useRouter()
@@ -90,9 +90,20 @@ onClickOutside(pointerElement, () => {
                 <Icon name="icon-park-outline:home" size="1.5em" @click="handleHome" />
             </li>
         </ul>
-
-        <div ref="refScroll" class="scroll">
-            <div
+        <ul ref="refScroll" class="scroll">
+            <li
+                v-for="tab in fixedMenu"
+                :key="tab.path"
+                class="scroll-item"
+                :class="{ 'scroll-item-active': tab.path === route.path }"
+                @click="handleTabClick(tab as unknown as RouteLocationNormalizedLoaded)"
+                @contextmenu.prevent="() => {}"
+            >
+                <span>
+                    {{ tab.name }}
+                </span>
+            </li>
+            <li
                 v-for="tab in tabs"
                 :key="tab.path"
                 class="scroll-item"
@@ -107,9 +118,9 @@ onClickOutside(pointerElement, () => {
                     class="scroll-item-icon"
                     @click.prevent.stop="onCloseCurrTab(tab)"
                 />
-            </div>
-        </div>
-        <contextMenu ref="refContextMenu" @click="scrollToTarget" />
+            </li>
+        </ul>
+        <ContextMenu ref="refContextMenu" @click="scrollToTarget" />
     </div>
 </template>
 <style lang="scss" scoped>
@@ -133,7 +144,7 @@ onClickOutside(pointerElement, () => {
 }
 
 .scroll {
-    @apply flex-y-center overflow-hidden;
+    @apply p-0px m-0px list-none flex-y-center overflow-hidden;
 
     &-item {
         color: var(--el-text-color-secondary);
