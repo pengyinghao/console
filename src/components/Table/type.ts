@@ -63,7 +63,7 @@ export interface TableProps {
     rowKey?: string
 
     /** 查询条件 */
-    search: SearchProps
+    search?: SearchProps
 }
 
 export interface TableReactive {

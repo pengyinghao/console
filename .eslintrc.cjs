@@ -38,6 +38,8 @@ module.exports = {
         'import/newline-after-import': 'off',
         'import/no-extraneous-dependencies': 'off',
         'consistent-return': 'off',
+        'no-restricted-syntax': 'off',
+        'guard-for-in': 'off',
         'no-undef': 'off',
         'vue/no-v-html': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off'

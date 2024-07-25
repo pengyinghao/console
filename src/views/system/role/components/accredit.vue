@@ -7,40 +7,63 @@ const visible = ref(false)
 const roleInfo = ref<Role>()
 
 const refTree = ref<TreeInstance>()
-const loading = ref(true)
+const loading = ref(false)
 
 /** 菜单信息 */
 const menuInfos = ref<Menu[]>([])
-/** 勾选的菜单id集合 */
-const checkMenuIds = ref<number[]>([])
-
 const defaultNavigate = ref('')
-const defaultNavigateInfos = ref<DefaultNavigate[]>([])
-const handleCheckChange = () => {
-    const nodes = refTree.value?.getCheckedNodes() as Menu[]
-    const result = nodes
-        .filter((item) => item.type === 1)
-        .map((item) => {
+
+/** 树形所有节点 */
+const treeNodes = computed<any>(() => {
+    if (refTree.value) {
+        const nodes = refTree.value.store.nodesMap
+        return nodes
+    }
+    return {}
+})
+
+// 默认导航
+const defaultNavigateInfos = computed(() => {
+    return Object.entries(treeNodes.value)
+        .filter((item: any) => item[1].checked && item[1].data.url)
+        .map((item: any) => {
             return {
-                url: item.url,
-                name: item.name
+                url: item[1].data.url,
+                name: item[1].data.name
             } as DefaultNavigate
         })
-    defaultNavigateInfos.value = result
+})
+
+/** 菜单勾选值改变事件 */
+const handleCheckChange = (node: Menu, nodeCheck: boolean) => {
+    node.children!.forEach((item) => {
+        refTree.value?.setChecked(item.id, nodeCheck, true)
+    })
+}
+
+/** 展开、收缩 */
+const handleExpand = (isExpand: boolean) => {
+    for (const node in treeNodes.value) {
+        treeNodes.value[node].expanded = isExpand
+    }
 }
 
 const show = async (row: Role) => {
+    loading.value = true
     visible.value = true
     roleInfo.value = row
+
     try {
         loading.value = true
+        // 获取菜单、 勾选的菜单id集合
         const [menu, menuIds] = await Promise.all([fetchMenuInfos(), fetchAuthorizeMenuIds(row.id)])
         menuInfos.value = menu
-        checkMenuIds.value = menuIds
+
+        // 设置勾选的菜单
+        refTree.value?.setCheckedKeys(menuIds, true)
+
+        // 设置默认导航
         defaultNavigate.value = row.defaultNavigate!
-        nextTick(() => {
-            handleCheckChange()
-        })
     } finally {
         loading.value = false
     }
@@ -48,7 +71,6 @@ const show = async (row: Role) => {
 
 const handleClose = () => {
     menuInfos.value = []
-    checkMenuIds.value = []
     visible.value = false
 }
 
@@ -62,6 +84,7 @@ const handleConfirm = async () => {
     })
     handleClose()
 }
+
 defineExpose({
     show
 })
@@ -69,7 +92,7 @@ defineExpose({
 
 <template>
     <el-drawer v-model="visible" title="角色授权" :size="350" :close-on-click-modal="false" :before-close="handleClose">
-        <div v-loading="loading">
+        <div v-loading="loading" class="h-full flex flex-col">
             <el-form label-width="85px">
                 <el-form-item label="角色名称" class="!mb-4px">
                     {{ roleInfo?.name }}
@@ -85,14 +108,21 @@ defineExpose({
                     </el-select>
                 </el-form-item>
             </el-form>
+            <div class="mb-10px">
+                <el-button-group size="small">
+                    <el-button type="primary" @click="handleExpand(true)">展开</el-button>
+                    <el-button type="primary" @click="handleExpand(false)">折叠</el-button>
+                </el-button-group>
+            </div>
             <el-tree
                 ref="refTree"
                 :data="menuInfos"
                 show-checkbox
                 node-key="id"
-                :default-checked-keys="checkMenuIds"
+                class="flex-1"
                 :props="{ label: 'name' }"
-                @check="handleCheckChange"
+                :check-strictly="true"
+                @check-change="handleCheckChange"
             />
         </div>
         <template #footer>
