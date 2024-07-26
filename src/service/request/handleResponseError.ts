@@ -16,7 +16,10 @@ export const handleResponseError = async (error: any) => {
     }
 
     // 刷新token遇到 token过期 ，重新登录
-    if (error.response.status === ResponseEnum.UNAUTHORIZED && config.url.includes('/user/refresh')) {
+    if (
+        (error.response.status === ResponseEnum.UNAUTHORIZED && config.url.includes('/user/refresh')) ||
+        error.response.data.code === ResponseEnum.SESSION_EXPIRED
+    ) {
         return eventEmitter.emit('API:UN_AUTH', error.response.data)
     }
 

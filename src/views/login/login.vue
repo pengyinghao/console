@@ -16,8 +16,8 @@ interface FormData {
 
 const formData = reactive<FormData>({
     uuid: '',
-    account: 'admin',
-    password: '1q2w3e4r%T',
+    account: '',
+    password: '',
     code: ''
 })
 

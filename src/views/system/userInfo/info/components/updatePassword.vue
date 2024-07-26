@@ -63,14 +63,11 @@ const close = async (success = false) => {
     visible.value = false
     refForm.value?.resetFields()
     if (success) {
-        try {
-            await window.$messageBox.alert('密码修改成功，请重新登录！', '提示', {
-                confirmButtonText: '确定',
-                type: 'success'
-            })
-        } finally {
-            userStore.loginOut(false)
-        }
+        await window.$messageBox.alert('密码修改成功，请重新登录！', '提示', {
+            confirmButtonText: '确定',
+            type: 'success'
+        })
+        userStore.loginOut()
     }
 }
 

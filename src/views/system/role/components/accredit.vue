@@ -41,10 +41,21 @@ const handleCheckChange = (node: Menu, nodeCheck: boolean) => {
     })
 }
 
+const expand = ref(false)
 /** 展开、收缩 */
-const handleExpand = (isExpand: boolean) => {
+const handleExpand = () => {
+    expand.value = !expand.value
     for (const node in treeNodes.value) {
-        treeNodes.value[node].expanded = isExpand
+        treeNodes.value[node].expanded = expand
+    }
+}
+
+const checkAll = ref(false)
+/** 全选/反选 */
+const handleCheckAll = () => {
+    checkAll.value = !checkAll.value
+    for (const node in treeNodes.value) {
+        refTree.value?.setChecked(treeNodes.value[node].data.id, checkAll.value, true)
     }
 }
 
@@ -77,6 +88,7 @@ const handleClose = () => {
 const handleConfirm = async () => {
     if (!defaultNavigate.value) return window.$message.warning('请选择默认导航')
     const checkMenuIds = refTree.value?.getCheckedKeys() as number[]
+
     await authorize({
         roleId: roleInfo.value!.id,
         menuIds: checkMenuIds,
@@ -110,8 +122,8 @@ defineExpose({
             </el-form>
             <div class="mb-10px">
                 <el-button-group size="small">
-                    <el-button type="primary" @click="handleExpand(true)">展开</el-button>
-                    <el-button type="primary" @click="handleExpand(false)">折叠</el-button>
+                    <el-button type="primary" @click="handleExpand()">展开/折叠</el-button>
+                    <el-button type="primary" @click="handleCheckAll()">全选/反选</el-button>
                 </el-button-group>
             </div>
             <el-tree
