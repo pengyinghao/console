@@ -1,5 +1,5 @@
 # build stage
-FROM node:18.0-alpine3.14 as build-stage
+FROM node:18.0-alpine3.14 AS build-stage
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ COPY . .
 RUN pnpm run build
 
 # production stage
-FROM nginx:stable as production-stage
+FROM nginx:stable AS production-stage
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 COPY docker/nginx.conf /etc/nginx/nginx.conf
