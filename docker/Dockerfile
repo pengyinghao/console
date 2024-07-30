@@ -4,6 +4,8 @@ FROM node:18.0-alpine3.14 AS build-stage
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
+RUN npm config set registry https://registry.npmmirror.com/
+
 RUN npm install -g pnpm
 RUN pnpm config set registry https://registry.npmmirror.com/
 
