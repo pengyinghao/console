@@ -6,6 +6,7 @@ import EditUser from './components/editUser.vue'
 import { setDefaultValue } from '@/utils'
 import { useCompRef } from '@/composables/useCompRef'
 import { userPermission } from '@/types/permissions'
+import { useUserStore } from '@/store'
 defineOptions({ name: 'User' })
 
 const reload = ref(false)
@@ -60,6 +61,7 @@ const handleUpdateUserFreezeState = async ({ id, freeze }: User) => {
     handleQuery()
 }
 
+const userStore = useUserStore()
 const columns: TableColumn<User>[] = [
     { label: '账号', prop: 'account' },
     { label: '编号', prop: 'no' },
@@ -95,6 +97,13 @@ const columns: TableColumn<User>[] = [
         width: 200,
         fixed: 'right',
         render: ({ row }) => {
+            if (row.no === 'sys' || row.account === userStore.info.account) {
+                return (
+                    <div v-permission={userPermission.system_user_edit}>
+                        <a onclick={() => handleEditUser(row.id)}>修改</a>
+                    </div>
+                )
+            }
             return (
                 <div class="flex-y-center">
                     <div v-permission={userPermission.system_user_edit}>
