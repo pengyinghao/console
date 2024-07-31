@@ -18,7 +18,7 @@ COPY . .
 RUN pnpm run build
 
 # production stage
-FROM nginx:stable AS production-stage
+FROM nginx:1.27-alpine AS production-stage
 
 # 复制构建产物到 Nginx HTML 目录
 COPY --from=build-stage /app/dist /usr/share/nginx/html
