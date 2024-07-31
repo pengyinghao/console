@@ -16,6 +16,11 @@ export const useTabStore = defineStore('tab', () => {
     })
     const tabs = ref<RouteLocationNormalizedLoaded[]>([])
 
+    const reset = () => {
+        fixedMenu.value = []
+        tabs.value = []
+    }
+
     /** 添加标签到集合 */
     const add = (tag: RouteLocationNormalizedLoaded, type?: string) => {
         if (tag.name === 'dashboard' || tabs.value.some((r) => r.path === tag.path)) return
@@ -56,6 +61,7 @@ export const useTabStore = defineStore('tab', () => {
         remove,
         removeLeftTabs,
         removeRightTabs,
-        removeOtherTabs
+        removeOtherTabs,
+        reset
     }
 })

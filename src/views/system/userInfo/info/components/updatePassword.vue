@@ -3,7 +3,7 @@ import { FormInstance } from 'element-plus'
 import { ruleHelper } from '@/utils/ruleHelper'
 import { updatePassword } from '@/service/api/system/user'
 import { encrypt } from '@/utils/crypto'
-import { useUserStore } from '@/store'
+import { useTabStore, useUserStore } from '@/store'
 
 const visible = ref(false)
 const loading = ref(false)
@@ -59,6 +59,7 @@ const rules = reactive<any>({
 })
 
 const userStore = useUserStore()
+const tabStore = useTabStore()
 const close = async (success = false) => {
     visible.value = false
     refForm.value?.resetFields()
@@ -67,6 +68,7 @@ const close = async (success = false) => {
             confirmButtonText: '确定',
             type: 'success'
         })
+        tabStore.reset()
         userStore.loginOut()
     }
 }

@@ -1,11 +1,12 @@
 <script lang="ts" setup>
-import { useAppStore, useUserStore } from '@/store'
+import { useAppStore, useTabStore, useUserStore } from '@/store'
 defineOptions({
     name: 'Avatar'
 })
 
 const appStore = useAppStore()
 const userStore = useUserStore()
+const tabStore = useTabStore()
 const router = useRouter()
 const { info } = toRefs(userStore)
 const onCommand = (value: 'preferenceSetting' | 'loginOut' | 'info') => {
@@ -13,6 +14,7 @@ const onCommand = (value: 'preferenceSetting' | 'loginOut' | 'info') => {
         return router.push('/info')
     }
     if (value === 'loginOut') {
+        tabStore.reset()
         return userStore.loginOut()
     }
     if (value === 'preferenceSetting') {
