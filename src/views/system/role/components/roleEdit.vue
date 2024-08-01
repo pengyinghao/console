@@ -62,6 +62,7 @@ const showModal = (id?: number) => {
 }
 
 const close = (refreshData = false) => {
+    formData.code = ''
     refForm.value?.resetFields()
     visible.value = false
     emits('close', refreshData)
