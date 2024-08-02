@@ -26,6 +26,6 @@ COPY --from=build-stage /app/dist /usr/share/nginx/html
 # 复制自定义 Nginx 配置文件
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 5001
+EXPOSE 5002
 
 CMD ["nginx", "-g", "daemon off;"]
