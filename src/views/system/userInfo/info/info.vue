@@ -16,7 +16,8 @@ const handleUpdateAvatar = () => {
 /** 修改密码 */
 const refUpdatePassword = useCompRef(UpdatePassword)
 const handleUpdatePassword = () => {
-    refUpdatePassword.value?.showModal()
+    window.$message({ type: 'warning', message: '修改密码功能暂未开放' })
+    // refUpdatePassword.value?.showModal()
 }
 </script>
 
