@@ -85,7 +85,9 @@ const columns: TableColumn<Role>[] = [
                     ) : (
                         ''
                     )}
-                    <a onclick={() => handleAccredit(row)}>授权</a>
+                    <a v-permission={rolePermission.system_role_accredit} onclick={() => handleAccredit(row)}>
+                        授权
+                    </a>
                 </div>
             )
         }
